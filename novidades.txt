@@ -1,0 +1,69 @@
+3.24b13
+	- RLPreviewSetup - adicionado a propriedade Dialogprint, o qual controla o dialogo de impressão no botão imprimir;
+	- RLPreviewSetup - Posição de Filtro e guardado conforme ultima impressão; 
+	- Rlpreview	 - Adicionado Atalho Ctrl + + pa zoom +;
+	- Rlpreview	 - Adicionado Atalho Ctrl + - pa zoom -;
+	- Rlpdffilter	 - Adicionado informação adicional - data de modificação;
+
+3.24b12
+	- rlRichText - Corrigido alinhamento justificado;
+	- rlRichText - Cirrigido erros ao abrir rich em window nt-x;
+	- rlRichText - Leaks de memória, mas alguns ainda persistem :(;
+	- Limpeza do código fonte;
+	- rlsysteminfo - Adicionado informações sobre o projeto;
+
+3.24b11
+	- rlReport   - Corrigido erro com alinhamento da direita;
+
+3.24b10
+	- rlpreview  - Corrigido erro ao exibir imagens de formatos diferentes de ICO,BMP;
+	- rlReport   - Corrigido to page, vinha em branco e ao imprimir pulava uma página;
+	- rlReport   - Corrigido exibição de bands cabeçalho;
+	- rlPreview  - Substituido Botão Savar por grafico, para ajustar espaços;
+	- rlPreview  - Corrigido erro ao copiar area do preview;	
+	- rlPreview  - Retirado Logo Padrão do Fortes('Poderemos carregar outro qualquer')
+
+
+3.24b8
+	- rlreport - Todos os componentes podem ser movimentados em run-time;
+	- rlresult - erros ao computar campos em nulo, calculo com vários formatos de campos;
+	- preview  - Adicionado Tecla de Função Ctrl + S para salvar;
+	- preview  - Adicionado Tecla de Função Ctrl + P Para imprimir diretamente;
+
+3.24b7
+	- rlreport      - Corrigido ordem de bandas para cabeça de impressão
+	- Todos         - Adicionado possibilidade de mover componentes derivados de CustomText em run time ; 
+	- Outros...
+	
+
+3.24b6
+	- rlformpreview - correção na impressão padrão
+	- rlprint       - correção na seleção da impressora;
+	- rlprintdialog - Modicicado descrição do botão ok para aplicar;
+	- rldraftfilter - retirado leaks;  
+	- rlreport      - corrigido erro na exibição do head e colun head; 
+	- Outros...
+	
+
+3.24b5
+	- rlformpreview - Adicionado opção de propriedade nas opções de impressão
+	- rlformpreview - Opção imprimir somente imprime diretamente;
+	- rlformpreview - Opção setup exibe impressão direta;
+	- rlprintdialog	- Limpeza nas variaveis de internacionalização;
+	- rldraftfilterdialog - Limpeza nas variaveis de internacionalização;
+	- rldraftfilter - Adicionado "FontSizeTextSize" propriedade para tamanho de fonte pode ser pelo tamanho real;  
+	- Outros...
+	
+
+3.24b3
+	- rlreport      - Corrigido erros com memoria;
+	- rltext        - Corrigido erros com memoria;
+	- rlpdffilter   - Corrigido erros com memoria;
+	- rlmemo        - Corrigido erros com memoria;
+	- rldraftfilter - Corrigido erros quando impressora estava off-line;
+	- rlformpreview - Corrigido erros com memoria;
+
+
+3.24b2
+	- Corrigido erros com posicionamento de bandas;
+	- Adicionado nome do documento na spool do windows;

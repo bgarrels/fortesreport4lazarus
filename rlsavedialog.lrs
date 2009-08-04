@@ -1,0 +1,42 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TRLSaveDialog','FORMDATA',[
+  'TPF0'#13'TRLSaveDialog'#12'RLSaveDialog'#4'Left'#3#211#0#6'Height'#3#244#0#3
+  +'Top'#3#151#1#5'Width'#3#135#1#13'ActiveControl'#7#12'EditFileName'#11'Borde'
+  +'rStyle'#7#8'bsDialog'#7'Caption'#6#11'Salvar como'#12'ClientHeight'#3#244#0
+  +#11'ClientWidth'#3#135#1#11'Font.Height'#2#11#9'Font.Name'#6#13'MS Sans Seri'
+  +'f'#10'Font.Pitch'#7#10'fpVariable'#8'Position'#7#14'poScreenCenter'#10'LCLV'
+  +'ersion'#6#8'0.9.26.2'#0#6'TLabel'#13'LabelFileName'#4'Left'#2#12#6'Height'#2
+  +#14#3'Top'#2#16#5'Width'#2'U'#7'Caption'#6#16'Nome do arquivo:'#11'ParentCol'
+  +'or'#8#0#0#6'TLabel'#14'LabelUseFilter'#4'Left'#2#12#6'Height'#2#14#3'Top'#2
+  +','#5'Width'#2'W'#7'Caption'#6#18'Salvar no formato:'#11'ParentColor'#8#0#0
+  +#12'TSpeedButton'#17'SpeedButtonLookup'#4'Left'#3'd'#1#6'Height'#2#21#3'Top'
+  +#2#12#5'Width'#2#21#7'Caption'#6#3'...'#5'Color'#7#9'clBtnFace'#9'NumGlyphs'
+  +#2#0#0#0#9'TGroupBox'#13'GroupBoxPages'#4'Left'#2#12#6'Height'#2'e'#3'Top'#2
+  +'D'#5'Width'#3'm'#1#7'Caption'#6#24' P'#195#161'ginas no intervalo  '#12'Cli'
+  +'entHeight'#2'S'#11'ClientWidth'#3'i'#1#8'TabOrder'#2#2#0#6'TLabel'#13'Label'
+  +'FromPage'#4'Left'#2'D'#6'Height'#2#14#3'Top'#2'-'#5'Width'#2#16#7'Caption'#6
+  +#4'&de:'#12'FocusControl'#7#12'EditFromPage'#11'ParentColor'#8#0#0#6'TLabel'
+  +#11'LabelToPage'#4'Left'#3#136#0#6'Height'#2#14#3'Top'#2'-'#5'Width'#2#19#7
+  +'Caption'#6#6'&at'#195#169':'#12'FocusControl'#7#10'EditToPage'#11'ParentCol'
+  +'or'#8#0#0#12'TRadioButton'#19'RadioButtonPagesAll'#4'Left'#2#8#6'Height'#2
+  +#17#3'Top'#2#20#5'Width'#2'J'#7'Caption'#6#12'Salvar &tudo'#7'Checked'#9#5'S'
+  +'tate'#7#9'cbChecked'#8'TabOrder'#2#0#0#0#12'TRadioButton'#24'RadioButtonPag'
+  +'esInterval'#4'Left'#2#8#6'Height'#2#17#3'Top'#2','#5'Width'#2':'#7'Caption'
+  +#6#8'P'#195#161'ginas'#8'TabOrder'#2#1#0#0#12'TRadioButton'#22'RadioButtonPa'
+  +'gesSelect'#4'Left'#2#8#6'Height'#2#17#3'Top'#2'D'#5'Width'#2';'#7'Caption'#6
+  +#10'&Sele'#195#167#195#163'o'#8'TabOrder'#2#2#0#0#5'TEdit'#12'EditFromPage'#4
+  +'Left'#2'X'#6'Height'#2#21#3'Top'#2','#5'Width'#2')'#8'OnChange'#7#18'EditFr'
+  +'omPageChange'#7'TabStop'#8#8'TabOrder'#2#3#4'Text'#6#1'1'#0#0#5'TEdit'#10'E'
+  +'ditToPage'#4'Left'#3#160#0#6'Height'#2#21#3'Top'#2','#5'Width'#2')'#8'OnCha'
+  +'nge'#7#18'EditFromPageChange'#7'TabStop'#8#8'TabOrder'#2#4#0#0#0#7'TButton'
+  +#10'ButtonSave'#4'Left'#3#220#0#6'Height'#2#25#3'Top'#3#204#0#5'Width'#2'K'#7
+  +'Caption'#6#6'Salvar'#7'Default'#9#11'ModalResult'#2#1#8'TabOrder'#2#4#0#0#7
+  +'TButton'#12'ButtonCancel'#4'Left'#3'0'#1#6'Height'#2#25#3'Top'#3#204#0#5'Wi'
+  +'dth'#2'K'#6'Cancel'#9#7'Caption'#6#8'Cancelar'#11'ModalResult'#2#2#8'TabOrd'
+  +'er'#2#3#0#0#5'TEdit'#12'EditFileName'#4'Left'#2'l'#6'Height'#2#21#3'Top'#2
+  +#12#5'Width'#3#249#0#8'TabOrder'#2#0#0#0#9'TComboBox'#15'ComboBoxFilters'#4
+  +'Left'#2'l'#6'Height'#2#21#3'Top'#2'('#5'Width'#3#177#0#10'ItemHeight'#2#13#5
+  +'Style'#7#14'csDropDownList'#8'TabOrder'#2#1#0#0#11'TSaveDialog'#10'SaveDial'
+  +'og'#4'left'#3'T'#1#3'top'#2'P'#0#0#0
+]);

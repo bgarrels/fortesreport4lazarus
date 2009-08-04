@@ -1,0 +1,144 @@
+object PageSetupConfig: RLPageSetupConfig
+  Left = 211
+  Top = 407
+  ActiveControl = GroupBoxPages
+  BorderStyle = bsDialog
+  Caption = ''
+  ClientHeight = 244
+  ClientWidth = 391
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = 11
+  Font.Name = 'MS Sans Serif'
+  Font.Pitch = fpVariable
+  Font.Style = []
+  Position = poScreenCenter
+  PixelsPerInch = 96
+  object GroupBoxPages: TGroupBox
+    Left = 12
+    Top = 68
+    Width = 365
+    Height = 101
+    Caption = ' Páginas no intervalo  '
+    TabOrder = 2
+    object LabelMarginsTop: TLabel
+      Left = 68
+      Top = 45
+      Width = 15
+      Height = 13
+      Caption = '&de:'
+      FocusControl = EditFromPage
+    end
+    object LabelMarginsBottom: TLabel
+      Left = 136
+      Top = 45
+      Width = 18
+      Height = 13
+      Caption = '&até:'
+      FocusControl = EditToPage
+    end
+    object LabelMarginsLeft: TLabel
+      Left = 136
+      Top = 45
+      Width = 18
+      Height = 13
+      Caption = '&até:'
+      FocusControl = EditToPage
+    end	
+    object LabelMarginsRigth: TEdit
+      Left = 88
+      Top = 44
+      Width = 41
+      Height = 21
+      TabStop = False
+      TabOrder = 3
+      Text = '1'
+      OnChange = EditMarginsBottom
+    end
+    object EditMarginsTop: TEdit
+      Left = 160
+      Top = 44
+      Width = 41
+      Height = 21
+      TabStop = False
+      TabOrder = 4
+      OnChange = EditFromToPageChange
+    end
+    object EditMarginsBottom: TEdit
+      Left = 160
+      Top = 44
+      Width = 41
+      Height = 21
+      TabStop = False
+      TabOrder = 4
+      OnChange = EditFromToPageChange
+    end	
+    object EditMarginsHeigth: TEdit
+      Left = 160
+      Top = 44
+      Width = 41
+      Height = 21
+      TabStop = False
+      TabOrder = 4
+      OnChange = EditFromToPageChange
+    end		
+    object EditMarginsRigth: TEdit
+      Left = 160
+      Top = 44
+      Width = 41
+      Height = 21
+      TabStop = False
+      TabOrder = 4
+      OnChange = EditFromToPageChange
+    end		
+  end
+  object ButtonSave: TButton
+    Left = 220
+    Top = 204
+    Width = 75
+    Height = 25
+    Caption = 'Salvar'
+    Default = True
+    ModalResult = 1
+    TabOrder = 4
+  end
+  object ButtonCancel: TButton
+    Left = 304
+    Top = 204
+    Width = 75
+    Height = 25
+    Cancel = True
+    Caption = 'Cancelar'
+    ModalResult = 2
+    TabOrder = 5
+  end
+  object EditFileName: TEdit
+    Left = 108
+    Top = 12
+    Width = 249
+    Height = 21
+    TabOrder = 0
+  end
+  object GroupBoxCopies: TComboBox
+    Left = 108
+    Top = 40
+    Width = 177
+    Height = 21
+    Style = csDropDownList
+    ItemHeight = 13
+    TabOrder = 1
+  end
+  object CheckBoxSaveInBackground: TCheckBox
+    Left = 12
+    Top = 172
+    Width = 365
+    Height = 17
+    Caption = 'Salvar em segundo plano'
+    TabOrder = 3
+  end
+  object PageSetupConfig: TPageSetupConfig
+    Left = 340
+    Top = 80
+  end
+end

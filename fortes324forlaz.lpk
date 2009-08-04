@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <Package Version="3">
+    <PathDelim Value="\"/>
+    <Name Value="fortes324forlaz"/>
+    <Author Value="Isaac Trindade Silva"/>
+    <CompilerOptions>
+      <Version Value="8"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="Versão para lazarus do excelente gerador de relatorios FortesReport. 
+Lazarus version of powerfull report generator FortesReport
+"/>
+    <Version Minor="3" Release="5" Build="7"/>
+    <Files Count="44">
+      <Item1>
+        <Filename Value="rlabout.lfm"/>
+        <Type Value="LFM"/>
+      </Item1>
+      <Item2>
+        <Filename Value="rlabout.lrs"/>
+        <Type Value="LRS"/>
+      </Item2>
+      <Item3>
+        <Filename Value="rlreg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="RLReg"/>
+      </Item3>
+      <Item4>
+        <Filename Value="rlabout.pas"/>
+        <UnitName Value="RLAbout"/>
+      </Item4>
+      <Item5>
+        <Filename Value="rlbarcode.pas"/>
+        <UnitName Value="RLBarcode"/>
+      </Item5>
+      <Item6>
+        <Filename Value="rlconsts.pas"/>
+        <UnitName Value="RLConsts"/>
+      </Item6>
+      <Item7>
+        <Filename Value="rldesign.pas"/>
+        <UnitName Value="RLDesign"/>
+      </Item7>
+      <Item8>
+        <Filename Value="rldraftfilter.pas"/>
+        <UnitName Value="RLDraftFilter"/>
+      </Item8>
+      <Item9>
+        <Filename Value="rldraftfilterdialog.lfm"/>
+        <Type Value="LFM"/>
+      </Item9>
+      <Item10>
+        <Filename Value="rldraftfilterdialog.lrs"/>
+        <Type Value="LRS"/>
+      </Item10>
+      <Item11>
+        <Filename Value="rldraftfilterdialog.pas"/>
+        <UnitName Value="RLDraftFilterDialog"/>
+      </Item11>
+      <Item12>
+        <Filename Value="rlfeedback.pas"/>
+        <UnitName Value="RLFeedBack"/>
+      </Item12>
+      <Item13>
+        <Filename Value="rlfilters.pas"/>
+        <UnitName Value="RLFilters"/>
+      </Item13>
+      <Item14>
+        <Filename Value="rlfinddialog.pas"/>
+        <UnitName Value="RLFindDialog"/>
+      </Item14>
+      <Item15>
+        <Filename Value="rlhtmlfilter.pas"/>
+        <UnitName Value="RLHTMLFilter"/>
+      </Item15>
+      <Item16>
+        <Filename Value="rlmetafile.pas"/>
+        <UnitName Value="RLMetaFile"/>
+      </Item16>
+      <Item17>
+        <Filename Value="rlmetavcl.pas"/>
+        <UnitName Value="RLMetaVCL"/>
+      </Item17>
+      <Item18>
+        <Filename Value="rlpagesetupconfig.lfm"/>
+        <Type Value="LFM"/>
+      </Item18>
+      <Item19>
+        <Filename Value="rlpagesetupconfig.pas"/>
+        <UnitName Value="RLPageSetupConfig"/>
+      </Item19>
+      <Item20>
+        <Filename Value="rlparser.pas"/>
+        <UnitName Value="RLParser"/>
+      </Item20>
+      <Item21>
+        <Filename Value="rlpdffilter.pas"/>
+        <UnitName Value="RLPDFFilter"/>
+      </Item21>
+      <Item22>
+        <Filename Value="rlpreview.pas"/>
+        <UnitName Value="RLPreview"/>
+      </Item22>
+      <Item23>
+        <Filename Value="rlpreviewform.pas"/>
+        <UnitName Value="RLPreviewForm"/>
+      </Item23>
+      <Item24>
+        <Filename Value="rlprintdialog.lfm"/>
+        <Type Value="LFM"/>
+      </Item24>
+      <Item25>
+        <Filename Value="rlprintdialog.lrs"/>
+        <Type Value="LRS"/>
+      </Item25>
+      <Item26>
+        <Filename Value="rlprintdialog.pas"/>
+        <UnitName Value="RLPrintDialog"/>
+      </Item26>
+      <Item27>
+        <Filename Value="rlprinters.pas"/>
+        <UnitName Value="RLPrinters"/>
+      </Item27>
+      <Item28>
+        <Filename Value="rlreport.pas"/>
+        <UnitName Value="RLReport"/>
+      </Item28>
+      <Item29>
+        <Filename Value="rlrichfilter.pas"/>
+        <UnitName Value="RLRichFilter"/>
+      </Item29>
+      <Item30>
+        <Filename Value="rlrichparsers.pas"/>
+        <UnitName Value="RLRichParsers"/>
+      </Item30>
+      <Item31>
+        <Filename Value="rlrichtext.pas"/>
+        <UnitName Value="RLRichText"/>
+      </Item31>
+      <Item32>
+        <Filename Value="rlsavedialog.lfm"/>
+        <Type Value="LFM"/>
+      </Item32>
+      <Item33>
+        <Filename Value="rlsavedialog.lrs"/>
+        <Type Value="LRS"/>
+      </Item33>
+      <Item34>
+        <Filename Value="rlsavedialog.pas"/>
+        <UnitName Value="RLSaveDialog"/>
+      </Item34>
+      <Item35>
+        <Filename Value="rlspoolfilter.pas"/>
+        <UnitName Value="RLSpoolFilter"/>
+      </Item35>
+      <Item36>
+        <Filename Value="rltypes.pas"/>
+        <UnitName Value="RLTypes"/>
+      </Item36>
+      <Item37>
+        <Filename Value="rlutils.pas"/>
+        <UnitName Value="RLUtils"/>
+      </Item37>
+      <Item38>
+        <Filename Value="rlxlsfilter.pas"/>
+        <UnitName Value="RLXLSFilter"/>
+      </Item38>
+      <Item39>
+        <Filename Value="rlabout.lfm"/>
+        <Type Value="LFM"/>
+      </Item39>
+      <Item40>
+        <Filename Value="rldraftfilterdialog.lfm"/>
+        <Type Value="LFM"/>
+      </Item40>
+      <Item41>
+        <Filename Value="rlpagesetupconfig.lfm"/>
+        <Type Value="LFM"/>
+      </Item41>
+      <Item42>
+        <Filename Value="rlprintdialog.lfm"/>
+        <Type Value="LFM"/>
+      </Item42>
+      <Item43>
+        <Filename Value="rlsavedialog.lfm"/>
+        <Type Value="LFM"/>
+      </Item43>
+      <Item44>
+        <Filename Value="rlshared.pas"/>
+        <UnitName Value="rlshared"/>
+      </Item44>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="5">
+      <Item1>
+        <PackageName Value="imagesforlazarus"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="Printer4Lazarus"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="LCL"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="IDEIntf"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="FCL"/>
+        <MinVersion Major="1" Valid="True"/>
+      </Item5>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)\"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>
