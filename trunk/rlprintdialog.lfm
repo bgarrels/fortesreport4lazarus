@@ -1,0 +1,201 @@
+object RLPrintDialog: TRLPrintDialog
+  Left = 287
+  Height = 313
+  Top = 127
+  Width = 524
+  HorzScrollBar.Range = 421
+  VertScrollBar.Range = 237
+  ActiveControl = ButtonOptions
+  AutoScroll = False
+  Caption = 'Imprimir:'
+  ClientHeight = 313
+  ClientWidth = 524
+  Font.Height = -12
+  Font.Name = 'helvetica [adobe]'
+  Font.Pitch = fpVariable
+  Position = poScreenCenter
+  LCLVersion = '0.9.27'
+  object GroupBoxPrinter: TGroupBox
+    Left = 8
+    Height = 150
+    Top = 8
+    Width = 504
+    Caption = ' Impressora '
+    ClientHeight = 131
+    ClientWidth = 500
+    TabOrder = 0
+    object LabelPrinterName: TLabel
+      Left = 12
+      Height = 16
+      Top = 28
+      Width = 38
+      Caption = '&Nome:'
+      FocusControl = ComboBoxPrinterNames
+      ParentColor = False
+    end
+    object LabelFilterName: TLabel
+      Left = 12
+      Height = 16
+      Top = 62
+      Width = 57
+      Caption = 'Usar &filtro:'
+      FocusControl = ComboBoxPrinterNames
+      ParentColor = False
+    end
+    object ComboBoxPrinterNames: TComboBox
+      Left = 84
+      Height = 21
+      Top = 20
+      Width = 290
+      AutoComplete = False
+      ItemHeight = 0
+      ItemWidth = 0
+      Style = csDropDownList
+      TabOrder = 0
+    end
+    object CheckBoxPrintToFile: TCheckBox
+      Left = 12
+      Height = 20
+      Top = 91
+      Width = 134
+      Caption = 'Imprimir em arquivo'
+      TabOrder = 2
+    end
+    object ComboBoxFilters: TComboBox
+      Left = 84
+      Height = 21
+      Top = 52
+      Width = 290
+      AutoComplete = False
+      ItemHeight = 0
+      ItemWidth = 0
+      Style = csDropDownList
+      TabOrder = 1
+    end
+    object CheckBoxBackgroundMode: TCheckBox
+      Left = 12
+      Height = 20
+      Top = 111
+      Width = 177
+      Caption = 'Imprimir em segundo plano'
+      TabOrder = 3
+    end
+    object ButtonOptions: TButton
+      Left = 394
+      Height = 27
+      Top = 54
+      Width = 96
+      Caption = 'Opcoes'
+      TabOrder = 4
+    end
+  end
+  object GroupBoxPages: TGroupBox
+    Left = 8
+    Height = 102
+    Top = 161
+    Width = 259
+    Caption = ' Intervalo de impressao'
+    ClientHeight = 83
+    ClientWidth = 255
+    TabOrder = 1
+    object LabelFromPage: TLabel
+      Left = 99
+      Height = 16
+      Top = 32
+      Width = 18
+      Caption = '&de:'
+      FocusControl = EditFromPage
+      ParentColor = False
+    end
+    object LabelToPage: TLabel
+      Left = 169
+      Height = 16
+      Top = 32
+      Width = 21
+      Caption = 'Ate:'
+      FocusControl = EditToPage
+      ParentColor = False
+    end
+    object RadioButtonPagesAll: TRadioButton
+      Left = 12
+      Height = 21
+      Top = 7
+      Width = 52
+      Caption = '&Tudo'
+      Checked = True
+      State = cbChecked
+      TabOrder = 0
+    end
+    object RadioButtonPagesInterval: TRadioButton
+      Left = 12
+      Height = 21
+      Top = 31
+      Width = 70
+      Caption = 'Paginas'
+      TabOrder = 1
+      TabStop = False
+    end
+    object RadioButtonPagesSelect: TRadioButton
+      Left = 12
+      Height = 21
+      Top = 55
+      Width = 72
+      Caption = '&Selecao:'
+      TabOrder = 2
+      TabStop = False
+    end
+    object EditFromPage: TEdit
+      Left = 121
+      Height = 21
+      Top = 27
+      Width = 41
+      TabStop = False
+      TabOrder = 3
+      Text = '1'
+    end
+    object EditToPage: TEdit
+      Left = 193
+      Height = 21
+      Top = 27
+      Width = 41
+      TabStop = False
+      TabOrder = 4
+    end
+  end
+  object GroupBoxCopies: TGroupBox
+    Left = 276
+    Height = 103
+    Top = 160
+    Width = 236
+    Caption = ' Copias '
+    ClientHeight = 84
+    ClientWidth = 232
+    TabOrder = 2
+    object LabelCopies: TLabel
+      Left = 12
+      Height = 16
+      Top = 24
+      Width = 129
+      Caption = 'Numero de &copias:'
+      ParentColor = False
+    end
+    object EditCopies: TEdit
+      Left = 158
+      Height = 21
+      Top = 20
+      Width = 49
+      TabOrder = 0
+      Text = '1'
+    end
+  end
+  object ButtonCancel: TButton
+    Left = 344
+    Height = 25
+    Top = 277
+    Width = 163
+    Cancel = True
+    Caption = 'Cancelar'
+    ModalResult = 2
+    TabOrder = 3
+  end
+end
