@@ -16,6 +16,7 @@ uses
   LCLIntf,
   LCLType,
   LMessages,
+  FileUtil,
   {$ENDIF}
   DB, Classes, SysUtils, Math, Contnrs, TypInfo, SyncObjs,
 {$ifdef USEVARIANTS}
@@ -9553,9 +9554,9 @@ begin
   else
     case fInfoType of
       itCarbonCopy      : s:=IntToStr(FindParentBand.CarbonIndex+1);
-      itDate            : s:=DateToStr(MasterReport.ReportDateTime);
+      itDate            : s:=SysToUTF8(DateToStr(MasterReport.ReportDateTime));
       itDetailCount     : s:=IntToStr(FindParentPager.DetailCount);
-      itFullDate        : s:=FormatDateTime(LongDateFormat,MasterReport.ReportDateTime);
+      itFullDate        : s:=SysToUTF8(FormatDateTime(LongDateFormat,MasterReport.ReportDateTime));
       itHour            : s:=TimeToStr(MasterReport.ReportDateTime);
       itJunction        : s:=JunctionStr;
       itLastPageNumber  : s:='{LastPageNumber}';
