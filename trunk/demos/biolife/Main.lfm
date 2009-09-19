@@ -1,0 +1,31 @@
+object MainForm: TMainForm
+  Left = 449
+  Height = 91
+  Top = 293
+  Width = 237
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'FishFact'
+  ClientHeight = 91
+  ClientWidth = 237
+  Position = poScreenCenter
+  LCLVersion = '0.9.29'
+  object PreviewButton: TButton
+    Left = 32
+    Height = 25
+    Top = 48
+    Width = 75
+    Caption = 'Preview'
+    OnClick = PreviewButtonClick
+    TabOrder = 0
+  end
+  object CancelButton: TButton
+    Left = 136
+    Height = 25
+    Top = 48
+    Width = 75
+    Caption = 'Cancel'
+    OnClick = CancelButtonClick
+    TabOrder = 1
+  end
+end
