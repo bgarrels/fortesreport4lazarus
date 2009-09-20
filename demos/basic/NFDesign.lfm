@@ -1,7 +1,7 @@
 object NFDesignForm: TNFDesignForm
-  Left = 224
+  Left = 340
   Height = 824
-  Top = 166
+  Top = 39
   Width = 876
   Caption = 'NFDesignForm'
   ClientHeight = 824
@@ -76,7 +76,7 @@ object NFDesignForm: TNFDesignForm
         Left = 93
         Height = 21
         Top = 0
-        Width = 86
+        Width = 93
         Align = faHeight
         Color = clWhite
         DataField = 'NF_CLI_NOME'
@@ -249,7 +249,7 @@ object NFDesignForm: TNFDesignForm
           Align = faHeight
           AutoSize = False
           Color = clWhite
-          DataField = 'INF_ITE_CO'
+          DataField = 'INF_ITE_CODIGO'
           DataSource = DataSourceINF
           Holder = RLLabel3
           ParentColor = False
@@ -565,7 +565,7 @@ object NFDesignForm: TNFDesignForm
   object DatasetNF: TDbf
     IndexDefs = <>
     TableName = 'nf.dbf'
-    TableLevel = 3
+    TableLevel = 7
     FilterOptions = []
     left = 8
     object DatasetNFNF_NUMERO: TStringField
@@ -589,23 +589,22 @@ object NFDesignForm: TNFDesignForm
       ReadOnly = False
       Required = False
     end
-    object DatasetNFNF_CLI_COD: TLargeintField
+    object DatasetNFNF_CLI_CODIGO: TLongintField
       DisplayWidth = 10
       FieldKind = fkData
-      FieldName = 'NF_CLI_COD'
+      FieldName = 'NF_CLI_CODIGO'
       Index = 2
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
     end
-    object DatasetNFCLI_NOME1: TStringField
-      DisplayLabel = 'NFCLI_NOME'
+    object DatasetNFNF_CLI_NOME: TStringField
       DisplayWidth = 40
       FieldKind = fkLookup
       FieldName = 'NF_CLI_NOME'
       Index = 3
-      KeyFields = 'NF_CLI_COD'
+      KeyFields = 'NF_CLI_CODIGO'
       LookupCache = False
       LookupDataSet = DatasetCLI
       LookupKeyFields = 'CLI_CODIGO'
@@ -619,21 +618,21 @@ object NFDesignForm: TNFDesignForm
   object DatasetINF: TDbf
     IndexDefs = <    
       item
-        IndexFile = 'IDX_NF_NUM'
-        SortField = 'INF_NF_NUM'
+        IndexFile = 'IDX_NF_NUMERO'
+        SortField = 'INF_NF_NUMERO'
         Options = []
       end>
-    IndexName = 'IDX_NF_NUM'
+    IndexName = 'IDX_NF_NUMERO'
     MasterFields = 'NF_NUMERO'
     MasterSource = DataSourceNF
     TableName = 'inf.dbf'
-    TableLevel = 3
+    TableLevel = 7
     FilterOptions = []
     left = 44
-    object DatasetINFINF_NF_NUM: TStringField
+    object DatasetINFINF_NF_NUMERO: TStringField
       DisplayWidth = 6
       FieldKind = fkData
-      FieldName = 'INF_NF_NUM'
+      FieldName = 'INF_NF_NUMERO'
       Index = 0
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -641,35 +640,41 @@ object NFDesignForm: TNFDesignForm
       Required = False
       Size = 6
     end
-    object DatasetINFINF_ITE_CO: TLargeintField
+    object DatasetINFINF_ITE_CODIGO: TLongintField
       DisplayWidth = 10
       FieldKind = fkData
-      FieldName = 'INF_ITE_CO'
+      FieldName = 'INF_ITE_CODIGO'
       Index = 1
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
     end
-    object DatasetINFINF_QUANT: TLargeintField
+    object DatasetINFINF_VALOR: TFloatField
       DisplayWidth = 10
       FieldKind = fkData
-      FieldName = 'INF_QUANT'
+      FieldName = 'INF_VALOR'
       Index = 2
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 0
+      MinValue = 0
+      Precision = 8
     end
-    object DatasetINFINF_VALOR: TLargeintField
+    object DatasetINFINF_QUANT: TFloatField
       DisplayWidth = 10
       FieldKind = fkData
-      FieldName = 'INF_VALOR'
+      FieldName = 'INF_QUANT'
       Index = 3
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      MaxValue = 0
+      MinValue = 0
+      Precision = 8
     end
     object DatasetINFINF_SUBTOTAL: TFloatField
       DisplayWidth = 10
@@ -683,12 +688,12 @@ object NFDesignForm: TNFDesignForm
       MaxValue = 0
       MinValue = 0
     end
-    object DatasetINFITE_NOME1: TStringField
+    object DatasetINFINF_ITE_NOME: TStringField
       DisplayWidth = 40
       FieldKind = fkLookup
       FieldName = 'INF_ITE_NOME'
       Index = 5
-      KeyFields = 'INF_ITE_CO'
+      KeyFields = 'INF_ITE_CODIGO'
       LookupCache = False
       LookupDataSet = DatasetITE
       LookupKeyFields = 'ITE_CODIGO'
@@ -702,10 +707,10 @@ object NFDesignForm: TNFDesignForm
   object DatasetCLI: TDbf
     IndexDefs = <>
     TableName = 'cli.dbf'
-    TableLevel = 3
+    TableLevel = 7
     FilterOptions = []
-    left = 82
-    object DatasetCLICLI_CODIGO: TLargeintField
+    left = 80
+    object DatasetCLICLI_CODIGO: TLongintField
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'CLI_CODIGO'
@@ -730,11 +735,11 @@ object NFDesignForm: TNFDesignForm
   object DatasetITE: TDbf
     IndexDefs = <>
     TableName = 'ite.dbf'
-    TableLevel = 3
+    TableLevel = 7
     FilterOptions = []
     left = 120
     top = 1
-    object DatasetITEITE_CODIGO: TLargeintField
+    object DatasetITEITE_CODIGO: TLongintField
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'ITE_CODIGO'
