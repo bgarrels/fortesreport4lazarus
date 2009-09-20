@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<CONFIG>
-  <Compiler Value="C:\bin\code\fpc224\bin\i386-Win32\fpc.exe" Date="982165711"/>
-  <Params Value=" -MObjFPC -Scgi -O1 -gl -WG -vewnhi -l -FiD:\repositories\fortes4lazarus\demos\biolife\ -FuD:\repositories\fortes4lazarus\lib\i386-win32\ -FuD:\repositories\lazarus\ideintf\units\i386-win32\ -FuD:\repositories\lazarus\components\printers\lib\i386-win32\win32\ -FuD:\repositories\lazarus\components\images\lib\i386-win32\win32\ -FuD:\repositories\lazarus\lcl\units\i386-win32\ -FuD:\repositories\lazarus\lcl\units\i386-win32\win32\ -FuD:\repositories\lazarus\packager\units\i386-win32\ -FuD:\repositories\fortes4lazarus\demos\biolife\ -Fu. -FED:\repositories\fortes4lazarus\demos\biolife\ -oBiolife.exe -dLCL -dLCLwin32 Biolife.lpr"/>
-</CONFIG>
