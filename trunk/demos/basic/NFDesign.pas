@@ -13,23 +13,23 @@ type
   { TNFDesignForm }
 
   TNFDesignForm = class(TForm)
-    DatasetCLICLI_CODIGO: TLargeintField;
+    DatasetCLICLI_CODIGO: TLongintField;
     DatasetCLICLI_NOME: TStringField;
-    DatasetINFINF_ITE_CO: TLargeintField;
-    DatasetINFINF_NF_NUM: TStringField;
-    DatasetINFINF_QUANT: TLargeintField;
+    DatasetINFINF_ITE_CODIGO: TLongintField;
+    DatasetINFINF_NF_NUMERO: TStringField;
+    DatasetINFINF_QUANT: TFloatField;
     DatasetINFINF_SUBTOTAL: TFloatField;
-    DatasetINFINF_VALOR: TLargeintField;
-    DatasetINFITE_NOME1: TStringField;
-    DatasetITEITE_CODIGO: TLargeintField;
+    DatasetINFINF_VALOR: TFloatField;
+    DatasetINFINF_ITE_NOME: TStringField;
+    DatasetITEITE_CODIGO: TLongintField;
     DatasetITEITE_GRUPO: TStringField;
     DatasetITEITE_NOME: TStringField;
     DatasetNF: TDbf;
     DatasetINF: TDbf;
     DatasetCLI: TDbf;
     DatasetITE: TDbf;
-    DatasetNFCLI_NOME1: TStringField;
-    DatasetNFNF_CLI_COD: TLargeintField;
+    DatasetNFNF_CLI_NOME: TStringField;
+    DatasetNFNF_CLI_CODIGO: TLongintField;
     DatasetNFNF_DATA: TDateField;
     DatasetNFNF_NUMERO: TStringField;
     RLReport1: TRLReport;
@@ -77,7 +77,6 @@ var
   NFDesignForm: TNFDesignForm;
 
 implementation
-
 
 procedure TNFDesignForm.TableINFCalcFields(DataSet: TDataSet);
 begin

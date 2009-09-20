@@ -1,7 +1,7 @@
 object ITDesignForm: TITDesignForm
-  Left = 214
+  Left = 248
   Height = 640
-  Top = 138
+  Top = 279
   Width = 870
   Caption = 'ITDesignForm'
   ClientHeight = 640

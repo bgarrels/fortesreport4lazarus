@@ -81,13 +81,6 @@
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)\"/>
     </SearchPaths>
-    <Linking>
-      <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
-      </Options>
-    </Linking>
     <Other>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
