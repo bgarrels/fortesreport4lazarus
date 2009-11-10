@@ -367,11 +367,11 @@ type
   protected
     procedure   Notification(aComponent: TComponent; Operation: TOperation); override;
   public
-    constructor Create(aOwner:TComponent); override;
-    destructor  Destroy; override;
     {$IFDEF FPC}
     fPageCache     :Contnrs.TObjectList;
     {$ENDIF}
+    constructor Create(aOwner:TComponent); override;
+    destructor  Destroy; override;
     {@method Link - Cria uma referência para o componente.
      A instância é mantida até que não haja mais referências a ela. :/}
     procedure   Link(aComponent:TComponent);
