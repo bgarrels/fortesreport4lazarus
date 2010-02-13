@@ -410,13 +410,6 @@ begin
   end;  
 end;
 
-{$ifdef KYLIX}
-function RGB(r, g, b: Byte): TColor;
-begin
-  Result := (r or (g shl 8) or (b shl 16));
-end;
-{$endif}
-
 type
   TPublicGraphic=class(TGraphic);
 
