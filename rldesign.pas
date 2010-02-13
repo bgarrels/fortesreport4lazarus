@@ -1,43 +1,23 @@
-{$I RLReport.inc}
 {@unit RLDesing
 Portado para o Lazarus - Trabalho inicial de Isaac Trindade da Silva contato tioneobrasil@yahoo.com.br dicas4lazarus@yahoo.com.br
 Lazarus Ported - initial work by Isaac 07/2009
 
 }
 unit RLDesign;
-{$MODE DELPHI}{$H+}
+
+{$MODE DELPHI}
+{$I RLReport.inc}
+
 interface
 
 uses
   Classes, TypInfo, Db, SysUtils,
-{$ifdef DELPHI5}
-  DsgnIntF,
-{$else}
- {$IFDEF FPC}
   PropEdits, ComponentEditors, LCLType,
- {$ELSE}
-  DesignEditors, DesignIntf,
- {$ENDIF}
-{$endif}
-{$ifdef VCL}
   Forms,
-{$endif}
-{$ifdef CLX}
-  QForms,
-{$endif}
   RLReport, RLConsts, RLUtils, RLTypes,
   RLAbout;
 
 type
-  {$IFDEF FPC}
-  IDesignerClass=class(TComponentEditorDesigner);
-  {$ELSE}
-  {$ifdef DELPHI5}
-  IDesignerClass=IFormDesigner;
-  {$else}
-  IDesignerClass=IDesigner;
-  {$endif}
-  {$ENDIF}
 
   { TRLReportDesigner }
 
@@ -46,10 +26,10 @@ type
     // variables
     fReport:TRLReport;
     // custom methods
-    procedure   ShowAboutBox; virtual;
+    procedure   ShowAboutBox;
   public
     // constructors & destructors
-    constructor Create(aComponent:TComponent; aDesigner:IDesignerClass); {$IFNDEF FPC} override;{$ENDIF}
+    constructor Create(aComponent:TComponent; aDesigner: TComponentEditorDesigner); override;
     // override methods
     procedure   Edit; override;
     procedure   ExecuteVerb(Index:Integer); override;
@@ -95,7 +75,7 @@ implementation
 
 { TRLReportDesigner }
 
-constructor TRLReportDesigner.Create(aComponent:TComponent; aDesigner:IDesignerClass);
+constructor TRLReportDesigner.Create(aComponent:TComponent; aDesigner: TComponentEditorDesigner);
 begin
   inherited;
   fReport:=TRLReport(aComponent);
@@ -128,7 +108,6 @@ end;
 procedure TRLReportDesigner.Edit;
 begin
   fReport.Preview;
-  TForm(fReport.Owner).Invalidate;
 end;
 
 procedure TRLReportDesigner.ExecuteVerb(Index:Integer);
