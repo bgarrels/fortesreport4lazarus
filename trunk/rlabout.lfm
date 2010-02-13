@@ -1,20 +1,20 @@
 object frmRLAbout: TfrmRLAbout
   Left = 354
-  Height = 189
+  Height = 185
   Top = 223
   Width = 440
   ActiveControl = bbtOk
   BorderStyle = bsDialog
   Caption = ' '
-  ClientHeight = 189
+  ClientHeight = 185
   ClientWidth = 440
   Color = clWhite
   Font.Height = 11
   Font.Name = 'MS Sans Serif'
-  Font.Pitch = fpVariable
   KeyPreview = True
+  OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '0.9.26.2'
+  LCLVersion = '0.9.29'
   object imgLogo: TImage
     Left = 4
     Height = 32
@@ -73,6 +73,7 @@ object frmRLAbout: TfrmRLAbout
     ParentFont = False
   end
   object lblHome: TLabel
+    Cursor = crHandPoint
     Left = 52
     Height = 15
     Top = 96
@@ -86,6 +87,7 @@ object frmRLAbout: TfrmRLAbout
     Font.Style = [fsUnderline]
     ParentColor = False
     ParentFont = False
+    OnClick = lblHomeClick
   end
   object lblCopyright: TLabel
     Left = 52
@@ -102,10 +104,11 @@ object frmRLAbout: TfrmRLAbout
     ParentFont = False
   end
   object imgLazarusLogo: TImage
-    Left = 4
-    Height = 40
-    Top = 128
-    Width = 40
+    Left = 8
+    Height = 32
+    Top = 132
+    Width = 32
+    AutoSize = True
     Picture.Data = {
       055449636F6E501702000000010006000000000001002000E291000066000000
       80800000010020002808010048920000404000000100200028420000709A0100
@@ -4393,9 +4396,9 @@ object frmRLAbout: TfrmRLAbout
     }
   end
   object lblLazarusVersion: TLabel
-    Left = 51
+    Left = 52
     Height = 14
-    Top = 136
+    Top = 141
     Width = 98
     Caption = 'Versão para Lazarus'
     ParentColor = False
@@ -4407,6 +4410,7 @@ object frmRLAbout: TfrmRLAbout
     Top = 136
     Width = 99
     Caption = '&Ok'
+    Default = True
     Kind = bkOK
     NumGlyphs = 0
     TabOrder = 0
