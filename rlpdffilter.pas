@@ -172,6 +172,8 @@ type
     //
     procedure   Write(const aStr:string='');
     procedure   WriteLn(const aStr:string='');
+    //todo: mudar de widestring para UnicodeString após 0.9.30
+    procedure   WriteUTF16(const aWideStr:widestring='');
     //
     procedure   WriteBOF;
     procedure   WriteInfo;
@@ -230,7 +232,7 @@ type
     //
     class function PDF_CalcTextLeadingPointSize(aFontSize: word): word;
     class function PDF_CurrentDateTimeStr: string;
-    class function PDF_EncodeText(const aText: string): string;
+    class function PDF_EscapeText(const aText: string): string;
     class function PDF_FloatToStr(aFloat: double): string;
     class function PDF_GetDashPattern(aDashPattern: TRLPDFFilterDashPattern): string;
     class function PDF_IndirectObjStr(aIndex: integer): string;
@@ -1022,6 +1024,18 @@ begin
   Write(PDF_EOL);
 end;
 
+procedure TRLPDFFilter.WriteUTF16(const aWideStr: widestring);
+var
+  l:integer;
+begin
+  l:=Length(aWideStr)*SizeOf(WideChar);
+  if l>0 then
+  begin
+    fOutputStream.Write(aWideStr[1],l);
+    Inc(fWritePos,l);
+  end;
+end;
+
 function TRLPDFFilter.PDF_PointStr(X,Y:double):string;
 begin
   Result:=PDF_FloatToStr(PDF_PixelsToPoints(X))+' '+
@@ -1496,7 +1510,10 @@ begin
   // sub/superscript
   //  +-9 Ts
   // the text
-  WriteLn('('+PDF_EncodeText(aText)+') Tj');
+  Write('(');
+  // escape special chars and output as UTF16 (WideString)
+  WriteUTF16(UTF8Decode(PDF_EscapeText(aText)));
+  WriteLn(') Tj');
   // end text
   WriteLn('ET');
 end;
@@ -1768,7 +1785,7 @@ begin
   Result:=Round((aFontSize*14.5)/12);
 end;
 
-class function TRLPDFFilter.PDF_EncodeText(const aText:string):string;
+class function TRLPDFFilter.PDF_EscapeText(const aText:string):string;
 var
   i:integer;
 begin
@@ -1783,11 +1800,6 @@ begin
         #13: Result[i]:='r';
       end;
       Insert('\',Result,i);
-    end
-    else if not (Result[i] in [#32..#126,#128..#255]) then
-    begin
-      Insert(IntToOctal(Ord(Result[i]),3),Result,i+1);
-      Result[i]:='\';
     end;
 end;
 
