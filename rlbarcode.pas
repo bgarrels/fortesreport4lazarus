@@ -1,4 +1,4 @@
-{@unit RLBarcode - Implementação dos componentes para código de barras.
+{@unit RLBarcode - ImplementaÃ§Ã£o dos componentes para cÃ³digo de barras.
 Portado para o Lazarus - Trabalho inicial de Isaac Trindade da Silva contato tioneobrasil@yahoo.com.br dicas4lazarus@yahoo.com.br
 Lazarus Ported - initial work by Isaac 07/2009
 }
@@ -15,135 +15,135 @@ uses
   RLReport, RLConsts;
 
 type
-  {@type TRLBarcodeType - Padrão de codificação para o código de barras.
+  {@type TRLBarcodeType - PadrÃ£o de codificaÃ§Ã£o para o cÃ³digo de barras.
   Pode ser um dos seguintes valores:
-  bcCode2OF5Interleaved - Código 25, também conhecido como "Código 2 de 5". É
-    utilizado sobretudo no manuseio de inventários, em fichas de compensação
-    bancária, na identificação de envelopes de acabamento de fotografias, em
-    passagens aéreas, no manuseio de bagagens e cargas e em dezenas de outras
-    aplicações. É um formato de código distinto, de comprimento variável e
+  bcCode2OF5Interleaved - CÃ³digo 25, tambÃ©m conhecido como "CÃ³digo 2 de 5". Ã‰
+    utilizado sobretudo no manuseio de inventÃ¡rios, em fichas de compensaÃ§Ã£o
+    bancÃ¡ria, na identificaÃ§Ã£o de envelopes de acabamento de fotografias, em
+    passagens aÃ©reas, no manuseio de bagagens e cargas e em dezenas de outras
+    aplicaÃ§Ãµes. Ã‰ um formato de cÃ³digo distinto, de comprimento variÃ¡vel e
     consiste em duas barras espessas em um total de cinco barras para cada
-    caractere codificado. O código deve ter comprimento par;
-  bcCode2OF5Industry - ITF ou "Entrelaçado de 2 de 5". Esse código de barras é um
-    dos formatos mais populares utilizados pelas indústrias de transporte e de
-    armazenamento e foi desenvolvido com base no Código 25. Ambos os formatos
-    utilizam as mesmas técnicas de codificação, exceto que, no formato ITF,
-    tanto as barras quanto os espaços transportam dados. Os dígitos de posição
-    ímpar são codificados nas barras e os dígitos de posição par são codificados
-    nos espaços. O ITF é um formato de alta densidade, de comprimento variável,
-    exclusivamente numérico;
+    caractere codificado. O cÃ³digo deve ter comprimento par;
+  bcCode2OF5Industry - ITF ou "EntrelaÃ§ado de 2 de 5". Esse cÃ³digo de barras Ã© um
+    dos formatos mais populares utilizados pelas indÃºstrias de transporte e de
+    armazenamento e foi desenvolvido com base no CÃ³digo 25. Ambos os formatos
+    utilizam as mesmas tÃ©cnicas de codificaÃ§Ã£o, exceto que, no formato ITF,
+    tanto as barras quanto os espaÃ§os transportam dados. Os dÃ­gitos de posiÃ§Ã£o
+    Ã­mpar sÃ£o codificados nas barras e os dÃ­gitos de posiÃ§Ã£o par sÃ£o codificados
+    nos espaÃ§os. O ITF Ã© um formato de alta densidade, de comprimento variÃ¡vel,
+    exclusivamente numÃ©rico;
   bcCode2OF5Matrix - ver bcCode2OF5Industry;
-  bcCode39 - Código 39, também conhecido como "Código 3 de 9", é o formato mais
-    popular utilizado em inventário e controle não varejista. O formato consiste
-    em três elementos espessos (barras ou espaços) em um totalizado em manufatura,
-    aplicações militares e de saúde. O formato distinto de comprimento variável
+  bcCode39 - CÃ³digo 39, tambÃ©m conhecido como "CÃ³digo 3 de 9", Ã© o formato mais
+    popular utilizado em inventÃ¡rio e controle nÃ£o varejista. O formato consiste
+    em trÃªs elementos espessos (barras ou espaÃ§os) em um totalizado em manufatura,
+    aplicaÃ§Ãµes militares e de saÃºde. O formato distinto de comprimento variÃ¡vel
     aceita os 44 caracteres seguintes: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ.*$/+%. O
-    asterisco (*) é utilizado como caractere de início/parada, não podendo ser
-    utilizado no corpo da mensagem. Você também pode adicionar um dígito de verificação
-    que ajude a garantir a segurança do código de barras. O Código 39 suporta os
-    formatos de dígito de verificação Módulo 43 e xxx-nnnnnnn-c utilizados pela
-    alfândega dos E.U.A. para remessas de importação/exportação e em dezenas de
-    outras aplicações;
-  bcCode39Extended - O código extendido 39 foi desenvolvido para proporcionar
-    meios de codificar os caracteres adicionais que não são normalmente parte
-    do conjunto de caracteres do código 39 (caracteres minúsculos e símbolos). Os
-    caracteres extendidos são codificados por um par de caracteres normais do
-    código 39; por exemplo, uma minúscula "a" (que não faz parte do conjunto de
-    caracteres do código 39) pode ser codificado pelo par "+A". Um código de controle
+    asterisco (*) Ã© utilizado como caractere de inÃ­cio/parada, nÃ£o podendo ser
+    utilizado no corpo da mensagem. VocÃª tambÃ©m pode adicionar um dÃ­gito de verificaÃ§Ã£o
+    que ajude a garantir a seguranÃ§a do cÃ³digo de barras. O CÃ³digo 39 suporta os
+    formatos de dÃ­gito de verificaÃ§Ã£o MÃ³dulo 43 e xxx-nnnnnnn-c utilizados pela
+    alfÃ¢ndega dos E.U.A. para remessas de importaÃ§Ã£o/exportaÃ§Ã£o e em dezenas de
+    outras aplicaÃ§Ãµes;
+  bcCode39Extended - O cÃ³digo extendido 39 foi desenvolvido para proporcionar
+    meios de codificar os caracteres adicionais que nÃ£o sÃ£o normalmente parte
+    do conjunto de caracteres do cÃ³digo 39 (caracteres minÃºsculos e sÃ­mbolos). Os
+    caracteres extendidos sÃ£o codificados por um par de caracteres normais do
+    cÃ³digo 39; por exemplo, uma minÃºscula "a" (que nÃ£o faz parte do conjunto de
+    caracteres do cÃ³digo 39) pode ser codificado pelo par "+A". Um cÃ³digo de controle
     de retorno do carro pode ser codificado pelo par "#";
-  bcCode128A - Código 128 é um formato alfanumérico de alta densidade e comprimento
-    variável utilizado na indústria de transporte e etiquetagem. Esse código possui
-    106 padrões de barras e espaços. Cada padrão pode ter três significados, dependendo
-    de qual dos três conjuntos de caracteres é empregado. Um conjunto de caracteres
-    codifica todos os caracteres de controle ASCII e maiúsculos, um outro codifica
-    todos os caracteres maiúsculos e minúsculos e o terceiro conjunto codifica os
-    pares de dígitos numéricos de 00 a 99. O conjunto de caracteres utilizado é
-    determinado pelo caractere inicial. O Código 128 também permite codificar quatro
-    códigos de função:
+  bcCode128A - CÃ³digo 128 Ã© um formato alfanumÃ©rico de alta densidade e comprimento
+    variÃ¡vel utilizado na indÃºstria de transporte e etiquetagem. Esse cÃ³digo possui
+    106 padrÃµes de barras e espaÃ§os. Cada padrÃ£o pode ter trÃªs significados, dependendo
+    de qual dos trÃªs conjuntos de caracteres Ã© empregado. Um conjunto de caracteres
+    codifica todos os caracteres de controle ASCII e maiÃºsculos, um outro codifica
+    todos os caracteres maiÃºsculos e minÃºsculos e o terceiro conjunto codifica os
+    pares de dÃ­gitos numÃ©ricos de 00 a 99. O conjunto de caracteres utilizado Ã©
+    determinado pelo caractere inicial. O CÃ³digo 128 tambÃ©m permite codificar quatro
+    cÃ³digos de funÃ§Ã£o:
     FNC1 - reservado para uso em EAN (European Article Numbering);
-    FNC2 - utilizado para instruir o leitor de código de barras na concatenação da
-      mensagem em um símbolo de código de barras com a mensagem no símbolo de texto;
-    FNC3 - utilizado para instruir o leitor de código de barras a efetuar uma redefinição;
-    FNC4 - utilizado em aplicações de sistemas fechados.
-    Uma variação do formato Código 128 é o EAN 128. Esse símbolo utiliza o mesmo
-    conjunto de códigos que o Código 128, mas os códigos de função de FNC2 a FNC4
-    não podem ser utilizados e FNC1 é utilizado como parte do código inicial;
+    FNC2 - utilizado para instruir o leitor de cÃ³digo de barras na concatenaÃ§Ã£o da
+      mensagem em um sÃ­mbolo de cÃ³digo de barras com a mensagem no sÃ­mbolo de texto;
+    FNC3 - utilizado para instruir o leitor de cÃ³digo de barras a efetuar uma redefiniÃ§Ã£o;
+    FNC4 - utilizado em aplicaÃ§Ãµes de sistemas fechados.
+    Uma variaÃ§Ã£o do formato CÃ³digo 128 Ã© o EAN 128. Esse sÃ­mbolo utiliza o mesmo
+    conjunto de cÃ³digos que o CÃ³digo 128, mas os cÃ³digos de funÃ§Ã£o de FNC2 a FNC4
+    nÃ£o podem ser utilizados e FNC1 Ã© utilizado como parte do cÃ³digo inicial;
   bcCode128B - ver bcCode128A;
   bcCode128C - ver bcCode128A;
-  bcCode93 - O código 93 é uma versão mais compacta do código 39. Codifica
-    exatamente os mesmos caracteres que o código 39, mas utiliza 9 elementos de
-    barra por caractere ao invés de 15. O dígito verificador o dígito verificador
-    módulo 43 é opcional, como no código 39;
+  bcCode93 - O cÃ³digo 93 Ã© uma versÃ£o mais compacta do cÃ³digo 39. Codifica
+    exatamente os mesmos caracteres que o cÃ³digo 39, mas utiliza 9 elementos de
+    barra por caractere ao invÃ©s de 15. O dÃ­gito verificador o dÃ­gito verificador
+    mÃ³dulo 43 Ã© opcional, como no cÃ³digo 39;
   bcCode93Extended - ver bcCode93;
-  bcMSI - O código de barras MSI Plessey é utilizado principalmente em bibliotecas e
-    em etiquetagem de prateleiras de lojas. O MSI Plessey é um formato de comprimento
-    variável que permite codificar os 10 caracteres seguintes: 0123456789. Cada caractere
-    consiste em oito elementos: quatro barras e quatro espaços;
-  bcPostNet - Os códigos de barras POSTNET (Postal Numeric Encoding Technique) são
-    utilizados para codificar códigos de endereçamento postal no correio dos
-    E.U.A. O processo de manuseio de correspondência do Serviço postal foi
-    desenvolvido para ser totalmente automatizado e os códigos de barras POSTNET
+  bcMSI - O cÃ³digo de barras MSI Plessey Ã© utilizado principalmente em bibliotecas e
+    em etiquetagem de prateleiras de lojas. O MSI Plessey Ã© um formato de comprimento
+    variÃ¡vel que permite codificar os 10 caracteres seguintes: 0123456789. Cada caractere
+    consiste em oito elementos: quatro barras e quatro espaÃ§os;
+  bcPostNet - Os cÃ³digos de barras POSTNET (Postal Numeric Encoding Technique) sÃ£o
+    utilizados para codificar cÃ³digos de endereÃ§amento postal no correio dos
+    E.U.A. O processo de manuseio de correspondÃªncia do ServiÃ§o postal foi
+    desenvolvido para ser totalmente automatizado e os cÃ³digos de barras POSTNET
     alimentam o equipamento automatizado. O POSTNET difere dos outros formatos em
-    que a altura das barras varia, e não a largura das barras. Cada número é
-    representado por um padrão de cinco barras. Uma única barra alta é utilizada
-    para as barras de início e parada. O POSTNET pode ser utilizado como código
-    de barras de ponto de entrega de cinco dígitos, de nove dígitos e de 11
-    dígitos. Esses códigos são freqüentemente utilizados em conjunto com as barras
-    FIM que se encontram no canto superior direito de uma correspondência, como
-    cartões-resposta comerciais;
-  bcCodaBar - O CodBar é utilizado freqüentemente em bibliotecas, bancos de
-    sangue e na atividade de encomendas aéreas. O formato de comprimento variável
-    permite a codificação dos 20 caracteres seguintes: 0123456789-$:/.+ABCD. Os
-    caracteres de início e de parada de uma mensagem CodBar precisam ser A, B, C ou D;
-  bcEAN8 - O sistema EAN (European Article Numbering) é uma versão européia do
-    código UPC (Universal Product Code). Atualmente, esse código é denominado
-    International Article Number, mas a abreviação EAN permanece. Os códigos
-    EAN encontram-se em itens de varejo na Europa. Esse número é apropriado para uso
-    em publicações e periódicos, aparecendo como um código de barras adicional
-    no lado direito do código de barras principal. É a versão simplificada do padrão
-    EAN-13 para aplicação em produtos onde a etiqueta no padrão EAN-13 fique muito
-    grande. O EAN-8 codifica até oito dígitos, consistindo em dois dígitos do código
-    do país, cinco dígitos de dados e um dígito de verificação. Um número opcional de
-    dois ou cinco dígitos pode ser acrescentado ao código de barras principal;
-  bcEAN13 - O EAN-13 é a versão européia do UPC (A) (Universal Product Code). É o
-    padrão adotado pela ABAC (EAN Brasil) para codificação de produtos em
-    supermercados. Também é designado para uso em publicações e periódicos, aparecendo
-    como um código de barras adicional no lado direito do código de barras principal. Permite
-    a codificação de até 13 dígitos numéricos. A diferença entre o EAN-13 e o
-    UPC (A) é que o EAN-13 codifica um 13° dígito no padrão de paridade dos seis dígitos
-    da esquerda de um símbolo UPC (A). Esse 13° dígito, combinado com o 12°, representa um
-    código de país. Um número opcional de dois ou cinco dígitos pode ser acrescentado ao
-    código de barras principal;
-  bcUPC_A - Os símbolos UPC (Universal Product Code) são usados em aplicações de
-    varejo nos Estados Unidos e no Canadá. O UPC(A) é um formato de 12
-    dígitos. O símbolo consiste em 11 dígitos de dados e um dígito de
-    verificação. Normalmente, o primeiro dígito representa o tipo de produto
-    sendo identificado. Os cinco dígitos seguintes são um código de fabricante
-    e os cinco dígitos seguintes são utilizados para identificar um produto específico;
-  bcUPC_E0 - Como o UPC(A), o UPC(E) é utilizado em aplicações de varejo, no entanto,
-    como o código de barras é menor, ele é mais adequado para itens menores. Esse formato
-    também é chamado de "zero suprimido" porque o UPC(E) compacta um código de 12 dígitos
-    UPC(A) em um código de seis dígitos. O UPC(E) suprime o dígito de sistema numérico,
-    os dígitos finais no código de fabricante e os zeros iniciais na parte de identificação
-    de produto do código. Um número opcional de dois ou cinco dígitos pode ser adicionado
-    ao do código de barras UPC(A) e UPC(E) principal. Esse número é designado para uso em
-    publicações e periódicos, aparecendo como um código de barras adicional no lado direito
-    do código de barras principal;
+    que a altura das barras varia, e nÃ£o a largura das barras. Cada nÃºmero Ã©
+    representado por um padrÃ£o de cinco barras. Uma Ãºnica barra alta Ã© utilizada
+    para as barras de inÃ­cio e parada. O POSTNET pode ser utilizado como cÃ³digo
+    de barras de ponto de entrega de cinco dÃ­gitos, de nove dÃ­gitos e de 11
+    dÃ­gitos. Esses cÃ³digos sÃ£o freqÃ¼entemente utilizados em conjunto com as barras
+    FIM que se encontram no canto superior direito de uma correspondÃªncia, como
+    cartÃµes-resposta comerciais;
+  bcCodaBar - O CodBar Ã© utilizado freqÃ¼entemente em bibliotecas, bancos de
+    sangue e na atividade de encomendas aÃ©reas. O formato de comprimento variÃ¡vel
+    permite a codificaÃ§Ã£o dos 20 caracteres seguintes: 0123456789-$:/.+ABCD. Os
+    caracteres de inÃ­cio e de parada de uma mensagem CodBar precisam ser A, B, C ou D;
+  bcEAN8 - O sistema EAN (European Article Numbering) Ã© uma versÃ£o europÃ©ia do
+    cÃ³digo UPC (Universal Product Code). Atualmente, esse cÃ³digo Ã© denominado
+    International Article Number, mas a abreviaÃ§Ã£o EAN permanece. Os cÃ³digos
+    EAN encontram-se em itens de varejo na Europa. Esse nÃºmero Ã© apropriado para uso
+    em publicaÃ§Ãµes e periÃ³dicos, aparecendo como um cÃ³digo de barras adicional
+    no lado direito do cÃ³digo de barras principal. Ã‰ a versÃ£o simplificada do padrÃ£o
+    EAN-13 para aplicaÃ§Ã£o em produtos onde a etiqueta no padrÃ£o EAN-13 fique muito
+    grande. O EAN-8 codifica atÃ© oito dÃ­gitos, consistindo em dois dÃ­gitos do cÃ³digo
+    do paÃ­s, cinco dÃ­gitos de dados e um dÃ­gito de verificaÃ§Ã£o. Um nÃºmero opcional de
+    dois ou cinco dÃ­gitos pode ser acrescentado ao cÃ³digo de barras principal;
+  bcEAN13 - O EAN-13 Ã© a versÃ£o europÃ©ia do UPC (A) (Universal Product Code). Ã‰ o
+    padrÃ£o adotado pela ABAC (EAN Brasil) para codificaÃ§Ã£o de produtos em
+    supermercados. TambÃ©m Ã© designado para uso em publicaÃ§Ãµes e periÃ³dicos, aparecendo
+    como um cÃ³digo de barras adicional no lado direito do cÃ³digo de barras principal. Permite
+    a codificaÃ§Ã£o de atÃ© 13 dÃ­gitos numÃ©ricos. A diferenÃ§a entre o EAN-13 e o
+    UPC (A) Ã© que o EAN-13 codifica um 13Â° dÃ­gito no padrÃ£o de paridade dos seis dÃ­gitos
+    da esquerda de um sÃ­mbolo UPC (A). Esse 13Â° dÃ­gito, combinado com o 12Â°, representa um
+    cÃ³digo de paÃ­s. Um nÃºmero opcional de dois ou cinco dÃ­gitos pode ser acrescentado ao
+    cÃ³digo de barras principal;
+  bcUPC_A - Os sÃ­mbolos UPC (Universal Product Code) sÃ£o usados em aplicaÃ§Ãµes de
+    varejo nos Estados Unidos e no CanadÃ¡. O UPC(A) Ã© um formato de 12
+    dÃ­gitos. O sÃ­mbolo consiste em 11 dÃ­gitos de dados e um dÃ­gito de
+    verificaÃ§Ã£o. Normalmente, o primeiro dÃ­gito representa o tipo de produto
+    sendo identificado. Os cinco dÃ­gitos seguintes sÃ£o um cÃ³digo de fabricante
+    e os cinco dÃ­gitos seguintes sÃ£o utilizados para identificar um produto especÃ­fico;
+  bcUPC_E0 - Como o UPC(A), o UPC(E) Ã© utilizado em aplicaÃ§Ãµes de varejo, no entanto,
+    como o cÃ³digo de barras Ã© menor, ele Ã© mais adequado para itens menores. Esse formato
+    tambÃ©m Ã© chamado de "zero suprimido" porque o UPC(E) compacta um cÃ³digo de 12 dÃ­gitos
+    UPC(A) em um cÃ³digo de seis dÃ­gitos. O UPC(E) suprime o dÃ­gito de sistema numÃ©rico,
+    os dÃ­gitos finais no cÃ³digo de fabricante e os zeros iniciais na parte de identificaÃ§Ã£o
+    de produto do cÃ³digo. Um nÃºmero opcional de dois ou cinco dÃ­gitos pode ser adicionado
+    ao do cÃ³digo de barras UPC(A) e UPC(E) principal. Esse nÃºmero Ã© designado para uso em
+    publicaÃ§Ãµes e periÃ³dicos, aparecendo como um cÃ³digo de barras adicional no lado direito
+    do cÃ³digo de barras principal;
   bcUPC_E1 - ver bcUPC_E0;
   bcUPC_Supp2 - ver bcUPC_Supp;
   bcUPC_Supp5 - ver bcUPC_Supp;
-  bcEAN128A - Mais abrangente que os demais códigos, o UCC/EAN-128 é complementar,
-    baseado em Identificadores de Aplicação (AI), identificando o significado e o
+  bcEAN128A - Mais abrangente que os demais cÃ³digos, o UCC/EAN-128 Ã© complementar,
+    baseado em Identificadores de AplicaÃ§Ã£o (AI), identificando o significado e o
     formato de dados. O UCC/EAN-128 pode, inclusive, ser aplicado em unidades de
-    distribuição, permitindo a identificação do número de lote, série, data de
-    fabricação, validade, textos livres e outros dados. A utilização do UCC/EAN-128
-    é múltipla, podendo ser aplicado na logística e automação de vários setores
-    produtivos e comerciais, como o ramo alimentício, farmacêutico, vestuário e
-    de papel, entre outros. Além disso, pode ser usado na distribuição, armazenamento,
-    inventários e gestão de estoque, proporcionando agilidade na captura de informações,
-    com menor margem de erros. Trata-se de um sistema que possui abrangência necessária
-    para a obtenção de grandes ganhos na cadeia distributiva, sempre objetivando a
-    otimizar e a maximizar, por meio da informação rápida e precisa;
+    distribuiÃ§Ã£o, permitindo a identificaÃ§Ã£o do nÃºmero de lote, sÃ©rie, data de
+    fabricaÃ§Ã£o, validade, textos livres e outros dados. A utilizaÃ§Ã£o do UCC/EAN-128
+    Ã© mÃºltipla, podendo ser aplicado na logÃ­stica e automaÃ§Ã£o de vÃ¡rios setores
+    produtivos e comerciais, como o ramo alimentÃ­cio, farmacÃªutico, vestuÃ¡rio e
+    de papel, entre outros. AlÃ©m disso, pode ser usado na distribuiÃ§Ã£o, armazenamento,
+    inventÃ¡rios e gestÃ£o de estoque, proporcionando agilidade na captura de informaÃ§Ãµes,
+    com menor margem de erros. Trata-se de um sistema que possui abrangÃªncia necessÃ¡ria
+    para a obtenÃ§Ã£o de grandes ganhos na cadeia distributiva, sempre objetivando a
+    otimizar e a maximizar, por meio da informaÃ§Ã£o rÃ¡pida e precisa;
   bcEAN128B - ver bcEAN128A;
   bcEAN128C - ver bcEAN128A.
   :}
@@ -165,7 +165,7 @@ type
 
   TRLBarcodeCheckSumMethod=(cmNone,cmModule10);
 
-  {@type TRLBarcodeOrientation - Orientação do desenho das barras.
+  {@type TRLBarcodeOrientation - OrientaÃ§Ã£o do desenho das barras.
    Pode ser um dos seguintes valores:
    boLeftToRight - Da esquerda para a direita;
    boBottomToTop - De baixo para cima;
@@ -173,17 +173,17 @@ type
   TRLBarcodeOrientation=(boLeftToRight,boBottomToTop,boTopToBottom);
   {/@type}
 
-  {@type TRLBarcodeInvalidCode - O que deve ser exibido se o código contiver erros.
+  {@type TRLBarcodeInvalidCode - O que deve ser exibido se o cÃ³digo contiver erros.
    Pode ser um dos seguintes valores:
-   icEmptyRect - Apresenta um retângulo vazio;
-   icCrossOut - Apresenta o código de barras rasurado com uma cruz vermelha;
-   icDrawAnyway - Desenha as barras extraindo os dígitos inválidos.:}
+   icEmptyRect - Apresenta um retÃ¢ngulo vazio;
+   icCrossOut - Apresenta o cÃ³digo de barras rasurado com uma cruz vermelha;
+   icDrawAnyway - Desenha as barras extraindo os dÃ­gitos invÃ¡lidos.:}
   TRLBarcodeInvalidCode=(icEmptyRect,icCrossOut,icDrawAnyway);
   {/@type}
 
   { TRLCustomBarcode }
 
-  {@class TRLCustomBarcode - Classe base da qual podem derivar componentes para códigos de barras. @ancestor TRLCustomControl. }
+  {@class TRLCustomBarcode - Classe base da qual podem derivar componentes para cÃ³digos de barras. @ancestor TRLCustomControl. }
   TRLCustomBarcode=class(TRLCustomControl)
   private
     fBeforeText    :TRLBeforeTextEvent;
@@ -252,36 +252,36 @@ type
     // override methods
     procedure   InternalPaint; override;
     // custom properties
-    {@prop AutoSize - Redimensionamento automático. Determina se o controle irá se redimensionar automaticamente de acordo com o tamanho do seu conteúdo. :/}
+    {@prop AutoSize - Redimensionamento automÃ¡tico. Determina se o controle irÃ¡ se redimensionar automaticamente de acordo com o tamanho do seu conteÃºdo. :/}
     property    AutoSize default True;
-    {@prop Caption - Texto a ser impresso como código de barras. :/}
+    {@prop Caption - Texto a ser impresso como cÃ³digo de barras. :/}
     property    Caption;
     {@prop BarColor - Cor das barras. Determina a cor das barras cheias. :/}
     property    BarColor   :TColor               read fBarColor   write SetBarColor default clBlack;
-    {@prop ShowText - Determina se e como serão exibidas as informações junto com as barras.
+    {@prop ShowText - Determina se e como serÃ£o exibidas as informaÃ§Ãµes junto com as barras.
      Pode ser um dos seguintes valores:
-     boNone - Nenhum texto é exibido;
-     boCode - Apenas o valor do código de barras;
-     boType - Apenas o tipo de código de barras utilizado;
-     boBoth - Ambos o valor e o tipo de código. :/}
+     boNone - Nenhum texto Ã© exibido;
+     boCode - Apenas o valor do cÃ³digo de barras;
+     boType - Apenas o tipo de cÃ³digo de barras utilizado;
+     boBoth - Ambos o valor e o tipo de cÃ³digo. :/}
     property    ShowText      :TRLBarcodeTextOption     read fShowText       write SetShowText     default boNone;
-    {@prop Module - Fator de ampliação da largura das barras. :/}
+    {@prop Module - Fator de ampliaÃ§Ã£o da largura das barras. :/}
     property    Module        :integer                  read fModule         write SetModule       default 1;
-    {@prop Ratio - Razão entre as larguras das barras. :/}
+    {@prop Ratio - RazÃ£o entre as larguras das barras. :/}
     property    Ratio         :double                   read fRatio          write SetRatio        stored IsRatio;
-    {@prop BarcodeType - Padrão de código de barras. @links TRLBarcodeType. :/}
+    {@prop BarcodeType - PadrÃ£o de cÃ³digo de barras. @links TRLBarcodeType. :/}
     property    BarcodeType   :TRLBarcodeType           read fBarcodeType    write SetBarcodeType  default bcCode2of5Interleaved;
-    {@prop Orientation - Orientação da leitura das barras. :/}
+    {@prop Orientation - OrientaÃ§Ã£o da leitura das barras. :/}
     property    Orientation   :TRLBarcodeOrientation    read fOrientation    write SetOrientation  default boLeftToRight;
-    {@prop Margins - Margens externas do código de barras. @links TRLMargins. :/}
+    {@prop Margins - Margens externas do cÃ³digo de barras. @links TRLMargins. :/}
     property    Margins       :TRLMargins               read fMargins        write SetMargins;
-    {@prop InvalidCode - Determina o que deve ser exibido se o código tiver algum erro. @links TRLBarcodeInvalidCode. :/}
+    {@prop InvalidCode - Determina o que deve ser exibido se o cÃ³digo tiver algum erro. @links TRLBarcodeInvalidCode. :/}
     property    InvalidCode   :TRLBarcodeInvalidCode    read fInvalidCode    write SetInvalidCode  default icEmptyRect;
     // build checksum
     property    CheckSum      :boolean                  read fCheckSum       write SetCheckSum       default False;
     property    CheckSumMethod:TRLBarcodeCheckSumMethod read fCheckSumMethod write SetCheckSumMethod default cmModule10;
     // events
-    {@prop BeforePrint - Antes da impressão. Ocorre antes da impressão do controle para alterar o texto ou anular a sua impressão. :/}
+    {@prop BeforePrint - Antes da impressÃ£o. Ocorre antes da impressÃ£o do controle para alterar o texto ou anular a sua impressÃ£o. :/}
     property    BeforePrint   :TRLBeforeTextEvent       read fBeforeText     write fBeforeText;
   end;
   {/@class}
@@ -289,7 +289,7 @@ type
 
   { TRLCustomDBBarcode }
 
-  {@class TRLCustomDBBarcode - Classe base da qual podem derivar componentes para códigos de barras dataware. @ancestor TRLCustomBarcode.}
+  {@class TRLCustomDBBarcode - Classe base da qual podem derivar componentes para cÃ³digos de barras dataware. @ancestor TRLCustomBarcode.}
   TRLCustomDBBarcode=class(TRLCustomBarcode)
   private
     // variables
@@ -315,14 +315,14 @@ type
     // custom properties
     {@prop DataField - Nome do campo associado. :/}
     property    DataField  :TRLDataFieldProperty read fDataField   write SetDataField;
-    {@prop DataFormula - Expressão matemática envolvendo campos, valores e literais. :/}
+    {@prop DataFormula - ExpressÃ£o matemÃ¡tica envolvendo campos, valores e literais. :/}
     property    DataFormula:string               read fDataFormula write SetDataFormula;
-    {@prop DataSource - Referência ao DataSource que controle utiliza para se conectar ao DataSet. :/}
+    {@prop DataSource - ReferÃªncia ao DataSource que controle utiliza para se conectar ao DataSet. :/}
     property    DataSource :TDataSource          read fDataSource  write SetDataSource;
     // readonly
-    {@prop Field - Referência para o objeto TField determinado pelas props DataField e DataSource. :/}
+    {@prop Field - ReferÃªncia para o objeto TField determinado pelas props DataField e DataSource. :/}
     property    Field      :TField               read GetField;
-    {@prop DataSet - Referência para o objeto TDataSet determinado pela prop DataSource. :/}
+    {@prop DataSet - ReferÃªncia para o objeto TDataSet determinado pela prop DataSource. :/}
     property    DataSet    :TDataSet             read GetDataSet;
   end;
   {/@class}
@@ -330,7 +330,7 @@ type
 
   { TRLBarcode }
 
-  {@class TRLBarcode - Componente para códigos de barras. @pub. @ancestor TRLCustomBarcode. }
+  {@class TRLBarcode - Componente para cÃ³digos de barras. @pub. @ancestor TRLCustomBarcode. }
   TRLBarcode=class(TRLCustomBarcode)
   published
   
@@ -409,7 +409,7 @@ type
   {/@class}
 
 
-  {@class TRLDBBarcode - Componente para códigos de barras dataware. @pub. @ancestor TRLCustomDBBarcode. }
+  {@class TRLDBBarcode - Componente para cÃ³digos de barras dataware. @pub. @ancestor TRLCustomDBBarcode. }
   TRLDBBarcode=class(TRLCustomDBBarcode)
   published
 
@@ -685,7 +685,7 @@ begin
   Result:=NewBitmap(aWidth,aHeight);
   try
     data:=GetBarData(aText);
-    // desenha o código de barras
+    // desenha o cÃ³digo de barras
     fullrect:=Rect(0,0,aWidth,aHeight);
     imgrect :=fullrect;
     with Result.Canvas do
@@ -703,7 +703,7 @@ begin
         // reserva uma linha no topo para o tipo
         if fShowText in [boType,boBoth] then
           Inc(imgrect.Top,TextHeight(' '));
-        // reserva meia linha em baixo para o código (postnet é um linha)
+        // reserva meia linha em baixo para o cÃ³digo (postnet Ã© um linha)
         if fShowText in [boCode,boBoth] then
           if fBarcodeType=bcPostNet then
             Dec(imgrect.Bottom,TextHeight(' '))
@@ -1190,7 +1190,7 @@ const
      ('2515'),    // 8
      ('1507'));   // 9
 
-// Zuordung der Paraitaetsfolgen für EAN13
+// Zuordung der Paraitaetsfolgen fÃ¼r EAN13
 const
   Table_ParityEAN13:array[0..9, 1..6] of char=
     (('A','A','A','A','A','A'),  // 0
@@ -1482,7 +1482,7 @@ const
     (a:')'; b:')'; c:'09'; data:'221213' ),
     (a:'*'; b:'*'; c:'10'; data:'221312' ),
     (a:'+'; b:'+'; c:'11'; data:'231212' ),
-    (a:'´'; b:'´'; c:'12'; data:'112232' ),
+    (a:'Â´'; b:'Â´'; c:'12'; data:'112232' ),
     (a:'-'; b:'-'; c:'13'; data:'122132' ),
     (a:'.'; b:'.'; c:'14'; data:'122231' ),
     (a:'/'; b:'/'; c:'15'; data:'113222' ),

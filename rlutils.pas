@@ -16,21 +16,21 @@ uses
   Types,
   Graphics, Forms;
 
-{@var TempDir - Especifica aonde dever„o ser criados os arquivos tempor·rios.
- Na inicializaÁ„o do sistema È atribuido um valor padr„o a esta vari·vel. Este valor pode ser alterado depois.
- No Windows o diretÛrio padr„o È "WINDOWS\TEMP", e no Linux È o "/tmp".
+{@var TempDir - Especifica aonde dever√£o ser criados os arquivos tempor√°rios.
+ Na inicializa√ß√£o do sistema √© atribuido um valor padr√£o a esta vari√°vel. Este valor pode ser alterado depois.
+ No Windows o diret√≥rio padr√£o √© "WINDOWS\TEMP", e no Linux √© o "/tmp".
  @links GetTempFileName. :/}
 var TempDir:string='.';
 
-{@proc FreeObj - Libera objeto se n„o for nil e em seguida limpa a vari·vel.
+{@proc FreeObj - Libera objeto se n√£o for nil e em seguida limpa a vari√°vel.
  @links FreePtr. :/}
 procedure FreeObj(var aObj);
 
-{@proc FreePtr - Libera ponteiro se n„o for nil e em seguida limpa a vari·vel.
+{@proc FreePtr - Libera ponteiro se n√£o for nil e em seguida limpa a vari√°vel.
  @links FreeObj. :/}
 procedure FreePtr(var aPtr);
 
-{@func ByteToHex - Retorna o byte em notaÁ„o hexadecimal de dois dÌgitos.
+{@func ByteToHex - Retorna o byte em nota√ß√£o hexadecimal de dois d√≠gitos.
  @links HexToByte. :/}
 function  ByteToHex(const aByte:byte):string;
 
@@ -42,19 +42,19 @@ function  HexToByte(const aHex:string):byte;
  @links HexToGraphic, HexToByte. :/}
 function  HexToBitmap(const aHex:string):TBitmap;
 
-{@func HexToGraphic - Cria um gr·fico qualquer a partir de uma cadeia hexadecimal.
+{@func HexToGraphic - Cria um gr√°fico qualquer a partir de uma cadeia hexadecimal.
  @links HexToBitmap, HexToByte. :/}
 function  HexToGraphic(const aHex:string):TGraphic;
 
 {@func NewComponentName - Cria um nome para um novo componente. :/}
 function  NewComponentName(aComponent:TComponent):string;
 
-{@func GetTempFileName - Retorna nome de arquivo tempor·rio.
+{@func GetTempFileName - Retorna nome de arquivo tempor√°rio.
  @links TempDir. :/}
 function  GetTempFileName:string;
 
-{@func Token - Esta funÁ„o retorna a parte de Ìndice "aIndex" da string "aTokenList",
-cujas partes est„o separadas pelo caractere "aTokenSeparator". :/}
+{@func Token - Esta fun√ß√£o retorna a parte de √≠ndice "aIndex" da string "aTokenList",
+cujas partes est√£o separadas pelo caractere "aTokenSeparator". :/}
 function Token(const aTokenList:string; aIndex:integer; aTokenSeparator:char='|'):string;
 
 type
@@ -69,122 +69,122 @@ type
     procedure Execute; override;
   end;
 
-{@func ThreadIt - Esta funÁ„o executa uma procedure ou um mÈtodo de um objeto em segundo plano.
-A thread È criada suspensa, por isso È necess·rio invocar o mÈtodo Resume assim que ela estiver pronta para rodar.
-A prop FreeOnTerminate da thread È setada para True como padr„o, o que significa que n„o È necess·rio destruir a
-inst‚ncia.
-O par‚metro KeepLoop indica que a thread dever· executar o mÈtodo continuamente atÈ a sua finalizaÁ„o.
-O par‚metro Synchronized indica que a execuÁ„o do mÈtodo dever· ser sincronizada com a thread principal para que
-n„o ocorram travamentos por concorrÍncia. … essencial se o mÈtodo leva a alguma chamada ‡ VCL/CLX. :}
+{@func ThreadIt - Esta fun√ß√£o executa uma procedure ou um m√©todo de um objeto em segundo plano.
+A thread √© criada suspensa, por isso √© necess√°rio invocar o m√©todo Resume assim que ela estiver pronta para rodar.
+A prop FreeOnTerminate da thread √© setada para True como padr√£o, o que significa que n√£o √© necess√°rio destruir a
+inst√¢ncia.
+O par√¢metro KeepLoop indica que a thread dever√° executar o m√©todo continuamente at√© a sua finaliza√ß√£o.
+O par√¢metro Synchronized indica que a execu√ß√£o do m√©todo dever√° ser sincronizada com a thread principal para que
+n√£o ocorram travamentos por concorr√™ncia. √â essencial se o m√©todo leva a alguma chamada √† VCL/CLX. :}
 function ThreadIt(MethodRef:TThreadMethod; KeepLoop:boolean=False; Synchronized:boolean=False):TRLThread; overload;
 function ThreadIt(ProcedureRef:TProcedure; KeepLoop:boolean=False; Synchronized:boolean=False):TRLThread; overload;
 {/@func}
 
-{@proc ThreadSafeCall - Faz uma chamada "aprova de threads" a um mÈtodo de usu·rio. Se o processo corrente È o processo principal,
-este procedimento È equivalente a uma chamada direta ao mÈtodo "Method". Se o processo È uma thread, criada com "ThreadIt" por exemplo, o
-mÈtodo "Method" È chamado atravÈs do mÈtodo de sincronizaÁ„o da thread.
+{@proc ThreadSafeCall - Faz uma chamada "aprova de threads" a um m√©todo de usu√°rio. Se o processo corrente √© o processo principal,
+este procedimento √© equivalente a uma chamada direta ao m√©todo "Method". Se o processo √© uma thread, criada com "ThreadIt" por exemplo, o
+m√©todo "Method" √© chamado atrav√©s do m√©todo de sincroniza√ß√£o da thread.
 @links TRLCustomReport.BackgroundMode, ThreadIt, CurrentThread, IsMainThread. :/}
 procedure ThreadSafeCall(Method:TThreadMethod);
 
-{@func IsMainThread - Retorna verdadeiro se a thread que est· em execuÁ„o È a thread principal do sistema.
+{@func IsMainThread - Retorna verdadeiro se a thread que est√° em execu√ß√£o √© a thread principal do sistema.
 @links ThreadIt, CurrentThread. :/}
 function  IsMainThread:boolean;
 
-{@func CurrentThread - Retorna referÍncia ‡ thread corrente. Retorna referÍncia apenas para threads criadas pelo mÈtodo
+{@func CurrentThread - Retorna refer√™ncia √† thread corrente. Retorna refer√™ncia apenas para threads criadas pelo m√©todo
 ThreadIt.
-Nota: N„o h· um objeto thread associado ‡ thread principal.
+Nota: N√£o h√° um objeto thread associado √† thread principal.
 @links ThreadIt, IsMainThread. :/}
 function  CurrentThread:TRLThread;
 
-{@func FormatFileExt - Adiciona ponto a uma extens„o, se n„o houver. :/}
+{@func FormatFileExt - Adiciona ponto a uma extens√£o, se n√£o houver. :/}
 function  FormatFileExt(const aExt:string):string;
 
-{@func AddFileFilter - Adiciona filtro de arquivos com nome aFilter, descriÁ„o aDescription e extens„o padr„o aExt. :/}
+{@func AddFileFilter - Adiciona filtro de arquivos com nome aFilter, descri√ß√£o aDescription e extens√£o padr√£o aExt. :/}
 function  AddFileFilter(const aFilter:string; const aDescription,aExt:string):string;
 
-{@func GetFileFilterExt - Devolve a extens„o padr„o para arquivos correspondentes ao filtro aFilter. :/}
+{@func GetFileFilterExt - Devolve a extens√£o padr√£o para arquivos correspondentes ao filtro aFilter. :/}
 function  GetFileFilterExt(const aFilter:string; aIndex:integer):string;
 
-{@proc RotatePoints - Rotaciona os pontos aPoints em 2D de acordo com o ‚ngulo aAngle.
+{@proc RotatePoints - Rotaciona os pontos aPoints em 2D de acordo com o √¢ngulo aAngle.
  @links RotateBitmap. :/}
 procedure RotatePoints(var aPoints:array of TPoint; const aAngle:double);
 
-{@func RotateBitmap - Rotaciona o bitmap TBitmap em 2D de acordo com o ‚ngulo aAngle e devolve em aDest.
- Nota: O bitmap aDest deve ter tamanho suficiente para a imagem rotacionada. Este c·lculo pode ser feito
+{@func RotateBitmap - Rotaciona o bitmap TBitmap em 2D de acordo com o √¢ngulo aAngle e devolve em aDest.
+ Nota: O bitmap aDest deve ter tamanho suficiente para a imagem rotacionada. Este c√°lculo pode ser feito
  previamente com a proc RotatePoints.
  @links RotatePoints, RotatedBitmap. :/}
 procedure RotateBitmap(aSource,aDest:TBitmap; aAngle:double; aAxis,aOffset:TPoint);
 
-{@func RotatedBitmap - Cria e devolve um bitmap compatÌvel com o bitmap aSource rotacionado em 2D de acordo com o ‚ngulo aAngle com
+{@func RotatedBitmap - Cria e devolve um bitmap compat√≠vel com o bitmap aSource rotacionado em 2D de acordo com o √¢ngulo aAngle com
  tamanho calculado.
  @links RotateBitmap. :/}
 function  RotatedBitmap(aSource:TBitmap; aAngle:double):TBitmap;
 
-{@func PointsRect - Retorna um ret‚ngulo delimitando a ·rea definida pelos pontos aPoints.
+{@func PointsRect - Retorna um ret√¢ngulo delimitando a √°rea definida pelos pontos aPoints.
  @links PointsSize. :/}
 function  PointsRect(const aPoints:array of TPoint):TRect;
 
-{@func PointsSize - Retorna o tamanho da ·rea definida pelos pontos aPoints.
+{@func PointsSize - Retorna o tamanho da √°rea definida pelos pontos aPoints.
  @links PointsRect. :/}
 function  PointsSize(const aPoints:array of TPoint):TPoint;
 
-{@func ScalePoints - Modifica as dimensıes dos pontos aPoints para que caibam no ret‚ngulo definido por aRect respeitando a proporÁ„o.
+{@func ScalePoints - Modifica as dimens√µes dos pontos aPoints para que caibam no ret√¢ngulo definido por aRect respeitando a propor√ß√£o.
  @links PointsRect. :/}
 procedure ScalePoints(var aPoints:array of TPoint; const aRect:TRect);
 
-{@func StretchPoints - Amplia ou reduz as dimensıes dos pontos aPoints para que caibam no ret‚ngulo definido por aRect.
+{@func StretchPoints - Amplia ou reduz as dimens√µes dos pontos aPoints para que caibam no ret√¢ngulo definido por aRect.
  @links PointsRect. :/}
 procedure StretchPoints(var aPoints:array of TPoint; const aRect:TRect);
 
-{@func CenterPoints - Centraliza os pontos aPoints no ret‚gulo aRect.
+{@func CenterPoints - Centraliza os pontos aPoints no ret√¢gulo aRect.
  @links PointsRect. :/}
 procedure CenterPoints(var aPoints:array of TPoint; const aRect:TRect);
 
-{@func TextBounds - Calcula as dimensıes do texto aText de acordo com a fonte aFont e opcionalmente rotacionado em
- 2D de acordo com o ‚ngulo aAngle.
+{@func TextBounds - Calcula as dimens√µes do texto aText de acordo com a fonte aFont e opcionalmente rotacionado em
+ 2D de acordo com o √¢ngulo aAngle.
  @links PointsRect. :/}
 function  TextBounds(const aText:string; aFont:TFont; aAngle:double):TPoint;
 
-{@proc MoveRect - Desloca o ret‚ngulo horizontalmente de acordo com aX e verticalmente de acordo com aY.
- Nota: Valores positivos deslocam o ret‚ngulo para a direita ou abaixo. :/}
+{@proc MoveRect - Desloca o ret√¢ngulo horizontalmente de acordo com aX e verticalmente de acordo com aY.
+ Nota: Valores positivos deslocam o ret√¢ngulo para a direita ou abaixo. :/}
 procedure MoveRect(var aRect:TRect; aX,aY:integer);
 
-{@func RectWidth - Retorna a largura do ret‚ngulo aRect.
+{@func RectWidth - Retorna a largura do ret√¢ngulo aRect.
  @links RectHeight. :/}
 function  RectWidth(const aRect:TRect):integer;
 
-{@func RectHeight - Retorna a largura do ret‚ngulo aRect.
+{@func RectHeight - Retorna a largura do ret√¢ngulo aRect.
  @links RectWidth. :/}
 function  RectHeight(const aRect:TRect):integer;
 
-{@func ReduceRect - Retorna o ret‚ngulo aRect reduzido de acordo com os decrementos especificados em aPixels. :/}
+{@func ReduceRect - Retorna o ret√¢ngulo aRect reduzido de acordo com os decrementos especificados em aPixels. :/}
 function  ReduceRect(const aRect:TRect; aPixels:TRect):TRect;
 
-{@func IncreaseRect - Retorna o ret‚ngulo aRect ampliado de acordo com os incrementos especificados em aPixels. :/}
+{@func IncreaseRect - Retorna o ret√¢ngulo aRect ampliado de acordo com os incrementos especificados em aPixels. :/}
 function  IncreaseRect(const aRect:TRect; aPixels:TRect):TRect;
 
-{@func DiffRect - Retorna a diferenÁa entre os ret‚ngulos aRectOut e aRectIn, desde que aRectIn esteja dentro
+{@func DiffRect - Retorna a diferen√ßa entre os ret√¢ngulos aRectOut e aRectIn, desde que aRectIn esteja dentro
  de aRectOut. :/}
 function  DiffRect(const aRectOut,aRectIn:TRect):TRect;
 
-{@func IterateJustification - Faz a justificaÁ„o do texto distribuindo espaÁos. A funÁ„o deve ser executada atÈ
+{@func IterateJustification - Faz a justifica√ß√£o do texto distribuindo espa√ßos. A fun√ß√£o deve ser executada at√©
  se obter a largura total do texto. :/}
 function  IterateJustification(var aText:string; var aIndex:integer):boolean;
 
-{@func ScaleRect - Calcula a maior amostra do ret‚ngulo aSource escalonado de modo a caber em aTarget. :/}
+{@func ScaleRect - Calcula a maior amostra do ret√¢ngulo aSource escalonado de modo a caber em aTarget. :/}
 function  ScaleRect(const aSource,aTarget:TRect; aCenter:boolean):TRect;
 
 procedure StreamWrite(aStream:TStream; const aStr:string);
 procedure StreamWriteLn(aStream:TStream; const aStr:string='');
 
-{@proc RegisterTempFile - Registra um arquivo tempor·rio para ser excluÌdo na finalizaÁ„o. :/}
+{@proc RegisterTempFile - Registra um arquivo tempor√°rio para ser exclu√≠do na finaliza√ß√£o. :/}
 procedure RegisterTempFile(const aFileName:string);
-{@proc UnregisterTempFile - Retira arquivo tempor·rio da lista de arquivos a excluir na finalizaÁ„o. :/}
+{@proc UnregisterTempFile - Retira arquivo tempor√°rio da lista de arquivos a excluir na finaliza√ß√£o. :/}
 procedure UnregisterTempFile(const aFileName:string);
-{@proc ClearTempFiles - Destroi arquivos tempor·rios registrados pela proc RegisterTempFile. :/}
+{@proc ClearTempFiles - Destroi arquivos tempor√°rios registrados pela proc RegisterTempFile. :/}
 procedure ClearTempFiles;
 
-{@proc SmartGetFieldDisplayText - Retorna a verdadeira intenÁ„o do texto de exibiÁ„o do valor do campo. :/}
+{@proc SmartGetFieldDisplayText - Retorna a verdadeira inten√ß√£o do texto de exibi√ß√£o do valor do campo. :/}
 function SmartGetFieldDisplayText(Field:TField):string;
 
 {$ifdef DELPHI5}
@@ -427,7 +427,7 @@ var
 begin
   stream:=TStringStream.Create(emptystr);
   try
-    // traduz string hex em bin·ria
+    // traduz string hex em bin√°ria
     l:=Length(aHex);
     i:=1;
     while i<l do
@@ -435,7 +435,7 @@ begin
       stream.WriteString(char(HexToByte(aHex[i]+aHex[i+1])));
       inc(i,2);
     end;
-    // procura referÍncia para a classe
+    // procura refer√™ncia para a classe
     Result:=AuxBitmapNeeded;
     stream.Seek(0,0);
     TPublicGraphic(Result).ReadData(stream);
@@ -454,7 +454,7 @@ begin
   Result:=nil;
   stream:=TStringStream.Create(emptystr);
   try
-    // traduz string hex em bin·ria
+    // traduz string hex em bin√°ria
     l:=Length(aHex);
     i:=1;
     while i<l do
@@ -466,7 +466,7 @@ begin
     stream.Seek(0,0);
     stream.Read(graphclassname[0],1);
     stream.Read(graphclassname[1],byte(graphclassname[0]));
-    // procura referÍncia para a classe
+    // procura refer√™ncia para a classe
     graphclassname:=UpperCase(graphclassname);
     if graphclassname='TBITMAP' then
       graphclass:=TBitmap
@@ -1005,7 +1005,7 @@ begin
   sh:=aSource.Bottom-aSource.Top;
   tw:=aTarget.Right-aTarget.Left;
   th:=aTarget.Bottom-aTarget.Top;
-  // calcula o maior dos fatores de proporÁ„o entre largura e altura
+  // calcula o maior dos fatores de propor√ß√£o entre largura e altura
   fw:=tw/sw;
   fh:=th/sh;
   if fw>fh then
