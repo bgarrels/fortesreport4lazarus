@@ -118,8 +118,9 @@ end;
 procedure TRLReportDesigner.ShowAboutBox;
 begin
   with TfrmRLAbout.Create(nil) do
-  begin
+  try
     ShowModal;
+  finally
     free;
   end;
 end;
