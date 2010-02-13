@@ -1,30 +1,20 @@
-{$I RLReport.inc}
-
 {@unit RLUtils - Rotinas de uso geral.
 Portado para o Lazarus - Trabalho inicial de Isaac Trindade da Silva contato tioneobrasil@yahoo.com.br dicas4lazarus@yahoo.com.br
 Lazarus Ported - initial work by Isaac 07/2009
 }
 unit RLUtils;
-{$MODE DELPHI}{$H+}
+
+{$MODE DELPHI}
+{$I RLReport.inc}
+
 interface
 
 uses
+  LCLIntf, LCLType,
   SysUtils, Classes, Math, DB,
   SyncObjs,
-{$ifdef MSWINDOWS}
-  Windows, Types,
-{$else}
-{$IFDEF FPC}
-  LCLIntf,LCLType, Libc, Types,
-{$ELSE}
-  Libc, Types,
-{$ENDIF}
-{$endif}
-{$ifdef VCL}
+  Types,
   Graphics, Forms;
-{$else}
-  QGraphics, QForms;
-{$endif}
 
 {@var TempDir - Especifica aonde deverão ser criados os arquivos temporários.
  Na inicialização do sistema é atribuido um valor padrão a esta variável. Este valor pode ser alterado depois.
@@ -123,16 +113,13 @@ procedure RotatePoints(var aPoints:array of TPoint; const aAngle:double);
  Nota: O bitmap aDest deve ter tamanho suficiente para a imagem rotacionada. Este cálculo pode ser feito
  previamente com a proc RotatePoints.
  @links RotatePoints, RotatedBitmap. :/}
-{$IFNDEF FPC}
 procedure RotateBitmap(aSource,aDest:TBitmap; aAngle:double; aAxis,aOffset:TPoint);
-{$ENDIF
 
 {@func RotatedBitmap - Cria e devolve um bitmap compatível com o bitmap aSource rotacionado em 2D de acordo com o ângulo aAngle com
  tamanho calculado.
  @links RotateBitmap. :/}
-{$IFNDEF FPC}
 function  RotatedBitmap(aSource:TBitmap; aAngle:double):TBitmap;
-{$ENDIF}
+
 {@func PointsRect - Retorna um retângulo delimitando a área definida pelos pontos aPoints.
  @links PointsSize. :/}
 function  PointsRect(const aPoints:array of TPoint):TRect;
@@ -228,13 +215,6 @@ type
   TRGBArray=array[0..0] of TRGBQuad;
   PRGBArray=^TRGBArray;
 
-{$ifdef KYLIX}
-function RGB(r, g, b: Byte): TColor;
-{$endif}
-{$ifdef FPC}
-function RGB(r, g, b: Byte): TColor;
-{$endif}
-
 procedure ChronoStart;
 procedure ChronoMark;
 procedure ChronoLap(const Msg:string);
@@ -250,31 +230,14 @@ function NewBitmap:TBitmap; overload;
 implementation
 
 uses
-{$IFDEF FPC}
-  rlshared,
-{$ENDIF}
-{$ifdef VCL}
-  ExtCtrls;
-{$else}
-  QExtCtrls;
-{$endif}
+  ExtCtrls, IntfGraphics;
 
-
-{$IFDEF FPC}
 {$ASMMODE INTEL}
 function GetProcessorTick:Int64;register;
-begin
 asm
   DB $0F,$31
 end;
-end;
-{$ELSE}
-// CHRONOMETER BEGIN
-function GetProcessorTick:Int64;
-asm
-  DB $0F,$31
-end;
-{$ENDIF}
+
 var
   ChronoStarted   :Int64=0;
   ChronoMarks     :array[0..1024] of Int64;
@@ -453,12 +416,6 @@ begin
   Result := (r or (g shl 8) or (b shl 16));
 end;
 {$endif}
-{$ifdef FPC}
-function RGB(r, g, b: Byte): TColor;
-begin
-  Result := (r or (g shl 8) or (b shl 16));
-end;
-{$endif}
 
 type
   TPublicGraphic=class(TGraphic);
@@ -531,29 +488,6 @@ begin
   finally
     FreeObj(stream);
   end;
-end;
-
-// diretório temporário
-function GetTempDir:string;
-{$ifdef MSWINDOWS}
-var
-  p:array[0..255] of char;
-  h:string;
-{$endif}
-begin
-{$ifdef MSWINDOWS}
-  GetDir(0,h);                 // salva diretório atual
-  GetWindowsDirectory(@p,256); // diretório do windows
-  ChDir(strpas(p));
-  try
-    GetTempPath(256,@p);
-    Result:=strpas(p);
-  finally
-    ChDir(h);
-  end;
-{$else}
-  Result:='/tmp';
-{$endif}
 end;
 
 function NewComponentName(aComponent:TComponent):string;
@@ -767,21 +701,8 @@ begin
     inc(aPoints[i].y,center.y);
   end;
 end;
-{$IFNDEF FPC}
+
 procedure RotateBitmap(aSource,aDest:TBitmap; aAngle:double; aAxis,aOffset:TPoint);
-type
-{$ifdef KYLIX}
-  TRGBQuad=packed record
-    rgbBlue    :byte;
-    rgbGreen   :byte;
-    rgbRed     :byte;
-    rgbReserved:byte;
-  end;
-{$endif}
-  PRGBArray=^TRGBArray;
-  TRGBArray=array[0..0] of TRGBQuad;
-const
-  RGBBlack:TRGBQuad=(rgbBlue:0; rgbGreen:0; rgbRed:0; rgbReserved:0);
 var
   x            :integer;
   xDest        :integer;
@@ -795,22 +716,25 @@ var
   yPrime       :integer;
   yPrimeRotated:integer;
   //
-  RowSource    :PRGBArray;
-  RowDest      :PRGBArray;
-  //
   Radians      :double;
   RadiansCos   :double;
   RadiansSin   :double;
+  NormalImg    :TLazIntfImage;
+  RotateImg    :TLazIntfImage;
 begin
+  // create intermediary images
+  NormalImg := aSource.CreateIntfImage;
+  RotateImg := TLazIntfImage.Create(aDest.Width, aDest.Height);
+  RotateImg.DataDescription := NormalImg.DataDescription;
+  RotateImg.SetSize(aDest.Width, aDest.Height);
+
   // Convert degrees to radians. Use minus sign to force clockwise rotation.
   Radians   :=aAngle*PI/180;
   RadiansSin:=sin(Radians);
   RadiansCos:=cos(Radians);
-
   // Step through each row of rotated image.
   for y:=0 to aDest.Height-1 do
   begin
-    RowDest:=aDest.ScanLine[y];
     yDest  :=y-aOffset.y;
     yPrime :=2*(yDest-aAxis.y)+1; // center y: -1,0,+1
     // Step through each col of rotated image.
@@ -830,22 +754,21 @@ begin
       if (xOriginal>=0) and (xOriginal<=aSource.Width-1) and (yOriginal>=0) and (yOriginal<=aSource.Height-1) then
       begin
         // Assign pixel from rotated space to current pixel in aDest
-        RowSource :=aSource.ScanLine[yOriginal];
-        RowDest[x]:=RowSource[xOriginal];
+        RotateImg.Colors[x,y]:=NormalImg.Colors[xOriginal,yOriginal];
       end
       else if aSource.Height>0 then
       begin
-        RowSource :=aSource.ScanLine[0];
-        RowDest[x]:=RowSource[0];
+        RotateImg.Colors[x,y]:=NormalImg.Colors[0,0];
       end
       else
-        RowDest[x]:=RGBBlack;
+        RotateImg.Colors[x,y]:=TColorToFPColor(clBlack);
     end;
   end;
-
+  aDest.LoadFromIntfImage(RotateImg);
+  RotateImg.Destroy;
+  NormalImg.Destroy;
 end;
-{$ENDIF}
-{$IFNDEF FPC}
+
 function RotatedBitmap(aSource:TBitmap; aAngle:double):TBitmap;
 var
   p:array[0..3] of TPoint;
@@ -869,7 +792,7 @@ begin
     raise;
   end;
 end;
-{$ENDIF}
+
 function PointsRect(const aPoints:array of TPoint):TRect;
 var
   i:integer;

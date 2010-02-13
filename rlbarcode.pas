@@ -1,28 +1,17 @@
-{$I RLReport.inc}
-
 {@unit RLBarcode - Implementação dos componentes para código de barras.
 Portado para o Lazarus - Trabalho inicial de Isaac Trindade da Silva contato tioneobrasil@yahoo.com.br dicas4lazarus@yahoo.com.br
 Lazarus Ported - initial work by Isaac 07/2009
 }
 unit RLBarcode;
-{$MODE DELPHI}{$H+}
+
+{$MODE DELPHI}
+{$I RLReport.inc}
+
 interface
 
 uses
-{$ifdef VCL}
-  {$IFDEF MSWINDOWS}
-  Windows,
-  {$ELSE}
-  LCLIntf,
-  {$ENDIF}
-  Graphics, Dialogs,
-{$else}
-  Types, QGraphics, QDialogs,
-{$endif}
+  LCLIntf, Graphics, Dialogs,
   Classes, SysUtils, DB,
-  {$IFDEF FPC}
-  rlshared,
-  {$ENDIF}
   RLReport, RLConsts;
 
 type
@@ -807,18 +796,7 @@ var
   w,h:integer;
   k  :integer;
   r  :TRect;
-  {$IFDEF FPC}
-  sfileBitmap:String;
-  sfileBitmapResult:String;
-  randFile:integer;
-  spathfileBitmap:String;
-  tsfile:TStringlist;
-  {$ENDIF}
 begin
-  {$IFDEF FPC}
-  a:=TBitmap.Create;
-  tsfile:=TStringlist.Create;
-  {$ENDIF}
   PaintAsCustomControl;
   r:=ReduceRect(GetClientRect,CalcMarginalPixels);
   w:=RectWidth(r);
@@ -839,32 +817,7 @@ begin
       else // boLeftToRight
         ang:=0;
       end;
-      {$IFDEF FPC}
-      randomize;
-      randFile:=trunc(random *31000);
-//    a:=RotatedBitmap(m,ang);
-      a.Assign(m);
-      {$IFDEF MSWINDOWS}
-      spathfileBitmap:=GetCurrentDir;
-      {$ELSE}
-      spathfileBitmap:='/tmp/';
-      {$ENDIF}
-{
-      sfileBitmap:=spathfileBitmap+'rlbcod'+inttostr(randFile)+'.bmp';
-      sfileBitmapResult:=spathfileBitmap+'rlbcodresult'+inttostr(randFile)+'.bmp';
-      tsfile.Add(sfileBitmap);
-      tsfile.Add(sfileBitmapResult);
-      tsfile.SaveToFile(spathfileBitmap+'rlbcod.dat');
-      m.SaveToFile(sfileBitmap);
-      Showmessage('chamou rlRotateBitmap');
-      //rlRotateBitmap(sfileBitmap,sfileBitmapResult,ang);
-      rlRotateBitmap(ang);
-      Showmessage('finalizou rlRotateBitmap');
-      a.LoadFromFile(sfileBitmapResult);
-}
-      {$ELSE}
       a:=RotatedBitmap(m,ang);
-      {$ENDIF}
       try
         case Alignment of
           taCenter      : l:=(r.Left+r.Right-a.Width) div 2;
@@ -897,18 +850,8 @@ var
   w,h:integer;
   k  :integer;
   r  :TRect;
-  {$IFDEF FPC}
-  sfileBitmap:String;
-  sfileBitmapResult:String;
-  randFile:integer;
-  spathfileBitmap:String;
-  tsfile:TStringlist;
-  {$ENDIF}
 begin
-  {$IFDEF FPC}
-  a:=TBitmap.Create;
-  tsfile:=TStringlist.Create;
-  {$ENDIF}
+  inherited;
   //
   r:=ReduceRect(CalcPrintClientRect,CalcMarginalPixels);
   w:=RectWidth(r);
@@ -929,29 +872,7 @@ begin
       else // boLeftToRight
         ang:=0;
       end;
-      {$IFDEF FPC}
-      randomize;
-      randFile:=trunc(random *31000);
-      a.Assign(m);
-      {$IFDEF MSWINDOWS}
-      spathfileBitmap:=GetCurrentDir;
-      {$ELSE}
-      spathfileBitmap:='/tmp/';
-      {$ENDIF}
-      {
-      sfileBitmap:=spathfileBitmap+'rlbcod'+inttostr(randFile)+'.bmp';
-      sfileBitmapResult:=spathfileBitmap+'rlbcodresult'+inttostr(randFile)+'.bmp';
-      tsfile.Add(sfileBitmap);
-      tsfile.Add(sfileBitmapResult);
-      tsfile.SaveToFile(spathfileBitmap+'rlbcod.dat');
-      m.SaveToFile(sfileBitmap);
-      rlRotateBitmap(ang);
-//      rlRotateBitmap(pchar(sfileBitmap),pchar(sfileBitmapResult),ang);
-      a.LoadFromFile(sfileBitmapResult);
-      }
-      {$ELSE}
       a:=RotatedBitmap(m,ang);
-      {$ENDIF}
       try
         case Alignment of
           taCenter      : l:=(r.Left+r.Right-a.Width) div 2;
