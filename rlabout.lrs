@@ -5296,6 +5296,6 @@ LazarusResources.Add('TfrmRLAbout','FORMDATA',[
   +'lblLazarusVersion'#4'Left'#2'4'#6'Height'#2#14#3'Top'#3#141#0#5'Width'#2'b'
   +#7'Caption'#6#20'Vers'#195#163'o para Lazarus'#11'ParentColor'#8#7'Visible'#8
   +#0#0#7'TBitBtn'#5'bbtOk'#4'Left'#3'8'#1#6'Height'#2#26#3'Top'#3#136#0#5'Widt'
-  +'h'#2'c'#7'Caption'#6#3'&Ok'#7'Default'#9#4'Kind'#7#4'bkOK'#9'NumGlyphs'#2#0
-  +#8'TabOrder'#2#0#0#0#0
+  +'h'#2'c'#7'Caption'#6#3'&Ok'#7'Default'#9#4'Kind'#7#4'bkOK'#11'ModalResult'#2
+  +#1#9'NumGlyphs'#2#0#8'TabOrder'#2#0#0#0#0
 ]);
