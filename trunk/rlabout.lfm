@@ -4412,6 +4412,7 @@ object frmRLAbout: TfrmRLAbout
     Caption = '&Ok'
     Default = True
     Kind = bkOK
+    ModalResult = 1
     NumGlyphs = 0
     TabOrder = 0
   end
