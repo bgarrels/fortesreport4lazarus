@@ -497,7 +497,7 @@ type
 implementation
 
 uses
-  RLUtils;
+  RLUtils, LConvEncoding;
 
 type
   TRLBarcodeTypeInfo=record
@@ -1482,7 +1482,7 @@ const
     (a:')'; b:')'; c:'09'; data:'221213' ),
     (a:'*'; b:'*'; c:'10'; data:'221312' ),
     (a:'+'; b:'+'; c:'11'; data:'231212' ),
-    (a:'´'; b:'´'; c:'12'; data:'112232' ),
+    (a:Chr(180){'´'}; b:Chr(180){'´'}; c:'12'; data:'112232' ),
     (a:'-'; b:'-'; c:'13'; data:'122132' ),
     (a:'.'; b:'.'; c:'14'; data:'122231' ),
     (a:'/'; b:'/'; c:'15'; data:'113222' ),
@@ -1613,7 +1613,7 @@ begin
     end;
 end;
 begin
-  text:=aText;
+  text:=UTF8ToCP1252(aText);
   //
   case fBarcodeType of
     bcCode128A,
