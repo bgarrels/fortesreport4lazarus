@@ -10,7 +10,7 @@ object RLDraftFilterDialogForm: TRLDraftFilterDialogForm
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Position = poOwnerFormCenter
-  LCLVersion = '0.9.26.2'
+  LCLVersion = '0.9.29'
   object ButtonOk: TButton
     Left = 92
     Height = 25
@@ -48,10 +48,6 @@ object RLDraftFilterDialogForm: TRLDraftFilterDialogForm
     ChildSizing.ControlsPerLine = 1
     ClientHeight = 47
     ClientWidth = 241
-    Items.Strings = (
-      '80 colunas'
-      '132 colunas'
-    )
     TabOrder = 2
   end
 end
