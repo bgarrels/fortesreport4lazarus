@@ -1,35 +1,25 @@
-{$I RLReport.inc}
-
-{@unit RLDraftFilter - Implementação do filtro de impressão draft. 
+{@unit RLDraftFilter - Implementação do filtro de impressão draft.
 Portado para o Lazarus - Trabalho inicial de Isaac Trindade da Silva contato tioneobrasil@yahoo.com.br dicas4lazarus@yahoo.com.br
 Lazarus Ported - initial work by Isaac 07/2009
 }
 unit RLDraftFilter;
-{$IFDEF FPC}
+
 {$MODE DELPHI}
-{$ENDIF}
+{$I RLReport.inc}
+
 //{$DEFINE SHOWMESS}
+
+//todo: testar com UTF-8
+
 interface
 
 uses
+  {$ifdef Windows}
+  ShellApi,
+  {$endif}
   SysUtils, Classes, Math, Contnrs, Dialogs,
-{$ifdef MSWINDOWS}
-{$IFDEF FPC}
-  LCLIntf, LCLType, ShellApi,
-{$ELSE}
-  Windows, ShellApi,
-{$ENDIF}
-{$else}
-  Types, Libc,
-{$endif}
-{$ifdef VCL}
+  LCLIntf, LCLType,
   Graphics, RLMetaVCL,
-{$else}
-  QGraphics, RLMetaCLX,
-{$endif}
-{$IFDEF FPC}
-  rlshared,
-{$ENDIF}
   RLMetaFile, RLConsts, RLUtils, RLFilters, RLTypes, RLPrinters;
 
 type
@@ -430,7 +420,7 @@ type
 implementation
 
 uses
-  RLDraftFilterDialog;
+  RLDraftFilterDialog, IntfGraphics, FPimage;
 
 const
   AspectratioX=126/100;
@@ -449,6 +439,12 @@ var
   PinsPerRow:integer=12;
   PinsPerCol:integer=12;
 
+const
+  PlotColors:array[boolean] of TFPColor=(
+    (Red: $ffff; Green: $ffff; Blue: $ffff; Alpha: alphaOpaque), //white
+    (Red: $0000; Green: $0000; Blue: $0000; Alpha: alphaOpaque)  //black
+  );
+
 procedure DoColorTable(aSource,aDest:TBitmap; aContrast:double=2);
 const
   MatrixSize=4;
@@ -456,77 +452,71 @@ const
                                                              (128, 64,176,112),
                                                              ( 32,224, 16,208),
                                                              (160, 96,144, 80));
-  PlotColors:array[boolean] of TColor=(clWhite,clBlack);
 var
   x,y,i:integer;
   plot :boolean;
-  srcln:PRGBArray;
-  dstln:PRGBArray;
+  R, G, B: byte;
+  SrcImg: TLazIntfImage;
+  DestImg: TLazIntfImage;
 begin
-  aSource.PixelFormat:=pf32bit;
-  aDest.PixelFormat  :=pf32bit;
-  aDest.Width        :=aSource.Width;
-  aDest.Height       :=aSource.Height;
-  {$IFDEF FPC}
-  aDest.assign(aSource);
-  {$ELSE}
+  SrcImg := aSource.CreateIntfImage;
+  DestImg := TLazIntfImage.Create(aSource.Width, aSource.Height);
+  DestImg.DataDescription := SrcImg.DataDescription;
+  DestImg.SetSize(aSource.Width, aSource.Height);
   for y:=0 to aSource.Height-1 do
   begin
-    srcln:=aSource.ScanLine[y];
-    dstln:=aDest.ScanLine[y];
     for x:=0 to aSource.Width-1 do
     begin
-      with srcln[x] do
-      i   :=(rgbRed+rgbGreen+rgbBlue) div 3;
-
+      //convert from FPColor to byte
+      with SrcImg.Colors[x,y] do
+      begin
+        R := (Red shr 8) and $ff;
+        G := (Green shr 8) and $ff;
+        B := (Blue shr 8) and $ff;
+      end;
+      i   :=(R+G+B) div 3;
       i   :=Trunc(((i-128)*aContrast+128));
       plot:=(i<TheMatrix[y mod MatrixSize,x mod MatrixSize]);
-      with dstln[x] do
-      begin
-        rgbRed  :=Byte(not plot)*255;
-        rgbGreen:=Byte(not plot)*255;
-        rgbBlue :=Byte(not plot)*255;
-      end;
+      DestImg.Colors[x,y] := PlotColors[plot];
     end;
   end;
-  {$ENDIF}
+  aDest.LoadFromIntfImage(DestImg);
+  SrcImg.Destroy;
+  DestImg.Destroy;
 end;
 
 procedure DoErrorDiffusion(aSource,aDest:TBitmap; aContrast:double=2);
-const
-  PlotColors:array[boolean] of TColor=(clWhite,clBlack);
 var
   x,y,i:integer;
   plot :boolean;
-  srcln:PRGBArray;
-  dstln:PRGBArray;
+  R, G, B: byte;
+  SrcImg: TLazIntfImage;
+  DestImg: TLazIntfImage;
 begin
-  aSource.PixelFormat:=pf32bit;
-  aDest.PixelFormat  :=pf32bit;
-  aDest.Width        :=aSource.Width;
-  aDest.Height       :=aSource.Height;
-  {$IFDEF FPC}
-  aDest.assign(aSource);
-  {$ELSE}
+  SrcImg := aSource.CreateIntfImage;
+  DestImg := TLazIntfImage.Create(aSource.Width, aSource.Height);
+  DestImg.DataDescription := SrcImg.DataDescription;
+  DestImg.SetSize(aSource.Width, aSource.Height);
   for y:=0 to aSource.Height-1 do
   begin
-    srcln:=aSource.ScanLine[y];
-    dstln:=aDest.ScanLine[y];
     for x:=0 to aSource.Width-1 do
     begin
-      with srcln[x] do
-        i:=(rgbRed+rgbGreen+rgbBlue) div 3;
-      i   :=Trunc(((i-128)*aContrast+128));
-      plot:=(i<Random(256));
-      with dstln[x] do
+      //convert from FPColor to byte
+      with SrcImg.Colors[x,y] do
       begin
-        rgbRed  :=Byte(not plot)*255;
-        rgbGreen:=Byte(not plot)*255;
-        rgbBlue :=Byte(not plot)*255;
+        R := (Red shr 8) and $ff;
+        G := (Green shr 8) and $ff;
+        B := (Blue shr 8) and $ff;
       end;
+      i := (R+G+B) div 3;
+      i := Trunc(((i-128)*aContrast+128));
+      plot:=(i<Random(256));
+      DestImg.Colors[x,y] := PlotColors[plot];
     end;
   end;
-  {$ENDIF}
+  aDest.LoadFromIntfImage(DestImg);
+  SrcImg.Destroy;
+  DestImg.Destroy;
 end;
 
 function TranslateAccents(const aString,aBS:string):string;
@@ -569,15 +559,10 @@ end;
 
 function GetBitmapPixel(aBitmap:TBitmap; aX,aY:integer; aDefault:TColor):TColor;
 begin
-  {$IFDEF FPC}
-  Result:=aDefault;
-  {$ELSE}
   if aY<aBitmap.Height then
-    with TRGBArray(aBitmap.ScanLine[aY]^)[aX] do
-      Result:=RGB(rgbRed,rgbGreen,rgbBlue)
+    Result := aBitmap.Canvas.Pixels[aX,aY]
   else
     Result:=aDefault;
-  {$ENDIF}
 end;
 
 function PinToCol(aPin,aCharWidth:integer):integer;
@@ -749,7 +734,7 @@ end;
 procedure TRLDraftFilter.InternalEndDoc;
 var
   cmd:string;
-{$ifdef MSWINDOWS}
+{$ifdef WINDOWS}
 var
   par:string;
   i  :integer;
@@ -764,7 +749,7 @@ begin
                      cmd:=StringReplace(cmd,'%p',RLPrinter.PrinterName,[rfReplaceAll,rfIgnoreCase]);
                      cmd:=StringReplace(cmd,'%d',RLPrinter.PrinterPort,[rfReplaceAll,rfIgnoreCase]);
                      cmd:=StringReplace(cmd,'%f',fDeviceFileName      ,[rfReplaceAll,rfIgnoreCase]);
-{$ifdef MSWINDOWS}
+{$ifdef WINDOWS}
                      i:=Pos(' ',cmd);
                      if i=0 then
                        i:=Length(cmd)+1;
@@ -779,6 +764,7 @@ begin
                      {$IFDEF SHOWMESS}
                      ShowMessage(cmd);
                      {$ENDIF}
+                     //todo: substituir libc por uma chamada padrão em todos unix
                      Libc.system(PChar(cmd));
 {$endif};
                    end;
@@ -1801,13 +1787,6 @@ begin
 end;
 
 procedure TRLDraftFilter.InternalDrawPage(aPage:TRLGraphicSurface);
-type
-  TRGB4=packed record
-    rgbBlue    :byte;
-    rgbGreen   :byte;
-    rgbRed     :byte;
-    rgbReserved:byte;
-  end;
 var
   objlist:TObjectList;
   obj    :TDraftObj;
