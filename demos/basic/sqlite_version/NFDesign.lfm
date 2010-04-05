@@ -1,0 +1,841 @@
+object NFDesignForm: TNFDesignForm
+  Left = 316
+  Height = 824
+  Top = 186
+  Width = 876
+  Caption = 'NFDesignForm'
+  ClientHeight = 824
+  ClientWidth = 876
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  LCLVersion = '0.9.29'
+  object RLReport1: TRLReport
+    Left = 8
+    Height = 1123
+    Top = 76
+    Width = 794
+    AdjustableMargins = True
+    DataSource = DataSourceNF
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    RealBounds.Left = 0
+    RealBounds.Top = 0
+    RealBounds.Width = 0
+    RealBounds.Height = 0
+    ExpressionParser = RLExpressionParser1
+    Transparent = False
+    BeforePrint = RLReport1BeforePrint
+    object RLBand1: TRLBand
+      Left = 38
+      Height = 21
+      Top = 106
+      Width = 718
+      Color = clWhite
+      ParentColor = False
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      Transparent = False
+      object RLDBText1: TRLDBText
+        Left = 1
+        Height = 21
+        Top = 0
+        Width = 85
+        Align = faHeight
+        Color = clWhite
+        DataField = 'NF_NUMERO'
+        DataSource = DataSourceNF
+        Holder = RLLabel1
+        ParentColor = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLDBText2: TRLDBText
+        Left = 47
+        Height = 21
+        Top = 0
+        Width = 62
+        Align = faHeight
+        Color = clWhite
+        DataField = 'NF_DATA'
+        DataSource = DataSourceNF
+        Holder = RLLabel2
+        ParentColor = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLDBText7: TRLDBText
+        Left = 93
+        Height = 21
+        Top = 0
+        Width = 93
+        Align = faHeight
+        Color = clWhite
+        DataField = 'NF_CLI_NOME'
+        DataSource = DataSourceNF
+        Holder = RLLabel7
+        ParentColor = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+    end
+    object RLSubDetail1: TRLSubDetail
+      Left = 38
+      Height = 110
+      Top = 127
+      Width = 718
+      Color = clWhite
+      DataSource = DataSourceINF
+      Margins.LeftMargin = 10
+      ParentColor = False
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      Transparent = False
+      object RLBand2: TRLBand
+        Left = 38
+        Height = 21
+        Top = 0
+        Width = 680
+        BandType = btColumnHeader
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Color = clWhite
+        ParentColor = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+        object RLLabel3: TRLLabel
+          Left = 0
+          Height = 20
+          Top = 0
+          Width = 46
+          Align = faLeft
+          AutoSize = False
+          Caption = 'Código do Item'
+          Color = clWhite
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object RLLabel4: TRLLabel
+          Left = 496
+          Height = 20
+          Top = 0
+          Width = 92
+          Align = faRight
+          Alignment = taRightJustify
+          Caption = 'Valor Unitário'
+          Color = clWhite
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object RLLabel5: TRLLabel
+          Left = 588
+          Height = 20
+          Top = 0
+          Width = 46
+          Align = faRight
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Quantidade'
+          Color = clWhite
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object RLLabel6: TRLLabel
+          Left = 634
+          Height = 20
+          Top = 0
+          Width = 46
+          Align = faRight
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Subtotal'
+          Color = clWhite
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object RLLabel8: TRLLabel
+          Left = 46
+          Height = 20
+          Top = 0
+          Width = 450
+          Align = faClient
+          Caption = 'Descrição'
+          Color = clWhite
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+      end
+      object RLBand3: TRLBand
+        Left = 38
+        Height = 21
+        Top = 21
+        Width = 680
+        Color = clWhite
+        ParentColor = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+        object RLDBText3: TRLDBText
+          Left = 0
+          Height = 21
+          Top = 0
+          Width = 46
+          Align = faHeight
+          AutoSize = False
+          Color = clWhite
+          DataField = 'INF_ITE_CODIGO'
+          DataSource = DataSourceINF
+          Holder = RLLabel3
+          ParentColor = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object RLDBText4: TRLDBText
+          Left = 496
+          Height = 21
+          Top = 0
+          Width = 92
+          Align = faHeight
+          Alignment = taRightJustify
+          AutoSize = False
+          Color = clWhite
+          DataField = 'INF_VALOR'
+          DataSource = DataSourceINF
+          Holder = RLLabel4
+          ParentColor = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object RLDBText5: TRLDBText
+          Left = 588
+          Height = 21
+          Top = 0
+          Width = 46
+          Align = faHeight
+          Alignment = taRightJustify
+          AutoSize = False
+          Color = clWhite
+          DataField = 'INF_QUANT'
+          DataSource = DataSourceINF
+          Holder = RLLabel5
+          ParentColor = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object RLDBText6: TRLDBText
+          Left = 634
+          Height = 21
+          Top = 0
+          Width = 46
+          Align = faHeight
+          Alignment = taRightJustify
+          AutoSize = False
+          Color = clWhite
+          DataFormula = 'INF_VALOR*INF_QUANT'
+          DataSource = DataSourceINF
+          DisplayMask = ',0.00'
+          Holder = RLLabel6
+          ParentColor = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object RLDBText8: TRLDBText
+          Left = 46
+          Height = 21
+          Top = 0
+          Width = 450
+          Align = faHeight
+          AutoSize = False
+          Color = clWhite
+          DataField = 'INF_ITE_NOME'
+          DataSource = DataSourceINF
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Holder = RLLabel8
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+      end
+      object RLBand4: TRLBand
+        Left = 38
+        Height = 21
+        Top = 42
+        Width = 680
+        BandType = btSummary
+        Color = clWhite
+        ParentColor = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+        object RLDBResult1: TRLDBResult
+          Left = 444
+          Height = 21
+          Top = 0
+          Width = 236
+          Align = faHeight
+          Alignment = taRightJustify
+          Color = clWhite
+          DataFormula = 'INF_VALOR*INF_QUANT'
+          DataSource = DataSourceINF
+          DisplayMask = ',0.00'
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Holder = RLLabel6
+          Info = riSum
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Text = 'Total: '
+          Transparent = False
+        end
+      end
+    end
+    object RLBand5: TRLBand
+      Left = 38
+      Height = 21
+      Top = 85
+      Width = 718
+      BandType = btColumnHeader
+      Borders.Sides = sdAll
+      Color = clWhite
+      ParentColor = False
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      Transparent = False
+      object RLLabel1: TRLLabel
+        Left = 1
+        Height = 19
+        Top = 1
+        Width = 46
+        Align = faLeft
+        AutoSize = False
+        Caption = 'Número da NF'
+        Color = clWhite
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel2: TRLLabel
+        Left = 47
+        Height = 19
+        Top = 1
+        Width = 46
+        Align = faLeft
+        AutoSize = False
+        Caption = 'Emissão'
+        Color = clWhite
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel7: TRLLabel
+        Left = 93
+        Height = 19
+        Top = 1
+        Width = 49
+        Align = faLeft
+        Caption = 'Cliente'
+        Color = clWhite
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+    end
+    object RLBand6: TRLBand
+      Left = 38
+      Height = 47
+      Top = 38
+      Width = 718
+      BandType = btHeader
+      Color = clWhite
+      Degrade.OppositeColor = clWhite
+      ParentColor = False
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      object RLImage1: TRLImage
+        Left = 4
+        Height = 32
+        Top = 4
+        Width = 32
+        Picture.Data = {
+          07544269746D617076020000424D760200000000000076000000280000002000
+          000020000000010004000000000000020000120B0000120B0000100000001000
+          000000000000000080000080000000808000800000008000800080800000C0C0
+          C000808080000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
+          FF00FFFFFFFFFFFFFFFFFFFF9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9FFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFF9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF99FFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFF99FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF99FFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFF99FFFFFFFFFFFFFFFFFFFFFFFFFFFFF999FFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFF99FFFFFFFFFFFFFFFFFFFFFFFFFFFFF999FFFFFFFFFFFF
+          FFFFFFFFFFFF99FFF999FFFFFFFFFFFFFFFFFFFFFF99FFFF999FFFFFFFFFFFFF
+          FFFFFFFF999FFFFF999FFFFFFFFFFFFFFFFFFFF9999FFFF9999FFFFFFFFFFFFF
+          FFFFFF9999FFFFF9999FFFFFFFFFFFFFFFFFF99999FFFFF9999FFFFFFFFFFFFF
+          FFFFF99999FFFF99999FFFFFFFFFFFFFFFFFF99999FFFF99999FFFFFFFFFFFFF
+          FFFFF999999FFF99999FFFFFFFFFFFFFFFFFFF999999FF99999FFFFFFFFFFFFF
+          FFFFFFF999999F99999FFFFFFFFFFFFFFFFFFFFFF9999999999FFFFFFFFFFFFF
+          FFFFFFFFFFF999999999FFFFFFFFFFFFFFFFFFFFFFFFF9999999FFFFFFFFFFFF
+          FFFFFFFFFFFFFF9999999FFFFFFFFF999FFFFF9999FFFFF999999999999999FF
+          FFFFF999999FFFFF99999999999FFFFFFFFFF999999FFFFFF999999FFFFFFFFF
+          FFFFF999999FFFFFFF9999999FFFFFFFFFFFF999999FFFFFFFFF99999999FFFF
+          999FFF9999FFFFFFFFFFFF99999999999FFFFFFFFFFFFFFFFFFFFFFFF9999FFF
+          FFFF
+        }
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Scaled = True
+        Transparent = False
+      end
+      object RLSystemInfo1: TRLSystemInfo
+        Left = 463
+        Height = 16
+        Top = 4
+        Width = 252
+        Alignment = taRightJustify
+        Anchors = [fkRight]
+        Color = clWhite
+        Info = itPagePreview
+        ParentColor = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Text = 'Pag.: # de #'
+      end
+      object RLSystemInfo2: TRLSystemInfo
+        Left = 654
+        Height = 16
+        Top = 24
+        Width = 60
+        Alignment = taRightJustify
+        Anchors = [fkRight]
+        Color = clWhite
+        Info = itFullDate
+        ParentColor = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+    end
+  end
+  object DataSourceNF: TDatasource
+    DataSet = DatasetNF
+    left = 16
+    top = 48
+  end
+  object DataSourceINF: TDatasource
+    DataSet = DatasetINF
+    left = 64
+    top = 48
+  end
+  object DataSourceCLI: TDatasource
+    DataSet = DatasetCLI
+    left = 112
+    top = 48
+  end
+  object DataSourceITE: TDatasource
+    DataSet = DatasetITE
+    left = 160
+    top = 48
+  end
+  object RLExpressionParser1: TRLExpressionParser
+    left = 216
+  end
+  object DatasetITE: TSqlite3Dataset
+    FileName = 'ite.db'
+    SQL = 'Select * from ITE;'
+    TableName = 'ITE'
+    FieldDefs = <    
+      item
+        Name = 'ITE_CODIGO'
+        DataType = ftInteger
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'ITE_NOME'
+        DataType = ftString
+        Precision = -1
+        Size = 40
+      end    
+      item
+        Name = 'ITE_GRUPO'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end>
+    left = 160
+    object DatasetITEITE_CODIGO: TLongintField
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'ITE_CODIGO'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object DatasetITEITE_NOME: TStringField
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'ITE_NOME'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 40
+    end
+    object DatasetITEITE_GRUPO: TStringField
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'ITE_GRUPO'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+  end
+  object DatasetCLI: TSqlite3Dataset
+    FileName = 'cli.db'
+    SQL = 'Select * from CLI;'
+    TableName = 'CLI'
+    FieldDefs = <    
+      item
+        Name = 'CLI_CODIGO'
+        DataType = ftInteger
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'CLI_NOME'
+        DataType = ftString
+        Precision = -1
+        Size = 40
+      end>
+    left = 112
+    object DatasetCLICLI_CODIGO: TLongintField
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'CLI_CODIGO'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object DatasetCLICLI_NOME: TStringField
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'CLI_NOME'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 40
+    end
+  end
+  object DatasetINF: TSqlite3Dataset
+    IndexFieldNames = 'INF_NF_NUMERO'
+    FileName = 'inf.db'
+    TableName = 'INF'
+    MasterSource = DataSourceNF
+    MasterFields = 'NF_NUMERO'
+    FieldDefs = <    
+      item
+        Name = 'INF_NF_NUMERO'
+        DataType = ftString
+        Precision = -1
+        Size = 6
+      end    
+      item
+        Name = 'INF_ITE_CODIGO'
+        DataType = ftInteger
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'INF_QUANT'
+        DataType = ftFloat
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'INF_VALOR'
+        DataType = ftFloat
+        Precision = -1
+        Size = 0
+      end>
+    OnCalcFields = TableINFCalcFields
+    left = 64
+    object DatasetINFINF_NF_NUMERO: TStringField
+      DisplayWidth = 6
+      FieldKind = fkData
+      FieldName = 'INF_NF_NUMERO'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 6
+    end
+    object DatasetINFINF_ITE_CODIGO: TLongintField
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'INF_ITE_CODIGO'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object DatasetINFINF_QUANT: TFloatField
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'INF_QUANT'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 0
+      MinValue = 0
+      Precision = -1
+    end
+    object DatasetINFINF_VALOR: TFloatField
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'INF_VALOR'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 0
+      MinValue = 0
+      Precision = -1
+    end
+    object DatasetINFINF_SUBTOTAL: TFloatField
+      DisplayWidth = 10
+      FieldKind = fkCalculated
+      FieldName = 'INF_SUBTOTAL'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 0
+      MinValue = 0
+    end
+    object DatasetINFITE_NOME1: TStringField
+      DisplayWidth = 40
+      FieldKind = fkLookup
+      FieldName = 'INF_ITE_NOME'
+      Index = 5
+      KeyFields = 'INF_ITE_CODIGO'
+      LookupCache = False
+      LookupDataSet = DatasetITE
+      LookupKeyFields = 'ITE_CODIGO'
+      LookupResultField = 'ITE_NOME'
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 40
+    end
+  end
+  object DatasetNF: TSqlite3Dataset
+    FileName = 'nf.db'
+    SQL = 'Select * from NF;'
+    TableName = 'NF'
+    FieldDefs = <    
+      item
+        Name = 'NF_NUMERO'
+        DataType = ftString
+        Precision = -1
+        Size = 6
+      end    
+      item
+        Name = 'NF_DATA'
+        DataType = ftDate
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'NF_CLI_CODIGO'
+        DataType = ftInteger
+        Precision = -1
+        Size = 0
+      end>
+    left = 16
+    object DatasetNFNF_NUMERO: TStringField
+      DisplayWidth = 6
+      FieldKind = fkData
+      FieldName = 'NF_NUMERO'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 6
+    end
+    object DatasetNFNF_DATA: TDateField
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'NF_DATA'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object DatasetNFNF_CLI_CODIGO: TLongintField
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'NF_CLI_CODIGO'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object DatasetNFCLI_NOME1: TStringField
+      DisplayWidth = 40
+      FieldKind = fkLookup
+      FieldName = 'NF_CLI_NOME'
+      Index = 3
+      KeyFields = 'NF_CLI_CODIGO'
+      LookupCache = False
+      LookupDataSet = DatasetCLI
+      LookupKeyFields = 'CLI_CODIGO'
+      LookupResultField = 'CLI_NOME'
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 40
+    end
+  end
+end
