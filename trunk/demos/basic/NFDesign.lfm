@@ -1,7 +1,7 @@
 object NFDesignForm: TNFDesignForm
-  Left = 340
+  Left = 316
   Height = 824
-  Top = 39
+  Top = 186
   Width = 876
   Caption = 'NFDesignForm'
   ClientHeight = 824
@@ -144,10 +144,10 @@ object NFDesignForm: TNFDesignForm
           Transparent = False
         end
         object RLLabel4: TRLLabel
-          Left = 521
+          Left = 496
           Height = 20
           Top = 0
-          Width = 67
+          Width = 92
           Align = faRight
           Alignment = taRightJustify
           Caption = 'Valor Unitário'
@@ -212,7 +212,7 @@ object NFDesignForm: TNFDesignForm
           Left = 46
           Height = 20
           Top = 0
-          Width = 475
+          Width = 450
           Align = faClient
           Caption = 'Descrição'
           Color = clWhite
@@ -260,10 +260,10 @@ object NFDesignForm: TNFDesignForm
           Transparent = False
         end
         object RLDBText4: TRLDBText
-          Left = 521
+          Left = 496
           Height = 21
           Top = 0
-          Width = 67
+          Width = 92
           Align = faHeight
           Alignment = taRightJustify
           AutoSize = False
@@ -321,7 +321,7 @@ object NFDesignForm: TNFDesignForm
           Left = 46
           Height = 21
           Top = 0
-          Width = 475
+          Width = 450
           Align = faHeight
           AutoSize = False
           Color = clWhite
@@ -441,7 +441,7 @@ object NFDesignForm: TNFDesignForm
         Left = 93
         Height = 19
         Top = 1
-        Width = 36
+        Width = 49
         Align = faLeft
         Caption = 'Cliente'
         Color = clWhite
@@ -507,10 +507,10 @@ object NFDesignForm: TNFDesignForm
         Transparent = False
       end
       object RLSystemInfo1: TRLSystemInfo
-        Left = 507
-        Height = 13
+        Left = 463
+        Height = 16
         Top = 4
-        Width = 208
+        Width = 252
         Alignment = taRightJustify
         Anchors = [fkRight]
         Color = clWhite
@@ -523,10 +523,10 @@ object NFDesignForm: TNFDesignForm
         Text = 'Pag.: # de #'
       end
       object RLSystemInfo2: TRLSystemInfo
-        Left = 664
-        Height = 13
+        Left = 654
+        Height = 16
         Top = 24
-        Width = 50
+        Width = 60
         Alignment = taRightJustify
         Anchors = [fkRight]
         Color = clWhite
@@ -619,7 +619,7 @@ object NFDesignForm: TNFDesignForm
     IndexDefs = <    
       item
         IndexFile = 'IDX_NF_NUMERO'
-        SortField = 'INF_NF_NUMERO'
+        SortField = 'INF_NF_NUMERO;INF_ITE_CODIGO'
         Options = []
       end>
     IndexName = 'IDX_NF_NUMERO'

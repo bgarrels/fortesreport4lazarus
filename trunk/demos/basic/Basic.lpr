@@ -7,13 +7,10 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, Main, NFDesign, ITDesign, fortes324forlaz, LResources, DBFLaz
+  Forms, Main
   { you can add units after this };
 
-{$IFDEF WINDOWS}{$R Basic.rc}{$ENDIF}
-
 begin
-  {$I Basic.lrs}
   Application.Initialize;
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;

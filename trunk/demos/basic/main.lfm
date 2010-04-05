@@ -62,4 +62,13 @@ object MainForm: TMainForm
     left = 128
     top = 88
   end
+  object RLPDFFilter1: TRLPDFFilter
+    DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright © 1999-2008 Fortes Informática'
+    DocumentInfo.ModDate = 0
+    ViewerOptions = []
+    FontEncoding = feNoEncoding
+    DisplayName = 'PDF Document'
+    left = 258
+    top = 88
+  end
 end

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, RLHTMLFilter, RLRichFilter;
+  StdCtrls, RLHTMLFilter, RLRichFilter, RLPDFFilter;
 
 type
 
@@ -19,6 +19,7 @@ type
     CloseButton: TButton;
     PreviewNFButton: TButton;
     RLHTMLFilter1: TRLHTMLFilter;
+    RLPDFFilter1: TRLPDFFilter;
     RLRichFilter1: TRLRichFilter;
     procedure CloseButtonClick(Sender: TObject);
     procedure PreviewItensButtonClick(Sender: TObject);
