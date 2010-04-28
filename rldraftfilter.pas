@@ -14,6 +14,9 @@ unit RLDraftFilter;
 interface
 
 uses
+{$ifdef unix}
+  Process,
+{$endif}
   {$ifdef Windows}
   ShellApi,
   {$endif}
@@ -734,8 +737,10 @@ end;
 procedure TRLDraftFilter.InternalEndDoc;
 var
   cmd:string;
+{$ifdef unix}
+  VProcess: TProcess;
+{$endif}
 {$ifdef WINDOWS}
-var
   par:string;
   i  :integer;
 {$endif}
@@ -764,8 +769,14 @@ begin
                      {$IFDEF SHOWMESS}
                      ShowMessage(cmd);
                      {$ENDIF}
-                     //todo: substituir libc por uma chamada padrão em todos unix
-                     Libc.system(PChar(cmd));
+                     VProcess := TProcess.Create(nil);
+                     try
+                       VProcess.Options := [poNoConsole];
+                       VProcess.CommandLine := Cmd;
+                       VProcess.Execute;
+                     finally
+                       VProcess.Free;
+                     end;
 {$endif};
                    end;
     dkFileName   : ;
@@ -1962,4 +1973,4 @@ begin
 end;
 
 end.
-
+
