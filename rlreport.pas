@@ -6,48 +6,26 @@
 {@unit RLReport - Implementação dos principais componentes e tipos do FortesReport.
 Portado para o Lazarus - Trabalho inicial de Isaac Trindade da Silva contato tioneobrasil@yahoo.com.br dicas4lazarus@yahoo.com.br
 Lazarus Ported - initial work by Isaac 07/2009
+
+29/04/10 - Luiz Amrico
+  * Remove cdigo especfico de Delphi/CLX. Usa tipos especficos da LCL
+  * Corrige RLAngleLabel
 }
 unit RLReport;
 {$MODE DELPHI}{$H+}
 interface
 
 uses
-  {$IFDEF FPC}
-  LCLIntf,
-  LCLType,
-  LMessages,
-  FileUtil,
-  {$ENDIF}
-  DB, Classes, SysUtils, Math, Contnrs, TypInfo, SyncObjs,
+  Types, LCLType, LCLProc, DB, Classes, SysUtils, Math, Contnrs, TypInfo, SyncObjs,
 {$ifdef USEVARIANTS}
   Variants,
 {$endif}
 {$ifdef USEMASKUTILS}
   MaskUtils,
 {$endif}
-{$ifdef MSWINDOWS}
-{$IFNDEF FPC}
-  Windows,
-{$ENDIF}
-{$else}
-  Types,
-{$endif}
-{$ifdef VCL}
-  ExtCtrls, DBCtrls, Controls, Forms, Dialogs, StdCtrls, Messages, Buttons, Graphics, //Mask,
-{$else}
-  Qt, QTypes, QExtCtrls, QDBCtrls, QControls, QForms, QDialogs, QStdCtrls, QButtons, QGraphics, 
-{$endif}
-{$ifdef VCL}
-  RLMetaVCL,
-{$else}
-  RLMetaCLX,
-{$endif}
-  RLMetaFile, RLFeedBack, RLParser, RLFilters, RLConsts, RLUtils, RLPrintDialog, RLSaveDialog, RLPreviewForm,
-  RLPreview, RLTypes, RLPrinters, RLSpoolFilter, RLPageSetupConfig,
-  {$IFDEF FPC}
-  rlshared
-  {$ENDIF}
-  ;
+  ExtCtrls, DBCtrls, Controls, Forms, Dialogs, StdCtrls, LMessages, Buttons, Graphics,
+  RLMetaVCL, RLMetaFile, RLFeedBack, RLParser, RLFilters, RLConsts, RLUtils, RLPrintDialog, RLSaveDialog, RLPreviewForm,
+  RLPreview, RLTypes, RLPrinters, RLSpoolFilter, RLPageSetupConfig;
 
 const
   CommercialVersion=RLConsts.CommercialVersion;
@@ -1255,19 +1233,11 @@ type
     // override & reintroduce
 
     procedure   Notification(aComponent: TComponent; Operation: TOperation); override;
-    {$IFNDEF FPC}
-    {$IFDEF LINUX}
     procedure   RequestAlign; override;
-    {$ENDIF}
-    {$ENDIF}
     function    GetClientRect:TRect; override;
     procedure   SetName(const Value:TComponentName); override;
-    procedure   WMMOUSEMOVE (var Msg: TMessage); message {$IFDEF FPC} LM_MOUSEMOVE; {$ELSE} WM_MOUSEMOVE;{$ENDIF}
-{$ifdef VCL}
+    procedure   WMMOUSEMOVE (var Msg: TLMessage); message LM_MOUSEMOVE;
     procedure   SetParent(aParent:TWinControl); override;
-{$else}
-    procedure   SetParent(const aParent:TWidgetControl); override;
-{$endif}
     procedure   InternalPaintFinish; dynamic;
     procedure   InternalPaint; dynamic;
     procedure   Paint; override;
@@ -1433,13 +1403,8 @@ type
     {@method SetAttribute - Modifica o valor do controle. :/}
     function    SetAttribute(const aName:string; aValue:variant):boolean; virtual;
 
-{$ifdef VCL}
-    procedure   CMColorChanged(var Message:TMessage); message CM_COLORCHANGED;
-    procedure   CMFontChanged(var Message:TMessage); message CM_FONTCHANGED;
-{$else}
-    procedure   ColorChanged; override;
-    procedure   FontChanged; override;
-{$endif}
+    procedure   CMColorChanged(var Message:TLMessage); message CM_COLORCHANGED;
+    procedure   CMFontChanged(var Message:TLMessage); message CM_FONTCHANGED;
 
     {@method PrepareStatics - Prepara os controles filhos do painel antes de imprimí-los.
      Esta operação consiste em invocar os eventos BeforePrint de cada controle, dando oportunidade para o
@@ -1771,11 +1736,6 @@ type
     // constructors & destructors
 
     constructor Create(aOwner:TComponent); override;
-    {$IFDEF FPC}
-    {$IFDEF LINUX}
-    procedure   Loaded; override;
-    {$ENDIF}
-    {$ENDIF}
 
     // custom properties
     
@@ -3282,7 +3242,7 @@ type
     // constructors & destructors
 
     constructor Create(aOwner:TComponent); override;
-    procedure CreateWnd; override;
+
     // custom methods
 
     function    DataCount:integer; dynamic;
@@ -3505,7 +3465,6 @@ type
     // constructors & destructors
 
     constructor Create(aOwner:TComponent); override;
-    procedure CreateWnd; override;
     destructor  Destroy; override;
 
     // override methods
@@ -4450,11 +4409,7 @@ type
     protected
     {@event OnMouseMove = ancestor /}
     property    OnMouseMove;///
-    {$IFDEF FPC}
-    procedure WMMouseMove (var Msg: TMessage); message LM_KEYDOWN;
-    {$ELSE}
-    procedure WMMouseMove (var Msg: TMessage); message WM_KEYDOWN;
-    {$ENDIF}
+    procedure WMMouseMove (var Msg: TLMessage); message LM_KEYDOWN;
   end;
   {/@class}
 
@@ -4887,6 +4842,9 @@ procedure LoadReportFromFile(const aFileName:string);
 {/@unit}
 
 implementation
+
+uses
+  LCLIntf;
 
 const
   faSlaveLeftSet  =[faLeft,faTop,faBottom,faLeftMost,faClient,faLeftTop,faLeftBottom,faCenterLeft,faClientLeft,faClientTop,faClientBottom,faWidth,faLeftOnly];
@@ -6345,18 +6303,14 @@ begin
       if i<>-1 then
         fHoldeds.Delete(i);
     end;
-  end;
-
+  end;  
 end;
 
 // anula alinhamento natural do delphi
-{$IFNDEF FPC}
-{$IFDEF LINUX}
 procedure TRLCustomControl.RequestAlign;
 begin
 end;
-{$ENDIF}
-{$ENDIF}
+
 procedure TRLCustomControl.PaintAsCustomControl;
 var
   r:TRect;
@@ -6375,9 +6329,9 @@ procedure TRLCustomControl.InternalPaintFinish;
 var
   p:TRLCustomReport;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomControl.InternalPaintFinish;');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  DebugLn('TRLCustomControl.InternalPaintFinish;');
+  {$ENDIF}
 
   p:=FindParentReport;
   if not Assigned(p) or p.ShowDesigners then
@@ -6393,16 +6347,6 @@ procedure TRLCustomControl.Paint;
 var
   r:TRLCustomReport;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomControl.Paint;');
-    {$ENDIF}
-  {$IFDEF FPC}
-{
-  InternalPaint;
-  InternalPaintFinish;
-  }
-  {$ENDIF}
-
   r:=FindParentReport;
   if Assigned(r) and (r.ReportState in [rsPreparing,rsClosing]) then // 3.20
   else
@@ -6553,37 +6497,20 @@ begin
   end;
 end;
 
-{$ifdef VCL}
-procedure TRLCustomControl.CMColorChanged(var Message: TMessage);
+procedure TRLCustomControl.CMColorChanged(var Message: TLMessage);
 begin
   if not (csLoading in ComponentState) and (Color<>clWhite) then
     fTransparent:=False;
   //  
   inherited;
 end;
-procedure TRLCustomControl.CMFontChanged(var Message:TMessage);
+procedure TRLCustomControl.CMFontChanged(var Message:TLMessage);
 begin
   AdjustBounds;
   Invalidate;
   //
   inherited;
 end;
-{$else}
-procedure TRLCustomControl.ColorChanged;
-begin
-  if not (csLoading in ComponentState) and (Color<>clWhite) then
-    fTransparent:=False;
-  //
-  inherited;
-end;
-procedure TRLCustomControl.FontChanged;
-begin
-  AdjustBounds;
-  Invalidate;
-  //
-  inherited;
-end;
-{$endif}
 
 type TFriendControl=class(TControl) end;
 
@@ -6612,11 +6539,7 @@ begin
     if aControl is TWinControl then
       TWinControl(aControl).PaintTo(aBitmap.Canvas.Handle,0,0)
     else if aControl is TControl then
-    {$IFDEF FPC}
       aControl.Perform(LM_PAINT,aBitmap.Canvas.Handle,0)
-    {$ELSE}
-      aControl.Perform(WM_PAINT,aBitmap.Canvas.Handle,0)
-    {$ENDIF}
     else
       SysUtils.Abort;  
 {$endif}
@@ -7641,15 +7564,11 @@ begin
   Result:=Caption;
 end;
 
-Procedure TRLCustomControl.WMMOUSEMOVE(var Msg: TMessage);
+Procedure TRLCustomControl.WMMOUSEMOVE(var Msg: TLMessage);
 begin
   inherited;
   ReleaseCapture;
-  {$IFDEF FPC}
   TWinControl(self).perform(LM_SYSCOMMAND, $f012, 0);
-  {$ELSE}
-  TWinControl(self).perform(WM_SYSCOMMAND, $f012, 0);
-  {$ENDIF}
 end;
 
 function TRLCustomControl.SetAttribute(const aName:string; aValue:variant):boolean;
@@ -7657,15 +7576,10 @@ begin
   Result:=False;
 end;
 
-{$ifdef VCL}
+
 procedure TRLCustomControl.SetParent(aParent:TWinControl);
 var
   p:TWinControl;
-{$else}
-procedure TRLCustomControl.SetParent(const aParent:TWidgetControl);
-var
-  p:TWidgetControl;
-{$endif}
 begin
   p:=aParent;
   if p<>nil then
@@ -7794,9 +7708,9 @@ end;
 constructor TRLCustomLabel.Create(aOwner:TComponent);
 begin
   inherited Create(aOwner);
-{$IFDEF TRACECUSTOMLABEL}
-writeln('TRLCustomLabel.Create');
-{$ENDIF}
+  {$IFDEF TRACECUSTOMLABEL}
+  Debugln('TRLCustomLabel.Create');
+  {$ENDIF}
 
   // customization
   Width      :=65;
@@ -7805,36 +7719,12 @@ writeln('TRLCustomLabel.Create');
   AutoSize   :=True;
 
 end;
-{$IFDEF FPC}
-{$IFDEF LINUX}
-
-procedure TRLCustomLabel.Loaded;
-begin
-{$IFDEF TRACECUSTOMLABEL}
-writeln('TRLCustomLabel.Loaded');
-{$ENDIF}
-
-{$IFDEF FPC}
-{$IFDEF LINUX}
-{
-InternalPaint;
-}
-{$ENDIF}
-{$ENDIF}
-end;
-{$ENDIF}
-{$ENDIF}
 
 procedure TRLCustomLabel.InternalPaint;
 var
   s:string;
   r:TRect;
 begin
-{$IFDEF TRACECUSTOMLABEL}
-writeln('TRLCustomLabel.InternalPaint;');
-writeln('TRLCustomLabel.InternalPaint Caption='+Caption);
-{$ENDIF}
-
   PaintAsCustomControl;
   s:=Caption;
   if (s=emptystr) and not IsPreparing then
@@ -7857,9 +7747,9 @@ var
   f:TRLMetaTextFlags;
 begin
   inherited;
-{$IFDEF TRACECUSTOMLABEL}
-writeln('TRLCustomLabel.InternalPrint;');
-{$ENDIF}
+  {$IFDEF TRACECUSTOMLABEL}
+  DebugLn('TRLCustomLabel.InternalPrint;');
+  {$ENDIF}
   //
   r:=CalcPrintClientRect;
   with RequestParentSurface do
@@ -7896,9 +7786,9 @@ var
   w:integer;
   c:string;
 begin
-{$IFDEF TRACECUSTOMLABEL}
-writeln('TRLCustomLabel.CalcSize');
-{$ENDIF}
+  {$IFDEF TRACECUSTOMLABEL}
+  Debugln('TRLCustomLabel.CalcSize');
+  {$ENDIF}
 
   aSize:=Point(Width,Height);
   if not AutoSize then
@@ -7952,18 +7842,7 @@ var
   s:string;
   r:TRect;
   m,a:TBitmap;
-  {$IFDEF FPC}
-  sfileBitmap:String;
-  sfileBitmapResult:String;
-  randFile:integer;
-  spathfileBitmap:String;
-  tsfile:TStringlist;
-  {$ENDIF}
 begin
-  {$IFDEF FPC}
-  a:=TBitmap.Create;
-  tsfile:=TStringlist.Create;
-  {$ENDIF}
   PaintAsCustomControl;
   s:=Caption;
   if (s=emptystr) and not IsPreparing then
@@ -7988,30 +7867,7 @@ begin
       m.Canvas.Rectangle(0,0,m.Width+1,m.Height+1);
       m.Canvas.TextOut(1,-1,s);
       //
-
-      {$IFDEF FPC}
-      a.Assign(m);
-      randomize;
-      randFile:=trunc(random *31000);
-      {$IFDEF MSWINDOWS}
-      spathfileBitmap:=ExtractFilePath(Application.ExeName);
-      {$ELSE}
-      spathfileBitmap:='/tmp/';
-      {$ENDIF}
-      {
-      sfileBitmap:=spathfileBitmap+'rlbcod'+inttostr(randFile)+'.bmp';
-      sfileBitmapResult:=spathfileBitmap+'rlbcodresult'+inttostr(randFile)+'.bmp';
-      tsfile.Add(sfileBitmap);
-      tsfile.Add(sfileBitmapResult);
-      tsfile.SaveToFile(spathfileBitmap+'rlbcod.dat');
-      m.SaveToFile(sfileBitmap);
-//    rlRotateBitmap(pchar(sfileBitmap),pchar(sfileBitmapResult),fAngle);
-      rlRotateBitmap(fAngle);
-      a.LoadFromFile(sfileBitmapResult);
-}
-      {$ELSE}
       a:=RotatedBitmap(m,fAngle);
-      {$ENDIF}
       try
         case Alignment of
           taCenter      : l:=(r.Left+r.Right-a.Width) div 2+o;
@@ -8041,20 +7897,8 @@ var
   s:string;
   r:TRect;
   m,a:TBitmap;
-  {$IFDEF FPC}
-  sfileBitmap:String;
-  sfileBitmapResult:String;
-  randFile:integer;
-  spathfileBitmap:String;
-  tsfile:TStringlist;
-  {$ENDIF}
 begin
   inherited;
-  {$IFDEF FPC}
-  a:=TBitmap.Create;
-  tsfile:=TStringlist.Create;
-  {$ENDIF}
-
   //
   s:=Caption;
   r:=CalcPrintClientRect;
@@ -8079,29 +7923,7 @@ begin
       m.Canvas.Rectangle(0,0,m.Width+1,m.Height+1);
       m.Canvas.TextOut(1,-1,s);
       //
-      {$IFDEF FPC}
-      a.Assign(m);
-      randomize;
-      randFile:=trunc(random *31000);
-      {$IFDEF MSWINDOWS}
-      spathfileBitmap:=ExtractFilePath(Application.ExeName);
-      {$ELSE}
-      spathfileBitmap:='/tmp/';
-      {$ENDIF}
-      {
-      sfileBitmap:=spathfileBitmap+'rlbcod'+inttostr(randFile)+'.bmp';
-      sfileBitmapResult:=spathfileBitmap+'rlbcodresult'+inttostr(randFile)+'.bmp';
-      tsfile.Add(sfileBitmap);
-      tsfile.Add(sfileBitmapResult);
-      tsfile.SaveToFile(spathfileBitmap+'rlbcod.dat');
-      m.SaveToFile(sfileBitmap);
-      rlRotateBitmap(fAngle);
-//      rlRotateBitmap(pchar(sfileBitmap),pchar(sfileBitmapResult),fAngle);
-      a.LoadFromFile(sfileBitmapResult);
-      }
-      {$ELSE}
       a:=RotatedBitmap(m,fAngle);
-      {$ENDIF}
       try
         case Alignment of
           taCenter      : l:=(r.Left+r.Right-a.Width) div 2+o;
@@ -8396,16 +8218,12 @@ begin
       Result:=emptystr
     else if aField is TBlobField then
       Result:=emptystr
-    {$IFNDEF FPC}
-    else if aField is TObjectField then
-      Result:=0
-    {$ENDIF}
+    //else if aField is TObjectField then
+    //  Result:=0
     else if aField is TVariantField then
       Result:=0
-    {$IFNDEF FPC}
-    else if aField is TInterfaceField then
-      Result:=emptystr
-    {$ENDIF}
+    //else if aField is TInterfaceField then
+    //  Result:=emptystr
     else
       Result:=Null
   else
@@ -9496,25 +9314,20 @@ Sfi = '\\StringFileInfo\\04';
 var
  VerSize : DWORD;
  sid: String;
- {$IFDEF FPC}
- Zero    : LongWord;
- {$ELSE}
  Zero    : THandle;
- {$ENDIF}
  PBlock  : Pointer;
  PS      : Pointer;
  Size    : UINT;
 begin
-  {$IFDEF FPC}
-  VerSize := 0;
-  Exit;
-  {$ELSE}
-  //Laguage = locale id
+  //todo: ver a funo deste metodo e implementar multi plataforma em outra unit
+  {
+  //Laguage = locale id 
   sid:= Format('%.x', [SysLocale.PriLangID]);
   // Reserva o tamanho para alocação de memoria
   VerSize := GetFileVersionInfoSize(PChar(ParamStr(0)), Zero);
   if VerSize = 0 then
        Exit;
+
   // Aloca memória
   GetMem(PBlock, VerSize);
   // Verifica a versão do resorce
@@ -9538,7 +9351,7 @@ begin
 
   Result:= StrPas(PS);
   Freemem(PBlock);
-  {$ENDIF}
+  }
 end;
 
 begin
@@ -9554,9 +9367,9 @@ begin
   else
     case fInfoType of
       itCarbonCopy      : s:=IntToStr(FindParentBand.CarbonIndex+1);
-      itDate            : s:=SysToUTF8(DateToStr(MasterReport.ReportDateTime));
+      itDate            : s:=DateToStr(MasterReport.ReportDateTime);
       itDetailCount     : s:=IntToStr(FindParentPager.DetailCount);
-      itFullDate        : s:=SysToUTF8(FormatDateTime(LongDateFormat,MasterReport.ReportDateTime));
+      itFullDate        : s:=FormatDateTime(LongDateFormat,MasterReport.ReportDateTime);
       itHour            : s:=TimeToStr(MasterReport.ReportDateTime);
       itJunction        : s:=JunctionStr;
       itLastPageNumber  : s:='{LastPageNumber}';
@@ -10048,9 +9861,9 @@ end;
 
 constructor TRLCustomSite.Create(aOwner:TComponent);
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.Create');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  Debugln('TRLCustomSite.Create');
+  {$ENDIF}
 
   // initialization
   fOnDraw          :=nil;
@@ -10068,9 +9881,9 @@ end;
 
 destructor TRLCustomSite.Destroy;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.Destroy;');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  Debugln('TRLCustomSite.Destroy;');
+  {$ENDIF}
 
   FreeObj(fSurface);
   FreeObj(fMargins);
@@ -10084,10 +9897,9 @@ end;
 // anula alinhamento natural do delphi
 procedure TRLCustomSite.AlignControls(aControl:TControl; var Rect:TRect);
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.AlignControls');
-    {$ENDIF}
-
+  {$IFDEF TRACECUSTOMSITE}
+  Debugln('TRLCustomSite.AlignControls');
+  {$ENDIF}
 end;
 
 // novo alinhamento de controles
@@ -10240,9 +10052,9 @@ begin
   aControl.BoundsRect:=aBoundsRect;
 end;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.AlignControls');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  Debugln('TRLCustomSite.AlignControls');
+  {$ENDIF}
 
   // limpa vetor de listas
   for align:=Low(TRLControlAlign) to High(TRLControlAlign) do
@@ -10620,22 +10432,13 @@ var
   i:integer;
   c:TControl;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.RealignControls;');
-    {$ENDIF}
-  {$IFDEF FPC}
- // {$IFDEF MSWINDOWS}
-  if csLoading in ComponentState then
-    Exit;
-  if stAligningControls in fControlState then
-    Exit;
-  //{$ENDIF}
-  {$ELSE}
-  if csLoading in ComponentState then
-    Exit;
-  if stAligningControls in fControlState then
-    Exit;
+  {$IFDEF TRACECUSTOMSITE}
+  DebugLn('TRLCustomSite.RealignControls;');
   {$ENDIF}
+  if csLoading in ComponentState then
+    Exit;
+  if stAligningControls in fControlState then
+    Exit;
   Include(fControlState,stAligningControls);
   try
     AlignControls(ClientRect);
@@ -10653,9 +10456,9 @@ end;
 
 procedure TRLCustomSite.DrawClient;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.DrawClient;');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  DebugLn('TRLCustomSite.DrawClient;');
+  {$ENDIF}
 
   DrawFrame(GetClientRect,clGray,True);
 end;
@@ -10663,9 +10466,9 @@ end;
 // desenha frames delimitadores
 procedure TRLCustomSite.DrawBounds;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.DrawBounds;');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  Debugln('TRLCustomSite.DrawBounds;');
+  {$ENDIF}
   DrawFrame(CalcSizeRect,clBlue,False);
 end;
 
@@ -10674,9 +10477,9 @@ procedure TRLCustomSite.DrawFrame(Rect:TRect; aColor:TColor; aRound:boolean);
 var
   curv:integer;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.DrawFrame;');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.DrawFrame;');
+  {$ENDIF}
 
   with Canvas do
   begin
@@ -10709,9 +10512,9 @@ var
   bCm,num:boolean;
   r:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.DrawTracks');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.DrawTracks');
+  {$ENDIF}
 
   num:=True; //Self is TRLCustomReport;
   r  :=CalcSizeRect;
@@ -10772,9 +10575,9 @@ procedure TRLCustomSite.DrawUnusedRect(Rect:TRect);
 const
   clDarkness=$00F4F4F4;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.DrawUnusedRect');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.DrawUnusedRect');
+  {$ENDIF}
 
   with Canvas do
   begin
@@ -10802,7 +10605,7 @@ end;
 procedure TRLCustomSite.Initialize;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.Initialize');
+  debugln('chamou TRLCustomSite.Initialize');
   {$ENDIF}
   InitializeAllFrom(Self);
 end;
@@ -10822,10 +10625,9 @@ end;
 
 procedure TRLCustomSite.ComputeDetail(aCaller:TObject);
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.ComputeDetail');
-    {$ENDIF}
-
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.ComputeDetail');
+  {$ENDIF}
   ComputeDetailAllFrom(Self,aCaller);
 end;
 
@@ -10847,7 +10649,7 @@ end;
 procedure TRLCustomSite.InvalidateAll;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.InvalidateAll');
+  debugln('chamou TRLCustomSite.InvalidateAll');
   {$ENDIF}
   InvalidateAllFrom(Self);
 end;
@@ -10858,7 +10660,7 @@ var
   r:TRect;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.DoOnDraw');
+  debugln('chamou TRLCustomSite.DoOnDraw');
   {$ENDIF}
   if Assigned(fOnDraw) then
   begin
@@ -10873,7 +10675,7 @@ var
   s:TRLCustomSite;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.OpenSurface');
+  debugln('chamou TRLCustomSite.OpenSurface');
   {$ENDIF}
   if Surface.Opened then
     Exit;
@@ -10895,7 +10697,7 @@ end;
 procedure TRLCustomSite.CloseSurface;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.CloseSurface');
+  debugln('chamou TRLCustomSite.CloseSurface');
   {$ENDIF}
   if not Surface.Opened then
     Exit;
@@ -10914,7 +10716,7 @@ var
   destrect   :TRect;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.ThrowSurface');
+  debugln('chamou TRLCustomSite.ThrowSurface');
   {$ENDIF}
   destsurface:=RequestParentSurface;
   destrect:=CalcPrintBoundsRect;
@@ -10929,7 +10731,7 @@ var
   m:TRect;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.PrepareBackgroundSurface');
+  debugln('chamou TRLCustomSite.PrepareBackgroundSurface');
   {$ENDIF}
   aBackgroundSurface.GeneratorId:=Integer(Self);
   NewGroupId;
@@ -10950,16 +10752,15 @@ end;
 
 procedure TRLCustomSite.SurfaceOpening;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.SurfaceOpening');
-    {$ENDIF}
-
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.SurfaceOpening');
+  {$ENDIF}
 end;
 
 procedure TRLCustomSite.SurfaceBeginDraw;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.SurfaceBeginDraw');
+  debugln('chamou TRLCustomSite.SurfaceBeginDraw');
   {$ENDIF}
   PrepareStatics;
   PrintStatics;
@@ -10968,35 +10769,35 @@ end;
 procedure TRLCustomSite.SurfaceOpened;
 begin
   {$IFDEF TRACECUSTOMSITE}
-writeln('chamou TRLCustomSite.SurfaceOpened');
+  debugln('chamou TRLCustomSite.SurfaceOpened');
   {$ENDIF}
 end;
 
 procedure TRLCustomSite.WriteSurface;
 begin
   {$IFDEF TRACECUSTOMSITE}
-writeln('chamou TRLCustomSite.WriteSurface');
+  debugln('chamou TRLCustomSite.WriteSurface');
   {$ENDIF}
 end;
 
 procedure TRLCustomSite.SurfaceEndDraw;
 begin
   {$IFDEF TRACECUSTOMSITE}
-writeln('chamou TRLCustomSite.SurfaceEndDraw');
+  debugln('chamou TRLCustomSite.SurfaceEndDraw');
   {$ENDIF}
 end;
 
 procedure TRLCustomSite.SurfaceClosed;
 begin
   {$IFDEF TRACECUSTOMSITE}
-writeln('chamou TRLCustomSite.SurfaceClosed');
+   debugln('chamou TRLCustomSite.SurfaceClosed');
   {$ENDIF}
 end;
 
 procedure TRLCustomSite.TruncateSurface;
 begin
   {$IFDEF TRACECUSTOMSITE}
-writeln('chamou TRLCustomSite.TruncateSurface;');
+   debugln('chamou TRLCustomSite.TruncateSurface;');
   {$ENDIF}
 end;
 
@@ -11005,8 +10806,8 @@ var
   p:TWinControl;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.MarkPrintPosition');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.MarkPrintPosition');
+  {$ENDIF}
   fPrintPosition.x:=Left;
   fPrintPosition.y:=Top;
   fPrintSize.x    :=Width;
@@ -11024,16 +10825,16 @@ end;
 procedure TRLCustomSite.DrawBackground(const aRect:TRect);
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.DrawBackground');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.DrawBackground');
+  {$ENDIF}
   Background.PaintTo(Canvas,aRect);
 end;
 
 function TRLCustomSite.CalcEffectiveRect:TRect;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.CalcEffectiveRect');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.CalcEffectiveRect');
+  {$ENDIF}
   Result:=CalcSizeRect;
 end;
 
@@ -11044,8 +10845,8 @@ var
   s:string;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.Signup');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.Signup');
+  {$ENDIF}
   with Canvas do
   begin
     Font.Name  :='Small Fonts';
@@ -11073,8 +10874,8 @@ procedure TRLCustomSite.PaintAsCustomSite;
 var
   z,s,e,r:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  WRITELN('chamou TRLCustomSite.PaintAsCustomSite');
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('chamou TRLCustomSite.PaintAsCustomSite');
   {$ENDIF}
   z:=CalcSizeRect;
   s:=z;
@@ -11136,8 +10937,8 @@ var
   p:TRLCustomReport;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.InternalPaintFinish');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.InternalPaintFinish');
+  {$ENDIF}
   p:=FindParentReport;
   if not Assigned(p) or (p.ShowDesigners and p.ShowTracks) then
     DrawTracks;
@@ -11151,8 +10952,8 @@ end;
 procedure TRLCustomSite.InternalPrint;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.InternalPrint');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.InternalPrint');
+  {$ENDIF}
   OpenSurface;
   WriteSurface;
   CloseSurface;
@@ -11167,8 +10968,8 @@ var
   ctrlsize :TPoint;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.CalcSize');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.CalcSize');
+  {$ENDIF}
   aSize:=Point(Width,Height);
   if not AutoSize then
     Exit;
@@ -11215,8 +11016,8 @@ end;
 function TRLCustomSite.CalcMarginalPixels:TRect;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.CalcMarginalPixels');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.CalcMarginalPixels');
+  {$ENDIF}
   Result.Left  :=Round(ScreenPPI*fMargins.LeftMargin  /InchAsMM);
   Result.Top   :=Round(ScreenPPI*fMargins.TopMargin   /InchAsMM);
   Result.Right :=Round(ScreenPPI*fMargins.RightMargin /InchAsMM);
@@ -11227,8 +11028,8 @@ end;
 function TRLCustomSite.CalcMarginalRect:TRect;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.CalcMarginalRect');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.CalcMarginalRect');
+  {$ENDIF}
   Result:=ReduceRect(CalcEffectiveRect,CalcMarginalPixels);
 end;
 
@@ -11237,8 +11038,8 @@ var
   w,h:integer;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.CalcBordersPixels');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.CalcBordersPixels');
+  {$ENDIF}
   Result:=Rect(0,0,0,0);
   if fBorders.Width>0 then
   begin
@@ -11259,16 +11060,16 @@ end;
 function TRLCustomSite.CalcBordersRect:TRect;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.CalcBordersRect');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.CalcBordersRect');
+  {$ENDIF}
   Result:=ReduceRect(CalcMarginalRect,CalcBordersPixels);
 end;
 
 function TRLCustomSite.CalcClientPixels:TRect;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.CalcClientPixels');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.CalcClientPixels');
+  {$ENDIF}
   Result.Left  :=Round(ScreenPPI*fInsideMargins.LeftMargin  /InchAsMM);
   Result.Top   :=Round(ScreenPPI*fInsideMargins.TopMargin   /InchAsMM);
   Result.Right :=Round(ScreenPPI*fInsideMargins.RightMargin /InchAsMM);
@@ -11279,25 +11080,25 @@ end;
 function TRLCustomSite.GetClientRect:TRect;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.GetClientRect');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.GetClientRect');
+  {$ENDIF}
   Result:=ReduceRect(CalcBordersRect,CalcClientPixels);
 end;
 
 function TRLCustomSite.CalcPrintBoundsRect:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CalcPrintBoundsRect');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CalcPrintBoundsRect');
+  {$ENDIF}
 
   Result:=Rect(fPrintPosition.X,fPrintPosition.Y,fPrintPosition.X+fPrintSize.X,fPrintPosition.Y+fPrintSize.Y);
 end;
 
 function TRLCustomSite.CalcPrintSizeRect:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CalcPrintSizeRect');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CalcPrintSizeRect');
+  {$ENDIF}
 
   Result:=CalcPrintBoundsRect;
   MoveRect(Result,0,0);
@@ -11305,9 +11106,9 @@ end;
 
 function TRLCustomSite.CalcPrintWastedPixels:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CalcPrintWastedPixels');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CalcPrintWastedPixels');
+  {$ENDIF}
 
   Result:=DiffRect(CalcPrintSizeRect,CalcPrintClientRect);
 end;
@@ -11317,9 +11118,9 @@ var
   p:TRLCustomPager;
   w:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CalcPrintWastedPixelsSum');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CalcPrintWastedPixelsSum');
+  {$ENDIF}
 
   Result:=CalcPrintWastedPixels;
   p:=FindParentPager;
@@ -11336,18 +11137,18 @@ end;
 // espacos perdidos em pixels de tela 
 function TRLCustomSite.CalcWastedPixels:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CalcWastedPixels');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CalcWastedPixels');
+  {$ENDIF}
 
   Result:=DiffRect(CalcSizeRect,GetClientRect);
 end;
 
 function TRLCustomSite.CanPrint:boolean;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CanPrint');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CanPrint');
+  {$ENDIF}
 
   fCouldPrint:=Visible and not (stPrinting in fControlState);
   if fCouldPrint then
@@ -11357,9 +11158,9 @@ end;
 
 function TRLCustomSite.CalcPrintMarginalPixels:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CalcPrintMarginalPixels');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CalcPrintMarginalPixels');
+  {$ENDIF}
 
   Result:=CalcMarginalPixels;
 end;
@@ -11368,9 +11169,9 @@ function TRLCustomSite.CalcPrintMarginalRect:TRect;
 var
   m:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CalcPrintMarginalRect');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CalcPrintMarginalRect');
+  {$ENDIF}
 
   Result:=CalcPrintSizeRect;
   m     :=CalcPrintMarginalPixels;
@@ -11382,36 +11183,36 @@ end;
 
 function TRLCustomSite.CalcPrintBordersPixels:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CalcPrintBordersPixels');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CalcPrintBordersPixels');
+  {$ENDIF}
 
   Result:=CalcBordersPixels;
 end;
 
 function TRLCustomSite.CalcPrintBordersRect:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CalcPrintBordersRect');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CalcPrintBordersRect');
+  {$ENDIF}
 
   Result:=ReduceRect(CalcPrintMarginalRect,CalcPrintBordersPixels);
 end;
 
 function TRLCustomSite.CalcPrintClientPixels:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CalcPrintClientPixels');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CalcPrintClientPixels');
+  {$ENDIF}
 
   Result:=CalcClientPixels;
 end;
 
 function TRLCustomSite.CalcPrintClientRect:TRect;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CalcPrintClientRect');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CalcPrintClientRect');
+  {$ENDIF}
 
   Result:=ReduceRect(CalcPrintBordersRect,CalcPrintClientPixels);
 end;
@@ -11420,9 +11221,9 @@ function TRLCustomSite.CalcGlobalPrintPosition:TPoint;
 var
   p:TRLCustomSite;
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.CalcGlobalPrintPosition');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.CalcGlobalPrintPosition');
+  {$ENDIF}
 
   Result:=fPrintPosition;
   p:=FindParentSite;
@@ -11436,9 +11237,9 @@ end;
 
 procedure TRLCustomSite.SetClientRect(const aValue:TRect);
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.SetClientRect');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.SetClientRect');
+  {$ENDIF}
 
   BoundsRect:=IncreaseRect(aValue,CalcWastedPixels);
 end;
@@ -11447,7 +11248,7 @@ procedure TRLCustomSite.SetBounds(aLeft,aTop,aWidth,aHeight:integer);
 begin
   inherited SetBounds(aLeft,aTop,aWidth,aHeight);
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.SetBounds');
+  debugln('chamou TRLCustomSite.SetBounds');
   {$ENDIF}
   //
   fPrintSize.X:=Width;
@@ -11457,8 +11258,8 @@ end;
 procedure TRLCustomSite.SetBackground(const aValue:TRLBackground);
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.SetBackground');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.SetBackground');
+  {$ENDIF}
   fBackground:=aValue;
   fBackground.ParentSite:=Self;
   Invalidate;
@@ -11466,9 +11267,9 @@ end;
 
 procedure TRLCustomSite.SetDegrade(const aValue:TRLDegradeEffect);
 begin
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSite.SetDegrade');
-    {$ENDIF}
+ {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomSite.SetDegrade');
+ {$ENDIF}
 
   fDegrade:=aValue;
   Invalidate;
@@ -11477,8 +11278,8 @@ end;
 procedure TRLCustomSite.SetInsideMargins(const aValue:TRLMargins);
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.SetInsideMargins');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.SetInsideMargins');
+  {$ENDIF}
   fInsideMargins.Assign(aValue);
   Invalidate;
 end;
@@ -11486,7 +11287,7 @@ end;
 procedure TRLCustomSite.SetMargins(const aValue:TRLMargins);
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.SetMargins');
+  debugln('chamou TRLCustomSite.SetMargins');
   {$ENDIF}
   fMargins.Assign(aValue);
   Invalidate;
@@ -11497,17 +11298,10 @@ begin
   inherited;
   //
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.Loaded');
+  debugln('chamou TRLCustomSite.Loaded');
   {$ENDIF}
   AdjustBounds;
   AlignControls(ClientRect);
-  {$IFDEF FPC}
-  {$IFDEF LINUX}
-  PaintAsCustomSite;
-
-  {$ENDIF}
-  {$ENDIF}
-
 end;
 
 procedure TRLCustomSite.InternalMeasureHeight;
@@ -11516,8 +11310,8 @@ var
   i:integer;
 begin
   {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomSite.InternalMeasureHeight');
-    {$ENDIF}
+  debugln('chamou TRLCustomSite.InternalMeasureHeight');
+  {$ENDIF}
   for i:=0 to ControlCount-1 do
   begin
     c:=ControlWithin(Controls[i]);
@@ -11534,9 +11328,9 @@ constructor TRLCustomPanel.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
   // customization
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('chamou TRLCustomPanel.Create');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('chamou TRLCustomPanel.Create');
+  {$ENDIF}
   Width      :=64;
   Height     :=32;
   AutoSizeDir:=[asWidthDir,asHeightDir];
@@ -11822,9 +11616,9 @@ var
   p:TRLCustomReport;
 begin
   inherited;
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomBand.InternalPaintFinish;');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomBand.InternalPaintFinish;');
+  {$ENDIF}
 
   //
   p:=FindParentReport;
@@ -12883,9 +12677,9 @@ var
 begin
   inherited;
   //
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomGroup.InternalPaintFinish;');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomGroup.InternalPaintFinish;');
+  {$ENDIF}
 
   p:=FindParentReport;
   if not Assigned(p) or p.ShowDesigners then
@@ -13042,10 +12836,6 @@ begin
   // objects
   inherited Create(aOwner);
   // customization
-end;
-procedure TRLCustomSkipper.CreateWnd;
-begin
-  inherited CreateWnd;
 end;
 
 function TRLCustomSkipper.DataCount:integer;
@@ -13234,7 +13024,7 @@ begin
   inherited;
   //
   {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomSubDetail.InternalPaintFinish');
+  debugln('TRLCustomSubDetail.InternalPaintFinish');
   {$ENDIF}
 
   p:=FindParentReport;
@@ -13305,10 +13095,6 @@ begin
   //
   ReloadPrinter;
 end;
-procedure TRLCustomReport.CreateWnd;
-begin
-  inherited CreateWnd;
-end;
 
 destructor TRLCustomReport.Destroy;
 begin
@@ -13352,7 +13138,6 @@ begin
       Inc(q);
       r:=r.NextReport;
     end;
-//  showmessage('chamou '+LS_PreparingReportStr);
     m.ProgressForm:=TfrmRLFeedBack.Create(LS_PreparingReportStr,q);
     m.ProgressForm.Show;
     m.ProgressForm.SetFocus;
@@ -13544,11 +13329,10 @@ end;
 procedure TRLCustomReport.InternalPaintFinish;
 begin
   inherited;
-    {$IFDEF TRACECUSTOMSITE}
-  writeln('TRLCustomReport.InternalPaintFinish');
-    {$ENDIF}
+  {$IFDEF TRACECUSTOMSITE}
+  debugln('TRLCustomReport.InternalPaintFinish');
+  {$ENDIF}
   //
-//showmessage('TRLCustomReport.InternalPaintFinish');
   if fShowDesigners then
     Signup('Report '+Name);
 end;
@@ -13573,7 +13357,8 @@ begin
   try
     PushBoundsRect;
     try
-      if CanShowProgress then ProgressCreate;
+      if CanShowProgress then
+        ProgressCreate;
       try
         Clear;
         //
@@ -14175,16 +13960,12 @@ end;
 function TRLCustomReport.CanShowProgress: boolean;
 begin
   // o progresso da impressão não pode ser concorrente do progresso de preparação
-  {$IFDEF FPC}
-   {$IFDEF LINUX}
-   Result:=MasterReport.ShowProgress;
-   {$ELSE}
-   Result:=MasterReport.ShowProgress and IsMainThread;
-   {$ENDIF}
+  //todo: remover este código assim que consertar showprogress
+  {$IFDEF LINUX}
+  Result:=MasterReport.ShowProgress;
   {$ELSE}
   Result:=MasterReport.ShowProgress and IsMainThread;
   {$ENDIF}
-
 end;
 
 { TRLPreviewOptions }
@@ -14224,7 +14005,7 @@ end;
 
 { TRLPanel }
 
-procedure TRLPanel.WMMouseMove(var Msg: TMessage);
+procedure TRLPanel.WMMouseMove(var Msg: TLMessage);
 begin
   inherited;
 //  Perform(WM_SYSCOMMAND,$F003,0);   ///redimensionar em run time
