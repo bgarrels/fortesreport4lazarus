@@ -5065,17 +5065,17 @@ begin
   // variables
   fParentControl:=aOwner;
   fSides        :=sdNone;
-  fDrawLeft     :=False;
-  fDrawTop      :=False;
-  fDrawRight    :=False;
-  fDrawBottom   :=False;
+  //fDrawLeft     :=False;
+  //fDrawTop      :=False;
+  //fDrawRight    :=False;
+  //fDrawBottom   :=False;
   fWidth        :=1;
   fColor        :=clBlack;
   fStyle        :=bsSolid;
-  fFixedLeft    :=False;
-  fFixedTop     :=False;
-  fFixedRight   :=False;
-  fFixedBottom  :=False;
+  //fFixedLeft    :=False;
+  //fFixedTop     :=False;
+  //fFixedRight   :=False;
+  //fFixedBottom  :=False;
   //
   inherited Create;
 end;
@@ -5455,7 +5455,7 @@ begin
   fPaperWidth    :=PaperInfo[fPaperSize].Width;
   fPaperHeight   :=PaperInfo[fPaperSize].Height;
   fOrientation   :=poPortrait;
-  fForceEmulation:=False;
+  //fForceEmulation:=False;
   //
   inherited Create;
 end;
@@ -5567,7 +5567,7 @@ begin
   fArrange    :=baAligned;
   fAutoSize   :=True;
   fHeight     :=40;
-  fStretch    :=False;
+  //fStretch    :=False;
   fWidth      :=40;
   // objects
   fPicture    :=TPicture.Create;
@@ -6158,10 +6158,10 @@ constructor TRLRealBounds.Create(aOwner:TRLCustomControl);
 begin
   fParentControl:=aOwner;
   fUsedUnit     :=buNone;
-  fLeft         :=0;
-  fTop          :=0;
-  fWidth        :=0;
-  fHeight       :=0;
+  //fLeft         :=0;
+  //fTop          :=0;
+  //fWidth        :=0;
+  //fHeight       :=0;
   //
   inherited Create;
 end;
@@ -6205,30 +6205,30 @@ end;
 constructor TRLCustomControl.Create(aOwner:TComponent);
 begin
   // initialization
-  fAfterPrint     :=nil;
+  //fAfterPrint     :=nil;
   fAlign          :=faNone;
-  fAnchors        :=[];
-  fBeforePrint    :=nil;
-  fBeforeText     :=nil;
-  fHolder         :=nil;
+  //fAnchors        :=[];
+  //fBeforePrint    :=nil;
+  //fBeforeText     :=nil;
+  //fHolder         :=nil;
   fHoldStyle      :=hsAsColumn;
-  fSecondHolder   :=nil;
+  //fSecondHolder   :=nil;
   fSecondHoldStyle:=hsAsColumn;
-  fRealBounds     :=nil;
+  //fRealBounds     :=nil;
   fAlignment      :=taLeftJustify;
-  fAutoSize       :=False;
-  fAutoSizeDir    :=[];
-  fAutoExpand     :=False;
-  fAutoTrunc      :=False;
+  //fAutoSize       :=False;
+  //fAutoSizeDir    :=[];
+  //fAutoExpand     :=False;
+  //fAutoTrunc      :=False;
   fLayout         :=tlTop;
-  fControlState   :=[];
-  fBehavior       :=[];
+  //fControlState   :=[];
+  //fBehavior       :=[];
   fDefaultBehavior:=fBehavior;
   fTransparent    :=True;
-  fSizeFixed      :=False;
+  //fSizeFixed      :=False;
   fFriendlyName   :=emptystr;
-  fOnMeasureHeight:=nil;     
-  fLocker         :=nil;
+  //fOnMeasureHeight:=nil;
+  //fLocker         :=nil;
   // objects
   fBorders        :=TRLBorders.Create(Self);
   fHoldeds        :=TList.Create;
@@ -7825,7 +7825,7 @@ end;
 
 constructor TRLCustomAngleLabel.Create(aOwner:TComponent);
 begin
-  fAngle       :=0;
+  //fAngle       :=0;
   fAngleBorders:=False;
   //
   inherited Create(aOwner);
@@ -8012,7 +8012,7 @@ begin
   fText       :=emptystr;
   fDataField  :=emptystr;
   fDataFormula:=emptystr;
-  fDataSource :=nil;
+  //fDataSource :=nil;
   fDisplayMask:=emptystr;
   //
   inherited Create(aOwner);
@@ -8235,9 +8235,9 @@ end;
 constructor TRLCustomDBResult.Create(aOwner:TComponent);
 begin
   fInfo           :=riSimple;
-  fResetAfterPrint:=False;
-  fMustResetValue :=False;
-  fBuiltInRegs    :=nil;
+  //fResetAfterPrint:=False;
+  //fMustResetValue :=False;
+  //fBuiltInRegs    :=nil;
   fComputeNulls   :=True;
   //
   fBuiltInRegs:=TObjectList.Create;
@@ -8993,9 +8993,9 @@ end;
 constructor TRLCustomImage.Create(aOwner:TComponent);
 begin
   // variables
-  fStretch:=False;
-  fCenter :=False;
-  fScaled :=False;
+  //fStretch:=False;
+  //fCenter :=False;
+  //fScaled :=False;
   // objects
   fPicture         :=TPicture.Create;
   fPicture.OnChange:=PictureChanged;
@@ -9132,7 +9132,7 @@ end;
 constructor TRLCustomDBImage.Create(aOwner:TComponent);
 begin
   fDataField :=emptystr;
-  fDataSource:=nil;
+  //fDataSource:=nil;
   //
   inherited Create(aOwner);
 end;
@@ -9444,13 +9444,13 @@ end;
 constructor TRLCustomDraw.Create(aOwner:TComponent);
 begin
   // initialization
-  fAngle     :=0;
+  //fAngle     :=0;
   fDrawKind  :=dkRectangle;
   fCenter    :=True;
-  fDrawData  :=nil;
-  fDrawWidth :=0;
-  fDrawHeight:=0;
-  fOptions   :=[];
+  //fDrawData  :=nil;
+  //fDrawWidth :=0;
+  //fDrawHeight:=0;
+  //fOptions   :=[];
   // objects
   fBrush         :=TBrush.Create;
   fBrush.OnChange:=ChangeResponse;
@@ -9866,7 +9866,7 @@ begin
   {$ENDIF}
 
   // initialization
-  fOnDraw          :=nil;
+  //fOnDraw          :=nil;
   // objects
   fBackground      :=TRLBackground.Create(Self);
   fDegrade         :=TRLDegradeEffect.Create(Self);
@@ -11997,21 +11997,21 @@ end;
 constructor TRLCustomPager.Create(aOwner:TComponent);
 begin
   // initialization
-  fAllowedBands     :=[];
-  fDetailCount      :=0;
-  fMaxBands         :=0;
-  fMinBands         :=0;
-  fRelativePagerRow :=0;
-  fDetailsInSurface :=0;
-  fNewPageNeeded    :=False;
+  //fAllowedBands     :=[];
+  //fDetailCount      :=0;
+  //fMaxBands         :=0;
+  //fMinBands         :=0;
+  //fRelativePagerRow :=0;
+  //fDetailsInSurface :=0;
+  //fNewPageNeeded    :=False;
   fPageBreaking     :=pbNone;
-  fJumpPending      :=False;
-  fJumpLength       :=0;
-  fNewPageCaller    :=nil;
-  fForceMinBands    :=False;
+  //fJumpPending      :=False;
+  //fJumpLength       :=0;
+  //fNewPageCaller    :=nil;
+  //fForceMinBands    :=False;
   fFooterMeasuring  :=fmNone;
-  fDataBandPrinted  :=False;
-  fPagerStatus      :=[];
+  //fDataBandPrinted  :=False;
+  //fPagerStatus      :=[];
   // objects
   fSortedBands:=TRLSortedBands.Create;
   //
@@ -12658,8 +12658,8 @@ end;
 constructor TRLCustomGroup.Create(aOwner:TComponent);
 begin
   // initialization
-  fOnGetBreak :=nil;
-  fBroken     :=False;
+  //fOnGetBreak :=nil;
+  //fBroken     :=False;
   fDataFields :=emptystr;
   fDataFormula:=emptystr;
 
@@ -12821,17 +12821,17 @@ constructor TRLCustomSkipper.Create(aOwner:TComponent);
 begin
   // initialization
   fRecordAction:=raUseIt;
-  fDataSource  :=nil;
-  fOnNeedData  :=nil;
-  fOnDataCount :=nil;
-  fOnDataRecord:=nil;
-  fRecordMoved :=False;
+  //fDataSource  :=nil;
+  //fOnNeedData  :=nil;
+  //fOnDataCount :=nil;
+  //fOnDataRecord:=nil;
+  //fRecordMoved :=False;
   fDataEof     :=True;
-  fRecNo       :=0;
-  fCopyNo      :=0;
+  //fRecNo       :=0;
+  //fCopyNo      :=0;
   fRecordRange :=rrAllRecords;
-  fRangeCount  :=0;
-  fPrintEmpty  :=False;
+  //fRangeCount  :=0;
+  //fPrintEmpty  :=False;
 
   // objects
   inherited Create(aOwner);
@@ -13048,30 +13048,30 @@ constructor TRLCustomReport.Create(aOwner:TComponent);
 begin
   // initialization
   fShowProgress       :=True;
-  fDefaultFilter      :=nil;
-  fExpressionParser   :=nil;
-  fInternalParser     :=nil;
-  fOnPageEnding       :=nil;
-  fOnPageStarting     :=nil;
-  fCanceled           :=False;
-  fNextReport         :=nil;
-  fPriorReport        :=nil;
+  //fDefaultFilter      :=nil;
+  //fExpressionParser   :=nil;
+  //fInternalParser     :=nil;
+  //fOnPageEnding       :=nil;
+  //fOnPageStarting     :=nil;
+  //fCanceled           :=False;
+  //fNextReport         :=nil;
+  //fPriorReport        :=nil;
   fFirstPageNumber    :=1;
-  fPageIndex          :=0;
+  //fPageIndex          :=0;
   fPrintDialog        :=True;
   fReportState        :=rsAbout;
   fShowDesigners      :=True;
   fShowTracks         :=True;
-  fShowExplosion      :=False;
+  //fShowExplosion      :=False;
   fPrintQuality       :=pqFullFeature;
-  fPageSurface        :=nil;
-  fOnFilterText       :=nil;
-  ProgressForm        :=nil;
-  fParseInvoker       :=nil;
-  fAdjustableMargins  :=False;
-  fPreviewOptions     :=nil;
+  //fPageSurface        :=nil;
+  //fOnFilterText       :=nil;
+  //ProgressForm        :=nil;
+  //fParseInvoker       :=nil;
+  //fAdjustableMargins  :=False;
+  //fPreviewOptions     :=nil;
   fForcePrepare       :=True;
-  fBackgroundMode     :=False;
+  //fBackgroundMode     :=False;
   //
   FillChar(fPrinterMetrics,SizeOf(fPrinterMetrics),0);
   // objects
@@ -13973,13 +13973,13 @@ end;
 constructor TRLPreviewOptions.Create(aOwner: TRLCustomReport);
 begin
   fParentReport:=aOwner;
-  fShowModal   :=False;
+  //fShowModal   :=False;
   fFormStyle   :=fsNormal;
   fPosition    :=poScreenCenter;
   fWindowState :=wsMaximized;
   fBorderIcons :=[biSystemMenu,biMinimize,biMaximize];
   fHelpFile    :=emptystr;
-  fHelpContext :=0;
+  //fHelpContext :=0;
   fCaption     :=LS_PreviewStr;
   //
   inherited Create;
