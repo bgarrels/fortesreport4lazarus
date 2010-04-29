@@ -107,6 +107,9 @@ end;
 
 procedure TRLReportDesigner.Edit;
 begin
+{$ifdef unix}
+  fReport.ShowProgress := False;
+{$endif}
   fReport.Preview;
 end;
 
@@ -199,4 +202,4 @@ begin
 end;
 
 end.
-
+
