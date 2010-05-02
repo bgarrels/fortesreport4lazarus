@@ -9,20 +9,8 @@ unit RLPreviewForm;
 interface
 
 uses
- {$IFDEF FPC}
-  LCLType,
- {$ENDIF}
-  SysUtils, Contnrs, Classes,  Math,
-{$ifdef VCL}
-  {$IFDEF FPC}
-  LCLIntf,
-  {$ELSE}
-  Windows,
-  {$ENDIF}
+  LCLType, SysUtils, Contnrs, Classes,  Math,
   Controls, Buttons, ExtCtrls, Forms, Dialogs, StdCtrls, Graphics,
-{$else}
-  Types, QControls, Qt, QButtons, QExtCtrls, QForms, QDialogs, QStdCtrls, QTypes, QGraphics,
-{$endif}
   RLConsts, RLMetaFile, RLPreview, RLFilters, RLUtils, RLPrintDialog, RLSaveDialog, RLPrinters, RLTypes, RLFindDialog,
   RLSpoolFilter, RLPageSetupConfig;
 
@@ -281,7 +269,8 @@ procedure PreviewFromFileDialog;
 
 implementation
 
-//{$R *.dfm}
+uses
+  LCLIntf;
 
 var
   SetupInstance:TRLPreviewSetup=nil;
@@ -290,11 +279,9 @@ procedure PreviewPagesWithOptions(aPages:TRLGraphicStorage; aShowModal:boolean; 
   aPosition:TPosition; aWindowState:TWindowState; aBorderIcons:TBorderIcons; const aHelpFile:string;
   aHelpContext:integer; aCaption:TCaption);
 begin
-//  Showmessage('preparando preview');
   SentToPrinter:=False;
   with TRLPreviewForm.Create(nil) do
   begin
-//    Showmessage('Carregando preview');
     Preview.Pages:=aPages;
     if DefaultZoomFactor=ZoomFactorFullWidth then
       Preview.ZoomFullWidth
@@ -1368,14 +1355,12 @@ Var
   filter    :TRLCustomPrintFilter;
 begin
   //Caso opção habilitada mostra a caixa de dialog no preview ao imprimir
-  if SetupInstance.fdialogprint then
-     begin
-     SpeedButtonSetup.Click;
-     exit;
-     end;
-  {$IFDEF SHOWMESS}
-  showmessage('passou SetupInstance.fdialogprint');
-  {$ENDIF}
+  if Assigned(SetupInstance) and SetupInstance.fdialogprint then
+  begin
+    SpeedButtonSetup.Click;
+    exit;
+  end;
+
   if Assigned(SetupInstance) and Assigned(SetupInstance.BeforePrint) then
     SetupInstance.BeforePrint(Self);
   priorfocus:=Screen.ActiveControl;
