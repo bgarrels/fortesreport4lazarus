@@ -1,6 +1,6 @@
 {$I RLReport.inc}
 
-{@unit RLPreviewForm - ImplementaÁ„o do form padr„o de prÈ-visualizaÁ„o.
+{@unit RLPreviewForm - Implementa√ß√£o do form padr√£o de pr√©-visualiza√ß√£o.
 Portado para o Lazarus - Trabalho inicial de Isaac Trindade da Silva contato tioneobrasil@yahoo.com.br dicas4lazarus@yahoo.com.br
 Lazarus Ported - initial work by Isaac 07/2009
 }
@@ -113,9 +113,9 @@ type
   TRLPreviewEditOptions=(eoCanReposition,eoCanResizeItems,eoCanEditText,eoCanDeleteItems,eoCanPointOut);
   TRLPreviewEditOptionsSet=set of TRLPreviewEditOptions;
 
-  {@class TRLPreviewSetup - OpÁıes do prÈ-visualizador padr„o.
-   Todos os relatÛrios que n„o tiverem suas prÛprias configuraÁıes de previsualizaÁ„o
-   seguir„o as regras estabelecidas neste componente. }
+  {@class TRLPreviewSetup - Op√ß√µes do pr√©-visualizador padr√£o.
+   Todos os relat√≥rios que n√£o tiverem suas pr√≥prias configura√ß√µes de previsualiza√ß√£o
+   seguir√£o as regras estabelecidas neste componente. }
   TRLPreviewSetup=class(TComponent)
   private
     fBeforePrint   :TNotifyEvent;
@@ -160,10 +160,10 @@ type
     constructor Create(aOwner:TComponent); override;
     destructor  Destroy; override;
 
-    {@prop SentToPrinter - Indica se o relatÛrio foi impresso ao menos uma vez. :/}
+    {@prop SentToPrinter - Indica se o relat√≥rio foi impresso ao menos uma vez. :/}
     property    SentToPrinter:boolean read GetSentToPrinter write SetSentToPrinter;
 
-    {@prop WindowBounds - Indica ou determina as dimensıes padrıes da janela quando ela n„o est· maximizada. :/}
+    {@prop WindowBounds - Indica ou determina as dimens√µes padr√µes da janela quando ela n√£o est√° maximizada. :/}
     property    WindowBounds :TRect   read GetWindowBounds  write SetWindowBounds;
   published
     {@prop WindowState - Indica o estado inicial da janela de preview. :/}
@@ -172,13 +172,13 @@ type
     {@prop FormStyle - Indica o estilo da janela de preview. :/}
     property    FormStyle   :TFormStyle   read GetFormStyle    write SetFormStyle   default fsNormal;
 
-    {@prop ShowModal - Indica se a janela de preview ser· modal. :/}
+    {@prop ShowModal - Indica se a janela de preview ser√° modal. :/}
     property    ShowModal   :boolean      read GetShowModal    write SetShowModal   default False;
 
-    {@prop Position - Indica a posiÁ„o da janela de preview. :/}
+    {@prop Position - Indica a posi√ß√£o da janela de preview. :/}
     property    Position    :TPosition    read GetPosition     write SetPosition    default poScreenCenter;
 
-    {@prop BorderIcons - Seleciona os botıes da janela de preview. :/}
+    {@prop BorderIcons - Seleciona os bot√µes da janela de preview. :/}
     property    BorderIcons :TBorderIcons read GetBorderIcons  write SetBorderIcons default [biSystemMenu,biMinimize,biMaximize];
 
     {@prop HelpFile - Nome do arquivo de help para a janela preview, se houver. :/}
@@ -187,47 +187,47 @@ type
     {@prop HelpContext - Contexto de help para a janela preview, se houver. :/}
     property    HelpContext :integer      read GetHelpContext  write SetHelpContext default 0;
 
-    {@prop Caption - TÌtulo da janela de preview. :/}
+    {@prop Caption - T√≠tulo da janela de preview. :/}
     property    Caption     :string       read GetCaption      write SetCaption;
 
     {@prop ZoomFactor - Fator de zoom inicial (percentual). :/}
     property    ZoomFactor  :double       read GetZoomFactor   write SetZoomFactor  stored IsZoomFactor;
 
-    {@prop EnabledButtons - Botıes habilitados.
-                            AtravÈs desta prop pode-se mostrar ou esconder botıes da barra de ferramentas.
+    {@prop EnabledButtons - Bot√µes habilitados.
+                            Atrav√©s desta prop pode-se mostrar ou esconder bot√µes da barra de ferramentas.
      @links TRLPreviewFormButtonsSet. :/}
     property    EnabledButtons:TRLPreviewFormButtonsSet read fEnabledButtons write SetEnabledButtons default [pbPrint,pbSave,pbSend];
 
-    {@prop EditOptions - OpÁıes de ediÁ„o (ainda n„o disponÌvel).
-     Determina que operaÁıes poder„o ser realizadas pelo usu·rio no conte˙do do relatÛrio
-     j· preparado.
+    {@prop EditOptions - Op√ß√µes de edi√ß√£o (ainda n√£o dispon√≠vel).
+     Determina que opera√ß√µes poder√£o ser realizadas pelo usu√°rio no conte√∫do do relat√≥rio
+     j√° preparado.
      @links TRLPreviewEditOptions,TRLPreviewEditOptionsSet. :/}
     property    EditOptions   :TRLPreviewEditOptionsSet read fEditOptions write SetEditOptions default [];
 
-    {@prop dialogprint - OpÁ„o que mostra o dialogo de impress„o no bot„o imprimir}
+    {@prop dialogprint - Op√ß√£o que mostra o dialogo de impress√£o no bot√£o imprimir}
     Property    DialogPrint   : Boolean read Getdialogprint write fdialogprint;
 
-    {@event BeforePrint - Sempre antes de imprimir ou quando o usu·rio pressiona o bot„o "Imprimir". :/}
+    {@event BeforePrint - Sempre antes de imprimir ou quando o usu√°rio pressiona o bot√£o "Imprimir". :/}
     property    BeforePrint:TNotifyEvent read fBeforePrint write fBeforePrint;
 
-    {@event AfterPrint - Sempre apÛs a impress„o ou quando o filtro de impress„o termina de processar todas as p·ginas. :/}
+    {@event AfterPrint - Sempre ap√≥s a impress√£o ou quando o filtro de impress√£o termina de processar todas as p√°ginas. :/}
     property    AfterPrint :TNotifyEvent read fAfterPrint  write fAfterPrint;
 
-    {@event BeforeSave - Sempre antes de salvar/exportar ou quando o usu·rio pressiona o bot„o "Salvar". :/}
+    {@event BeforeSave - Sempre antes de salvar/exportar ou quando o usu√°rio pressiona o bot√£o "Salvar". :/}
     property    BeforeSave :TNotifyEvent read fBeforeSave  write fBeforeSave;
 
-    {@event AfterSave - Sempre apÛs o salvamento/exportaÁ„o ou quando o filtro de salvamento termina de processar todas as p·ginas. :/}
+    {@event AfterSave - Sempre ap√≥s o salvamento/exporta√ß√£o ou quando o filtro de salvamento termina de processar todas as p√°ginas. :/}
     property    AfterSave  :TNotifyEvent read fAfterSave   write fAfterSave;
 
-    {@event BeforeSend - Sempre antes de enviar o relatÛrio via e-mail ou quando o usu·rio pressionar o bot„o "Enviar". :/}
+    {@event BeforeSend - Sempre antes de enviar o relat√≥rio via e-mail ou quando o usu√°rio pressionar o bot√£o "Enviar". :/}
     property    BeforeSend :TNotifyEvent read fBeforeSend  write fBeforeSend;
 
-    {@event OnSend - Sempre ao enviar um relatÛrio via e-mail.
-     O programador deve implementar este evento e providenciar o envio do relatÛrio.
-     O FortesReport n„o prove esta rotina, apenas fornece a interface para isso. :/}
+    {@event OnSend - Sempre ao enviar um relat√≥rio via e-mail.
+     O programador deve implementar este evento e providenciar o envio do relat√≥rio.
+     O FortesReport n√£o prove esta rotina, apenas fornece a interface para isso. :/}
     property    OnSend     :TNotifyEvent read fOnSend      write fOnSend;
 
-    {@event AfterSend - Sempre apÛs a conclus„o do envio do relatÛrio via e-mail. :/}
+    {@event AfterSend - Sempre ap√≥s a conclus√£o do envio do relat√≥rio via e-mail. :/}
     property    AfterSend  :TNotifyEvent read fAfterSend   write fAfterSend;
   end;
   {/@class}
@@ -250,19 +250,19 @@ var
   DefaultZoomFactor  :double=100;
   SentToPrinter      :boolean=False;
 
-{@proc PreviewPagesWithOptions - Exibe o form padr„o de prÈ-visualizaÁ„o com opÁıes. :}
+{@proc PreviewPagesWithOptions - Exibe o form padr√£o de pr√©-visualiza√ß√£o com op√ß√µes. :}
 procedure PreviewPagesWithOptions(aPages:TRLGraphicStorage; aShowModal:boolean; aFormStyle:TFormStyle;
   aPosition:TPosition; aWindowState:TWindowState; aBorderIcons:TBorderIcons; const aHelpFile:string;
   aHelpContext:integer; aCaption:TCaption);
 {/@proc}
-{@proc PreviewPages - Exibe o form padr„o de prÈ-visualizaÁ„o com as opÁıes default. :/}
+{@proc PreviewPages - Exibe o form padr√£o de pr√©-visualiza√ß√£o com as op√ß√µes default. :/}
 procedure PreviewPages(aPages:TRLGraphicStorage);
-{@proc PreviewFromFile - Carrega o arquivo de relatÛrio e exibe o form padr„o de prÈ-visualizaÁ„o. :/}
+{@proc PreviewFromFile - Carrega o arquivo de relat√≥rio e exibe o form padr√£o de pr√©-visualiza√ß√£o. :/}
 procedure PreviewFromFile(const aFileName:string);
-{@proc PreviewFromStream - Carrega a stream de relatÛrio e exibe o form padr„o de prÈ-visualizaÁ„o. :/}
+{@proc PreviewFromStream - Carrega a stream de relat√≥rio e exibe o form padr√£o de pr√©-visualiza√ß√£o. :/}
 procedure PreviewFromStream(aStream:TStream);
-{@proc PreviewFromFileDialog - Exibe di·logo para a carga de arquivo de relatÛrio e exibe
- o form padr„o de prÈ-visualizaÁ„o. :/}
+{@proc PreviewFromFileDialog - Exibe di√°logo para a carga de arquivo de relat√≥rio e exibe
+ o form padr√£o de pr√©-visualiza√ß√£o. :/}
 procedure PreviewFromFileDialog;
 
 {/@unit}
@@ -1016,7 +1016,7 @@ begin
       ShowHint := True;
       Spacing := -1;
       OnClick := SpeedButtonPageSetupClick;
-      Visible:= False; {continuar configuraÁ„o da p·gina}
+      Visible:= False; {continuar configura√ß√£o da p√°gina}
       FreeAndNil(bit);
     end;
     Bevel5:=TBevel.Create(Self);
@@ -1178,9 +1178,9 @@ begin
           '50%'#13+
           '25%'#13+
           '10%'#13+
-          'Largura da p·gina'+#13+
-          'P·gina inteira'+#13+
-          'V·rias p·ginas'+#13);
+          'Largura da p√°gina'+#13+
+          'P√°gina inteira'+#13+
+          'V√°rias p√°ginas'+#13);
       end;
     end;
     PanelCopyright:=TPanel.Create(Self);
@@ -1354,7 +1354,7 @@ Var
   priorfocus:TWinControl;
   filter    :TRLCustomPrintFilter;
 begin
-  //Caso opÁ„o habilitada mostra a caixa de dialog no preview ao imprimir
+  //Caso op√ß√£o habilitada mostra a caixa de dialog no preview ao imprimir
   if Assigned(SetupInstance) and SetupInstance.fdialogprint then
   begin
     SpeedButtonSetup.Click;
@@ -1382,7 +1382,7 @@ begin
 
     filter.Pages         :=Preview.Pages;
     filter.FirstPage     :=PrintParams.FromPage;
-    //CorreÁ„o para limite de p·ginas 
+    //Corre√ß√£o para limite de p√°ginas 
   if PrintParams.ToPage < filter.Pages.PageCount then
      filter.LastPage      :=PrintParams.ToPage else
      filter.LastPage      := filter.Pages.PageCount;
