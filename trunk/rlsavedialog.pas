@@ -1,6 +1,6 @@
 {$I RLReport.inc}
 
-{@unit RLSaveDialog - ImplementaÁ„o do di·logo de salvamento e sua classe de setup.
+{@unit RLSaveDialog - Implementa√ß√£o do di√°logo de salvamento e sua classe de setup.
 Portado para o Lazarus - Trabalho inicial de Isaac Trindade da Silva contato tioneobrasil@yahoo.com.br dicas4lazarus@yahoo.com.br
 Lazarus Ported - initial work by Isaac 07/2009
 }
@@ -25,19 +25,19 @@ uses
   RLFilters, RLConsts, RLTypes, RLUtils;
 
 type
-  {@type TRLSaveDialogOptions - OpÁıes de configuraÁ„o do di·logo de salvamento.
+  {@type TRLSaveDialogOptions - Op√ß√µes de configura√ß√£o do di√°logo de salvamento.
   Pode ser um conjunto dos seguintes valores:
-  rsoDisableBackgroundMode - Desabilitar a opÁ„o de salvamento em segundo plano.
+  rsoDisableBackgroundMode - Desabilitar a op√ß√£o de salvamento em segundo plano.
   :}
   TRLSaveDialogOption =(rsoDisableBackgroundMode);
   TRLSaveDialogOptions=set of TRLSaveDialogOption;
   {/@type}
 
-  {@type TRLSaveRange - OpÁıes para o modo seleÁ„o de p·ginas.
+  {@type TRLSaveRange - Op√ß√µes para o modo sele√ß√£o de p√°ginas.
   Pode ser um dos seguintes valores:
-  rsrAllPages - Salvar todas as p·ginas;
-  rsrSelection - Salvar as p·ginas de n˙meros indicados;
-  rsrPageNums - Salvar o intervalo de p·ginas indicado.
+  rsrAllPages - Salvar todas as p√°ginas;
+  rsrSelection - Salvar as p√°ginas de n√∫meros indicados;
+  rsrPageNums - Salvar o intervalo de p√°ginas indicado.
   :/}
   TRLSaveRange=(rsrAllPages,rsrSelection,rsrPageNums);
 
@@ -77,9 +77,9 @@ type
     function  Execute:boolean;
   end;
 
-  {@class TRLSaveDialogSetup - OpÁıes do di·logo de salvamento.
-   O di·logo de salvamento obedecer· as configuraÁıes da inst‚ncia deste componente. Com ele, È
-   possÌvel configurar alguns itens de comportamento do di·logo de salvamento.
+  {@class TRLSaveDialogSetup - Op√ß√µes do di√°logo de salvamento.
+   O di√°logo de salvamento obedecer√° as configura√ß√µes da inst√¢ncia deste componente. Com ele, √©
+   poss√≠vel configurar alguns itens de comportamento do di√°logo de salvamento.
    @pub}
   TRLSaveDialogSetup=class(TComponent)
   private
@@ -93,16 +93,16 @@ type
   public
     { Public declarations }
   published
-    {@prop Options - OpÁıes diversas do di·logo de salvamento. @links TRLSaveDialogOptions. :/}
+    {@prop Options - Op√ß√µes diversas do di√°logo de salvamento. @links TRLSaveDialogOptions. :/}
     property Options:TRLSaveDialogOptions read GetOptions write SetOptions default DefaultSaveOptions;
-    {@prop BackgroundMode - Indica o valor inicial para a opÁ„o de salvar em segundo plano. :/}
+    {@prop BackgroundMode - Indica o valor inicial para a op√ß√£o de salvar em segundo plano. :/}
     property BackgroundMode:boolean read GetBackgroundMode write SetBackgroundMode;
     {@prop Filter - Filtro atualmente selecionado. @links TRLCustomSaveFilter:/}
     property Filter:TRLCustomSaveFilter read GetFilter write SetFilter;
   end;
   {/@class}
 
-  {@class TRLSaveParams - Par‚metros de salvamento.}
+  {@class TRLSaveParams - Par√¢metros de salvamento.}
   TRLSaveParams=class(TComponent)
   private
     { Private declarations }
@@ -129,30 +129,30 @@ type
     {@method Clear - Preenche todas as props com valores default.:/}
     procedure   Clear;
   published
-    {@prop Options - OpÁıes diversas do di·logo de salvamento. @links TRLSaveDialogOptions.:/}
+    {@prop Options - Op√ß√µes diversas do di√°logo de salvamento. @links TRLSaveDialogOptions.:/}
     property  Options         :TRLSaveDialogOptions read fOptions          write fOptions default DefaultSaveOptions;
     {@prop FileName - Nome do arquivo a gerar.:/}
     property  FileName        :string               read fFileName         write fFileName;
-    {@prop MaxPage - Limite superior para o intervalo de p·ginas a imprimir.:/}
+    {@prop MaxPage - Limite superior para o intervalo de p√°ginas a imprimir.:/}
     property  MaxPage         :integer              read fMaxPage          write SetMaxPage;
-    {@prop MinPage - Limite inferior para o intervalo de p·ginas a imprimir.:/}
+    {@prop MinPage - Limite inferior para o intervalo de p√°ginas a imprimir.:/}
     property  MinPage         :integer              read fMinPage          write fMinPage;
-    {@prop FromPage - Valor escolhido para a primeira p·gina a imprimir.:/}
+    {@prop FromPage - Valor escolhido para a primeira p√°gina a imprimir.:/}
     property  FromPage        :integer              read fFromPage         write fFromPage;
-    {@prop ToPage - Valor escolhido para a ˙ltima p·gina a imprimir.:/}
+    {@prop ToPage - Valor escolhido para a √∫ltima p√°gina a imprimir.:/}
     property  ToPage          :integer              read fToPage           write fToPage;
-    {@prop SaveRange - Valor inicial para o modo de seleÁ„o de p·ginas. @links TRLSaveRange.:/}
+    {@prop SaveRange - Valor inicial para o modo de sele√ß√£o de p√°ginas. @links TRLSaveRange.:/}
     property  SaveRange       :TRLSaveRange         read fSaveRange        write fSaveRange;
     {@prop BackgroundMode - Indica o valor inicial para o salvamento em segundo plano.:/}
     property  BackgroundMode  :boolean              read fBackgroundMode   write fBackgroundMode;
     {@prop Filter - Filtro atualmente selecionado. @links TRLCustomSaveFilter:/}
     property  Filter          :TRLCustomSaveFilter  read fFilter           write SetFilter;
-    {@prop HelpContext - CÛdigo do tÛpico de ajuda associado.:/}
+    {@prop HelpContext - C√≥digo do t√≥pico de ajuda associado.:/}
     property  HelpContext     :integer              read fHelpContext      write fHelpContext;
   end;
   {/@class}
 
-{@var SaveParams - Par‚metros de salvamento atuais. @links TRLSaveParams:/}
+{@var SaveParams - Par√¢metros de salvamento atuais. @links TRLSaveParams:/}
 var SaveParams:TRLSaveParams=nil;
 
 {/@unit}
@@ -270,7 +270,7 @@ begin
     Top := 68;
     Width := 365;
     Height := 101;
-    Caption := ' P·ginas no intervalo';
+    Caption := ' P√°ginas no intervalo';
     TabOrder := 2;
     LabelFromPage:=TLabel.Create(Self);
     with LabelFromPage do
@@ -293,7 +293,7 @@ begin
       Top := 45;
       Width := 18;
       Height := 13;
-      Caption := '&atÈ:';
+      Caption := '&at√©:';
       FocusControl := EditToPage;
     end;
     RadioButtonPagesAll:=TRadioButton.Create(Self);
@@ -506,7 +506,7 @@ begin
     SaveParams.Filter:=TRLCustomSaveFilter(ComboBoxFilters.Items.Objects[ComboBoxFilters.ItemIndex])
   else
     SaveParams.Filter:=nil;
-  // se n„o foi especificada uma extens„o, pega-la-emos do filtro selecionado
+  // se n√£o foi especificada uma extens√£o, pega-la-emos do filtro selecionado
   if ExtractFileExt(SaveParams.FileName)=emptystr then
     if Assigned(SaveParams.Filter) then
       SaveParams.FileName:=ChangeFileExt(SaveParams.FileName,SaveParams.Filter.DefaultExt)
