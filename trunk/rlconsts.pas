@@ -442,7 +442,7 @@ begin
   LS_DirectionDownStr     :='&Down';
   LS_DirectionCaptionStr  :='Direction';
   Ls_GetOutlineTextMetrics:='GetOutlineTextMetrics failed';
-  Ls_Salvar_Como          :='Salve as';
+  Ls_Salvar_Como          :='Save as';
   Ls_Nome_Arquivo         :='File Name:';
   LS_OptionsStr           :='Options';
   LS_ColumnsStr           :='Coluns';
