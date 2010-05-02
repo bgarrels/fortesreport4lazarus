@@ -136,17 +136,17 @@ type
    Implemente um evento TRLBeforePrintEvent para tomar atitudes antes da impressão de um componente.
    É possível bloquear a impressão do componente através do parâmetro PrintIt, ou alterar as suas
    características, como dimensões, cor, bordas etc.
-   Para alterar o conteúdo de texto do componente utilize o parâmetro Text e não as props do componente.
+   Para alterar o conteúdo de texto do componente utilize o parâmetro OutputText e não as props do componente.
    Nota: Este evento aparecerá como o nome BeforePrint nas caixas de texto.
    @links TRLAfterPrintEvent, TRLBeforePrintEvent, TRLCustomLabel. :/}
-  TRLBeforeTextEvent=procedure(Sender:TObject; var Text:string; var PrintIt:boolean) of object;
+  TRLBeforeTextEvent=procedure(Sender:TObject; var OutputText:string; var PrintIt:boolean) of object;
 
   {@type TRLOnComputeEvent - Evento disparado pelo componente TRLDBResult ao considerar um valor para
    estatística nos acumuladores internos.
-   Altere os parâmetro Value e Text para modificar o valor processado pelos acumuladores.
+   Altere os parâmetro Value e OutputText para modificar o valor processado pelos acumuladores.
    Altere o parâmetro ComputeIt para indicar se o valor deve ser computado ou ignorado.
    @links TRLDBResult. :/}
-  TRLOnComputeEvent=procedure(Sender:TObject; var Value:variant; var Text:string; var ComputeIt:boolean) of object;
+  TRLOnComputeEvent=procedure(Sender:TObject; var Value:variant; var OutputText:string; var ComputeIt:boolean) of object;
 
   {@type TRLOnGetBreakEvent - Evento disparado pelo componente TRLGroup durante as verificações de quebra de
    sequência de registros manual.
