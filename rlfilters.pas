@@ -1,6 +1,6 @@
 {$I RLReport.inc}
 
-{@unit RLFilters - ImplementaÁ„o do filtro padr„o de impress„o e classes abstratas para filtros de salvamento e filtros de impress„o.
+{@unit RLFilters - Implementa√ß√£o do filtro padr√£o de impress√£o e classes abstratas para filtros de salvamento e filtros de impress√£o.
 Portado para o Lazarus - Trabalho inicial de Isaac Trindade da Silva contato tioneobrasil@yahoo.com.br dicas4lazarus@yahoo.com.br
 Lazarus Ported - initial work by Isaac 07/2009
 }
@@ -25,7 +25,7 @@ type
 
   { TRLCustomFilter }
 
-  {@class TRLCustomFilter - Classe abstrata ancestral para todos os filtros de salvamento e filtros de impress„o.
+  {@class TRLCustomFilter - Classe abstrata ancestral para todos os filtros de salvamento e filtros de impress√£o.
    @links TRLHTMLFilter, TRLPDFFilter, TRLRichFilter, TRLDraftFilter. }
   TRLCustomFilter=class(TComponent)
   private
@@ -73,10 +73,10 @@ type
     constructor Create(aOwner:TComponent); override;
     destructor  Destroy; override;
 
-    {@method GetDisplayLabel - Devolve o nome do filtro para exibiÁ„o em caixas de seleÁ„o. :/}
+    {@method GetDisplayLabel - Devolve o nome do filtro para exibi√ß√£o em caixas de sele√ß√£o. :/}
     function GetDisplayLabel:string; virtual;
 
-    {@method GetDisplayName - Devolve o nome do filtro para exibiÁ„o em tempo de design. :/}
+    {@method GetDisplayName - Devolve o nome do filtro para exibi√ß√£o em tempo de design. :/}
     function GetDisplayName:string;
 
     {@method BeginDoc - Inicializa o processo de filtragem. :/}
@@ -85,40 +85,40 @@ type
     {@method EndDoc - Finaliza o processo de filtragem. :/}
     procedure EndDoc;
 
-    {@method NewPage - Adiciona uma nova p·gina. :/}
+    {@method NewPage - Adiciona uma nova p√°gina. :/}
     procedure NewPage;
 
-    {@method DrawPage - Desenha o conte˙do da superfÌcie na p·gina corrente. :/}
+    {@method DrawPage - Desenha o conte√∫do da superf√≠cie na p√°gina corrente. :/}
     procedure DrawPage(aPage:TRLGraphicSurface);
 
-    {@method Run - Processa as p·ginas atravÈs do filtro.
-     A lista de p·ginas aPages pode ser obtida na prop Pages de um TRLReport apÛs a preparaÁ„o do relatÛrio, ou de
-     modo avulso criando uma instancia do TRLGraphicStorage e carregando um relatÛrio do disco.
-     Os par‚metros aFirstPage e aLastPage s„o opcionais e indicam o intervalo de p·ginas a processar.
+    {@method Run - Processa as p√°ginas atrav√©s do filtro.
+     A lista de p√°ginas aPages pode ser obtida na prop Pages de um TRLReport ap√≥s a prepara√ß√£o do relat√≥rio, ou de
+     modo avulso criando uma instancia do TRLGraphicStorage e carregando um relat√≥rio do disco.
+     Os par√¢metros aFirstPage e aLastPage s√£o opcionais e indicam o intervalo de p√°ginas a processar.
      @links TRLGraphicStorage, TRLCustomReport.Pages. :/}
     procedure Run;
 
     procedure ExecuteDialog; virtual;
     property FilterStyle:TRLFilterStyles read fFilterStyle write fFilterStyle;
-    {@prop DisplayName - Retorna o nome para exibiÁ„o em caixas de seleÁ„o. :/}
+    {@prop DisplayName - Retorna o nome para exibi√ß√£o em caixas de sele√ß√£o. :/}
     property DisplayName:string read GetDisplayName write fDisplayName stored IsDisplayName;
 
-    {@prop Pages - ReferÍncia ‡ coleÁ„o de p·ginas a filtrar. :/}
+    {@prop Pages - Refer√™ncia √† cole√ß√£o de p√°ginas a filtrar. :/}
     property Pages:TRLGraphicStorage read fPages write SetPages;
     property FirstPage:integer read fFirstPage write fFirstPage;
     property LastPage :integer read fLastPage  write fLastPage;
     property Copies   :integer read fCopies    write fCopies;
 
-    {@prop BackgroundMode - Determina a filtragem de p·ginas em segundo plano. :/}
+    {@prop BackgroundMode - Determina a filtragem de p√°ginas em segundo plano. :/}
     property BackgroundMode:boolean read fBackgroundMode write fBackgroundMode;
 
-    {@prop Canceled - Indica se o processo foi interrompido pelo usu·rio. :/}
+    {@prop Canceled - Indica se o processo foi interrompido pelo usu√°rio. :/}
     property Canceled:boolean read fCanceled write fCanceled;
 
-    {@prop ShowProgress - Mostra barra de progresso do salvamento ou impress„o. :/}
+    {@prop ShowProgress - Mostra barra de progresso do salvamento ou impress√£o. :/}
     property ShowProgress:boolean read fShowProgress write fShowProgress default True;
 
-    {@prop ShowFilterDialog - Oferece opÁıes de configuraÁ„o do filtro para o usu·rio final. :/}
+    {@prop ShowFilterDialog - Oferece op√ß√µes de configura√ß√£o do filtro para o usu√°rio final. :/}
     property ShowFilterDialog:boolean read fShowFilterDialog write fShowFilterDialog default True;
   end;
   {/@class}
@@ -126,7 +126,7 @@ type
 
   { TRLCustomPrintFilter }
 
-  {@class TRLCustomPrintFilter - Classe base para filtros de impress„o.
+  {@class TRLCustomPrintFilter - Classe base para filtros de impress√£o.
    @links TRLDraftFilter. }
   TRLCustomPrintFilter=class(TRLCustomFilter)
   public
@@ -148,17 +148,17 @@ type
     {@prop FileName - Nome do arquivo destino para o filtro de salvamento. :/}
     property FileName:string read fFileName write fFileName;
 
-    {@prop DefaultExt - Extens„o padr„o para o arquivo destino. :/}
+    {@prop DefaultExt - Extens√£o padr√£o para o arquivo destino. :/}
     property DefaultExt:string read fDefaultExt write fDefaultExt;
   end;
   {/@class}
   
 {@var ActiveFilters - Lista de filtros ativos.
- Esta lista contÈm referÍncias a todos os filtros de impress„o e filtros de salvamento j· instanciados.
+ Esta lista cont√©m refer√™ncias a todos os filtros de impress√£o e filtros de salvamento j√° instanciados.
  @links TRLCustomFilter, SelectedFilter. :/}
 var ActiveFilters:TList=nil;
 
-{@func SaveFilterByFileName - Retorna uma referÍncia para um filtro de salvamento j· instanciado baseado na extens„o
+{@func SaveFilterByFileName - Retorna uma refer√™ncia para um filtro de salvamento j√° instanciado baseado na extens√£o
  do nome de arquivo informado.
  @links TRLCustomSaveFilter. :/}
 function SaveFilterByFileName(const aFileName:string):TRLCustomSaveFilter;
@@ -290,20 +290,20 @@ begin
       repeat
         fFilteringPageNo:=fFilteringFrom;
         repeat
-          // termina se ultrapassar a p·gina final
+          // termina se ultrapassar a p√°gina final
           if (fFilteringTo>=fFilteringFrom) and (fFilteringPageNo>fFilteringTo) then
             Break;
-          // cria uma nova folha apenas apÛs a primeira   
+          // cria uma nova folha apenas ap√≥s a primeira   
           if MustEject then
             NewPage;
           MustEject:=True;
-          // espera a p·gina ficar disponÌvel e devolve a referÍncia ‡ ela, no caso de impress„o imediata
+          // espera a p√°gina ficar dispon√≠vel e devolve a refer√™ncia √† ela, no caso de impress√£o imediata
           PageObj:=Pages.WaitPage(fFilteringPageNo-1);
           if not Assigned(PageObj) then
             Exit;
-          // filtra a p·gina  
+          // filtra a p√°gina  
           DrawPage(PageObj);
-          // progresso por p·gina e check de interrupÁ„o
+          // progresso por p√°gina e check de interrup√ß√£o
           if CanShowProgress then
             ProgressPhase;
           if CanShowProgress then
