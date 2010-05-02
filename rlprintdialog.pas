@@ -9,20 +9,8 @@ unit RLPrintDialog;
 interface
 
 uses
- {$IFDEF FPC}
-  LCLIntf,
-  LCLType,
- {$ENDIF}
-  Classes, SysUtils,
-{$ifdef MSWINDOWS}
-  Windows,
-{$else}
-{$endif}
-{$ifdef VCL}
-  Messages, Graphics, Controls, Forms, Dialogs, StdCtrls,
-{$else}
-  QGraphics, QControls, QForms, QDialogs, QStdCtrls,
-{$endif}
+  LCLIntf, LCLType, Classes, SysUtils,
+  LMessages, Graphics, Controls, Forms, Dialogs, StdCtrls,
   RLFilters, RLConsts, RLPrinters, RLTypes, RLSpoolFilter;
 
 type
@@ -201,8 +189,6 @@ var PrintParams:TRLPrintParams=nil;
 
 implementation
 
-///{$R *.dfm}
-
 // UTILS
 
 function IntToEmptyStr(aInt:integer):string;
@@ -224,11 +210,7 @@ end;
 
 constructor TRLPrintDialog.Create(aOwner:TComponent);
 begin
-  {$IFDEF FPC}
   inherited CreateNew(aOwner,0);
-  {$ELSE}
-  inherited CreateNew(aOwner);
-  {$ENDIF}
   //
   Init;
 end;
@@ -250,36 +232,19 @@ end;
 
 procedure TRLPrintDialog.Init;
 begin
-//  Showmessage('chamou init');
   Left := 324;
   Top := 372;
-{$ifdef VCL}
-  BorderStyle := bsDialog
-{$else}
-  BorderStyle := fbsDialog;
-{$endif};
+  BorderStyle := bsDialog;
   Caption := LS_PrintStr;
   ClientHeight := 317;//267;
   ClientWidth := 523;//430;
   Color := clBtnFace;
   Font.Charset := DEFAULT_CHARSET;
   Font.Color := clWindowText;
-  {$IFDEF LINUX}
-  Font.Name := 'Helvetica';
-  {$IFDEF LCLQt}
-  Font.Height := -12;
-  {$ELSE}
-  Font.Height := -10;
-  {$ENDIF}
-  {$ELSE}
-  Font.Height := -11;
-  Font.Name := 'MS Sans Serif';
-  {$ENDIF}
+  Font.Name := 'default';
+  Font.Height := 0;
   Font.Style := [];
   Position := poScreenCenter;
-  {$IFNDEF FPC}
-  Scaled := False;
-  {$ENDIF}
   PixelsPerInch := 96;
   GroupBoxPrinter:=TGroupBox.Create(Self);
   with GroupBoxPrinter do
@@ -923,7 +888,7 @@ procedure TRLPrintDialog.SpeedButtonSetupClick(Sender: TObject);
 begin
 SaveEditors;
 {$IFDEF FPC}
-Showmessage('Item nao implementado');
+Showmessage('Item não implementado');
 {$ENDIF}
 {$IFNDEF FPC}
 RLPrinter.ExecuteSetup;
