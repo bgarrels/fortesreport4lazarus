@@ -9,12 +9,7 @@ unit RLFilters;
 interface
 
 uses
-  Classes, SysUtils,
-{$ifdef MSWINDOWS}
-  Windows,
-{$else}
-  Types,
-{$endif}
+  Classes, SysUtils, Types,
   RLMetaFile, RLConsts, RLTypes, RLUtils, RLFeedBack, RLPrinters;
 
 type
