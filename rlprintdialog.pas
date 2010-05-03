@@ -1,6 +1,6 @@
 {$I RLReport.inc}
 
-{@unit RLPrintDialog - ImplementaÁ„o do di·logo de impress„o e sua classe de setup.
+{@unit RLPrintDialog - Implementa√ß√£o do di√°logo de impress√£o e sua classe de setup.
 Portado para o Lazarus - Trabalho inicial de Isaac Trindade da Silva contato tioneobrasil@yahoo.com.br dicas4lazarus@yahoo.com.br
 Lazarus Ported - initial work by Isaac 07/2009
 }
@@ -14,28 +14,28 @@ uses
   RLFilters, RLConsts, RLPrinters, RLTypes, RLSpoolFilter;
 
 type
-  {@type TRLPrintDialogOptions - OpÁıes de configuraÁ„o do di·logo de impress„o.
+  {@type TRLPrintDialogOptions - Op√ß√µes de configura√ß√£o do di√°logo de impress√£o.
   Pode ser um conjunto dos seguintes valores:
-  rpoPrintToFile - Mostrar a opÁ„o de impress„o em arquivo;
-  rpoPageNums - Mostrar a seleÁ„o de p·ginas por intervalo;
-  rpoSelection - Mostrar a seleÁ„o de p·ginas por n˙meros especÌficos;
-  rpoWarning - Exibir mensagens de advertÍncia;
+  rpoPrintToFile - Mostrar a op√ß√£o de impress√£o em arquivo;
+  rpoPageNums - Mostrar a sele√ß√£o de p√°ginas por intervalo;
+  rpoSelection - Mostrar a sele√ß√£o de p√°ginas por n√∫meros espec√≠ficos;
+  rpoWarning - Exibir mensagens de advert√™ncia;
   rpoHelp - Utilizar ajuda do sistema;
-  rpoDisablePrintToFile - Desabilitar opÁ„o de impress„o em arquivo;
-  rpoDisableCopies - Desabilitar a opÁ„o de n˙mero de cÛpias;
-  rpoDisableBackgroundMode - Desabilitar a opÁ„o de impress„o em segundo plano.
-  rpoprintdirect - Ao sair habilita impriss„o imediata
+  rpoDisablePrintToFile - Desabilitar op√ß√£o de impress√£o em arquivo;
+  rpoDisableCopies - Desabilitar a op√ß√£o de n√∫mero de c√≥pias;
+  rpoDisableBackgroundMode - Desabilitar a op√ß√£o de impress√£o em segundo plano.
+  rpoprintdirect - Ao sair habilita impriss√£o imediata
   :}
   TRLPrintDialogOption =(rpoPrintToFile,rpoPageNums,rpoSelection,rpoWarning,rpoHelp,
     rpoDisablePrintToFile,rpoDisableCopies,rpoDisableBackgroundMode, rpoprintdirect);
   TRLPrintDialogOptions=set of TRLPrintDialogOption;
   {/@type}
 
-  {@type TRLPrintRange - OpÁıes para o modo seleÁ„o de p·ginas.
+  {@type TRLPrintRange - Op√ß√µes para o modo sele√ß√£o de p√°ginas.
   Pode ser um dos seguintes valores:
-  rprAllPages - Imprimir todas as p·ginas;
-  rprSelection - Imprimir as p·ginas de n˙meros indicados;
-  rprPageNums - Imprimir o intervalo de p·ginas indicado.
+  rprAllPages - Imprimir todas as p√°ginas;
+  rprSelection - Imprimir as p√°ginas de n√∫meros indicados;
+  rprPageNums - Imprimir o intervalo de p√°ginas indicado.
   :/}
   TRLPrintRange=(rprAllPages,rprSelection,rprPageNums);
 
@@ -88,10 +88,10 @@ type
     function Execute:boolean;
   end;
 
-  {@class TRLPrintDialogSetup - OpÁıes do di·logo de impress„o.
-   O di·logo de impress„o obedecer· as configuraÁıes da inst‚ncia deste componente. Com ele, È
-   possÌvel estabelecer o n˙mero de cÛpias inicial e configurar alguns itens de comportamento do
-   di·logo de impress„o.
+  {@class TRLPrintDialogSetup - Op√ß√µes do di√°logo de impress√£o.
+   O di√°logo de impress√£o obedecer√° as configura√ß√µes da inst√¢ncia deste componente. Com ele, √©
+   poss√≠vel estabelecer o n√∫mero de c√≥pias inicial e configurar alguns itens de comportamento do
+   di√°logo de impress√£o.
    @pub}
   TRLPrintDialogSetup=class(TComponent)
   private
@@ -109,20 +109,20 @@ type
   public
     { Public declarations }
   published
-    {@prop Options - OpÁıes diversas do di·logo de impress„o. @links TRLPrintDialogOptions. :/}
+    {@prop Options - Op√ß√µes diversas do di√°logo de impress√£o. @links TRLPrintDialogOptions. :/}
     property Options:TRLPrintDialogOptions read GetOptions write SetOptions default DefaultPrintOptions;
-    {@prop Copies - Indica o valor inicial para o n˙mero de cÛpias. :/}
+    {@prop Copies - Indica o valor inicial para o n√∫mero de c√≥pias. :/}
     property Copies:integer read GetCopies write SetCopies default 1;
-    {@prop BackgroundMode - Indica o valor inicial para a opÁ„o de imprimir em segundo plano. :/}
+    {@prop BackgroundMode - Indica o valor inicial para a op√ß√£o de imprimir em segundo plano. :/}
     property BackgroundMode:boolean read GetBackgroundMode write SetBackgroundMode default False;
-    {@prop PrintToFile - Indica o estado inicial para a opÁ„o de imprimir em arquivo. :/}
+    {@prop PrintToFile - Indica o estado inicial para a op√ß√£o de imprimir em arquivo. :/}
     property PrintToFile:boolean read GetPrintToFile write SetPrintToFile default False;
-    {@prop Filter - Indica o filtro a oferecer no di·logo. @links TRLCustomPrintFilter:/}
+    {@prop Filter - Indica o filtro a oferecer no di√°logo. @links TRLCustomPrintFilter:/}
     property Filter:TRLCustomPrintFilter read GetFilter write SetFilter;
   end;
   {/@class}
 
-  {@class TRLPrintParams - Par‚metros de impress„o.}
+  {@class TRLPrintParams - Par√¢metros de impress√£o.}
   TRLPrintParams=class(TComponent)
   private
     fMaxPage       :integer;
@@ -150,22 +150,22 @@ type
     constructor Create(aOwner:TComponent); override;
     {@method Clear - Preenche todas as props com valores default.:/}
     procedure Clear;
-    {@method Apply - Aplica as configuraÁıes ao relatÛrio em andamento.:/}
+    {@method Apply - Aplica as configura√ß√µes ao relat√≥rio em andamento.:/}
     procedure Apply;
   published
-    {@prop Options - OpÁıes diversas do di·logo de impress„o. @links TRLPrintDialogOptions. :/}
+    {@prop Options - Op√ß√µes diversas do di√°logo de impress√£o. @links TRLPrintDialogOptions. :/}
     property  Options          :TRLPrintDialogOptions read fOptions           write fOptions default DefaultPrintOptions;
-    {@prop MaxPage - M·ximo para n˙mero de p·gina final. :/}
+    {@prop MaxPage - M√°ximo para n√∫mero de p√°gina final. :/}
     property  MaxPage          :integer               read fMaxPage           write SetMaxPage;
-    {@prop MinPage - MÌnimo para n˙mero de p·gina inicial. :/}
+    {@prop MinPage - M√≠nimo para n√∫mero de p√°gina inicial. :/}
     property  MinPage          :integer               read fMinPage           write fMinPage;
-    {@prop FromPage - N˙mero selecionado pelo usu·rio como p·gina inicial. :/}
+    {@prop FromPage - N√∫mero selecionado pelo usu√°rio como p√°gina inicial. :/}
     property  FromPage         :integer               read fFromPage          write fFromPage;
-    {@prop ToPage - N˙mero selecionado pelo usu·rio como p·gina final. :/}
+    {@prop ToPage - N√∫mero selecionado pelo usu√°rio como p√°gina final. :/}
     property  ToPage           :integer               read fToPage            write fToPage;
-    {@prop PrintRange - Modo de seleÁ„o de p·ginas. @links TRLPrintRange:/}
+    {@prop PrintRange - Modo de sele√ß√£o de p√°ginas. @links TRLPrintRange:/}
     property  PrintRange       :TRLPrintRange         read fPrintRange        write fPrintRange;
-    {@prop Copies - Indica o valor inicial para o n˙mero de cÛpias. :/}
+    {@prop Copies - Indica o valor inicial para o n√∫mero de c√≥pias. :/}
     property  Copies           :integer               read fCopies            write SetCopies default 1;
     {@prop PrintToFile - Imprimir para arquivo.:/}
     property  PrintToFile      :boolean               read fPrintToFile       write fPrintToFile;
@@ -173,7 +173,7 @@ type
     property  BackgroundMode   :boolean               read fBackgroundMode    write fBackgroundMode;
     {@prop FileName - Nome do arquivo a gerar.:/}
     property  FileName         :string                read fFileName          write fFileName;
-    {@prop Orientation - OrientaÁ„o do papel. @links TRLPageOrientation:/}
+    {@prop Orientation - Orienta√ß√£o do papel. @links TRLPageOrientation:/}
     property  Orientation      :TRLPageOrientation    read fOrientation       write fOrientation;
     {@prop Filter - Filtro atualmente selecionado. @links TRLCustomPrintFilter:/}
     property  Filter           :TRLCustomPrintFilter  read fFilter            write SetFilter;
@@ -182,7 +182,7 @@ type
   end;
   {/@class}
 
-{@var PrintParams - Par‚metros de impress„o atuais. @links TRLPrintParams:/}
+{@var PrintParams - Par√¢metros de impress√£o atuais. @links TRLPrintParams:/}
 var PrintParams:TRLPrintParams=nil;
 
 {/@unit}
@@ -518,7 +518,7 @@ procedure TRLPrintDialog.SpeedButtonSetupClick(Sender: TObject);
 begin
 SaveEditors;
 {$IFDEF FPC}
-Showmessage('Item n„o implementado');
+Showmessage('Item n√£o implementado');
 {$ENDIF}
 {$IFNDEF FPC}
 RLPrinter.ExecuteSetup;
