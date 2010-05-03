@@ -9,7 +9,7 @@ unit RLPrintDialog;
 interface
 
 uses
-  LCLIntf, LCLType, Classes, SysUtils,
+  LCLIntf, LCLType, Classes, SysUtils, LResources,
   LMessages, Graphics, Controls, Forms, Dialogs, StdCtrls,
   RLFilters, RLConsts, RLPrinters, RLTypes, RLSpoolFilter;
 
@@ -43,13 +43,18 @@ const
   DefaultPrintOptions=[rpoPrintToFile,rpoPageNums,rpoSelection,rpoWarning,rpoDisablePrintToFile];
 
 type
+
+  { TRLPrintDialog }
+
   TRLPrintDialog = class(TForm)
+    SpeedButtonSetup: TButton;
+    ButtonImprimir: TButton;
+    ButtonAplicar: TButton;
     GroupBoxPrinter: TGroupBox;
     ComboBoxPrinterNames: TComboBox;
     LabelPrinterName: TLabel;
     GroupBoxPages: TGroupBox;
     GroupBoxCopies: TGroupBox;
-    ButtonAplicar: TButton;
     ButtonCancel: TButton;
     RadioButtonPagesAll: TRadioButton;
     RadioButtonPagesInterval: TRadioButton;
@@ -65,11 +70,10 @@ type
     LabelFilterName: TLabel;
     CheckBoxBackgroundMode: TCheckBox;
     ButtonOptions: TButton;
-    SpeedButtonSetup: Tbutton;
-    ButtonImprimir  : Tbutton;
     procedure EditFromToPageChange(Sender: TObject);
     procedure ComboBoxFiltersChange(Sender: TObject);
     procedure ButtonOptionsClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     procedure SpeedButtonSetupClick(Sender: TObject);
     procedure ButtonImprimirClick(Sender: TObject);
   private
@@ -78,12 +82,9 @@ type
     procedure SaveEditors;
     procedure LoadPrinterList;
     procedure LoadFilterList;
-    procedure Init;
   protected
     { Protected declarations }
   public
-    { Public declarations }
-    constructor Create(aOwner:TComponent); override;
     function Execute:boolean;
   end;
 
@@ -147,7 +148,6 @@ type
   public
     { Public declarations }
     constructor Create(aOwner:TComponent); override;
-    destructor  Destroy; override;
     {@method Clear - Preenche todas as props com valores default.:/}
     procedure Clear;
     {@method Apply - Aplica as configurações ao relatório em andamento.:/}
@@ -206,15 +206,6 @@ end;
 
 { TRLPrintDialog }
 
-// OVERRIDE
-
-constructor TRLPrintDialog.Create(aOwner:TComponent);
-begin
-  inherited CreateNew(aOwner,0);
-  //
-  Init;
-end;
-
 // PUBLIC
 
 function TRLPrintDialog.Execute:boolean;
@@ -229,385 +220,6 @@ begin
 end;
 
 // PRIVATE
-
-procedure TRLPrintDialog.Init;
-begin
-  Left := 324;
-  Top := 372;
-  BorderStyle := bsDialog;
-  Caption := LS_PrintStr;
-  ClientHeight := 317;//267;
-  ClientWidth := 523;//430;
-  Color := clBtnFace;
-  Font.Charset := DEFAULT_CHARSET;
-  Font.Color := clWindowText;
-  Font.Name := 'default';
-  Font.Height := 0;
-  Font.Style := [];
-  Position := poScreenCenter;
-  PixelsPerInch := 96;
-  GroupBoxPrinter:=TGroupBox.Create(Self);
-  with GroupBoxPrinter do
-  begin
-    Name := 'GroupBoxPrinter';
-    Parent := Self;
-    Left := 8;
-    Top := 4;
-    Width := 504;//413;
-//  Height := 113;
-    Height := 150;
-    Caption := ' '+LS_PrinterStr+' ';
-    TabOrder := 0;
-    LabelPrinterName:=TLabel.Create(Self);
-    with LabelPrinterName do
-    begin
-      Name := 'LabelPrinterName';
-      Parent := GroupBoxPrinter;
-      Left := 12;
-      Top := 24;
-      Width := 31;
-      Height := 13;
-      Caption := '&'+LS_NameStr+':';
-      FocusControl := ComboBoxPrinterNames;
-    end;
-    ComboBoxPrinterNames:=TComboBox.Create(Self);
-    with ComboBoxPrinterNames do
-    begin
-      Name := 'ComboBoxPrinterNames';
-      Parent := GroupBoxPrinter;
-      Left := 74;//68;
-      Top := 20;
-      Width := 290;//329;
-      Height := 21;
-      Style := csDropDownList;
-      ItemHeight := 13;
-      TabOrder := 0;
-    end;
-    LabelFilterName:=TLabel.Create(Self);
-    with LabelFilterName do
-    begin
-      Name := 'LabelFilterName';
-      Parent := GroupBoxPrinter;
-      Left := 12;
-      Height := 16;
-      Top := 62;
-      Width := 76;
-
-{
-      Left := 12;
-      Top := 48;
-      Width := 47;
-      Height := 13;
-}
-      Caption := LS_UseFilterStr;
-      FocusControl := ComboBoxPrinterNames;
-    end;
-    ComboBoxFilters:=TComboBox.Create(Self);
-    with ComboBoxFilters do
-    begin
-      Name := 'ComboBoxFilters';
-      Parent := GroupBoxPrinter;
-      Left := 74;
-      Height := 29;
-      Top := 52;
-      Width := 290;
-      {
-      Left := 68;
-      Top := 44;
-      Width := 177;
-      Height := 21;
-      }
-      Style := csDropDownList;
-      TabOrder := 1;
-      OnChange := ComboBoxFiltersChange;
-    end;
-    ButtonOptions:=TButton.Create(Self);
-    with ButtonOptions do
-    begin
-      Name := 'ButtonOptions';
-      Parent := GroupBoxPrinter;
-      Left := 394;
-      Height := 27;
-      Top := 52;
-      Width := 85;
-{
-      Left := 248;
-      Top := 44;
-      Width := 61;
-      Height := 21;
-}
-      Caption := UTF8Encode(LS_OptionsStr);
-      TabOrder := 2;
-      OnClick := ButtonOptionsClick;
-    end;
-    CheckBoxPrintToFile:=TCheckBox.Create(Self);
-    with CheckBoxPrintToFile do
-    begin
-      Name := 'CheckBoxPrintToFile';
-      Parent := GroupBoxPrinter;
-      Left := 12;
-      Top := 91;//68;
-      Width := 325;
-      Height := 17;
-      Caption := LS_PrintToFileStr;
-      TabOrder := 3;
-    end;
-    CheckBoxBackgroundMode:=TCheckBox.Create(Self);
-    with CheckBoxBackgroundMode do
-    begin
-      Name := 'CheckBoxBackgroundMode';
-      Parent := GroupBoxPrinter;
-      Left := 12;
-      Top := 111;//88;
-      Width := 325;
-      Height := 17;
-      Caption := LS_PrintInBackgroundStr;
-      TabOrder := 4;
-    end;
-  end;
-  GroupBoxPages:=TGroupBox.Create(Self);
-  with GroupBoxPages do
-  begin
-    Name := 'GroupBoxPages';
-    Parent := Self;
-    Left := 8;
-    Top := 160;//120
-    Width := 259;//217;
-    Height := 103;
-    Caption := ' ' + LS_PageRangeStr + ' ';
-    TabOrder := 1;
-    LabelFromPage:=TLabel.Create(Self);
-    with LabelFromPage do
-    begin
-      Name := 'LabelFromPage';
-      Parent := GroupBoxPages;
-      Left := 97;//72;
-      //Top := 49;
-      Top := 31;
-      Width := 15;
-      Height := 13;
-      Caption := LS_OfStr;
-      FocusControl := EditFromPage;
-    end;
-    LabelToPage:=TLabel.Create(Self);
-    with LabelToPage do
-    begin
-      Name := 'LabelToPage';
-      Parent := GroupBoxPages;
-      Left := 165;//140;
-//    Top := 49;
-      Top := 31;
-      Width := 18;
-      Height := 13;
-      Caption := '&'+LS_RangeToStr;
-      FocusControl := EditToPage;
-    end;
-    RadioButtonPagesAll:=TRadioButton.Create(Self);
-    with RadioButtonPagesAll do
-    begin
-      Name := 'RadioButtonPagesAll';
-      Parent := GroupBoxPages;
-      Left := 12;
-      Height := 21;
-      Top := 7;
-      Width := 53;
-{
-      Left := 12;
-      Top := 24;
-      Width := 113;
-      Height := 17;
-      }
-      Caption := LS_AllStr;
-      Checked := True;
-      TabOrder := 0;
-      TabStop := True;
-    end;
-    RadioButtonPagesInterval:=TRadioButton.Create(Self);
-    with RadioButtonPagesInterval do
-    begin
-      Name := 'RadioButtonPagesInterval';
-      Parent := GroupBoxPages;
-      Left := 12;
-      Height := 21;
-      Top := 31;
-      Width := 73;
-{
-      Left := 12;
-      Top := 48;
-      Width := 61;
-      Height := 17;
-      }
-      Caption := LS_PagesStr;
-      TabOrder := 1;
-    end;
-    EditFromPage:=TEdit.Create(Self);
-    with EditFromPage do
-    begin
-      Name := 'EditFromPage';
-      Parent := GroupBoxPages;
-      Left := 121;
-      Height := 21;
-      Top := 27;
-      Width := 41;
-{
-      Left := 92;
-      Top := 44;
-      Width := 41;
-      Height := 21;
-      TabOrder := 2;
-      }
-      Text := '1';
-      OnChange := EditFromToPageChange;
-    end;
-    EditToPage:=TEdit.Create(Self);
-    with EditToPage do
-    begin
-      Name := 'EditToPage';
-      Parent := GroupBoxPages;
-      Left := 193;
-      Height := 21;
-      Top := 27;
-      Width := 41;
-{
-      Left := 164;
-      Top := 44;
-      Width := 41;
-      Height := 21;
-}
-      TabOrder := 3;
-      OnChange := EditFromToPageChange;
-    end;
-    RadioButtonPagesSelect:=TRadioButton.Create(Self);
-    with RadioButtonPagesSelect do
-    begin
-      Name := 'RadioButtonPagesSelect';
-      Parent := GroupBoxPages;
-      Left := 12;
-      Height := 21;
-      Top := 55;
-      Width := 77;
- {
-      Left := 12;
-      Top := 72;
-      Width := 73;
-      Height := 17;
-      }
-      Caption := LS_SelectionStr;
-      TabOrder := 4;
-    end;
-  end;
-  GroupBoxCopies:=TGroupBox.Create(Self);
-  with GroupBoxCopies do
-  begin
-    Name := 'GroupBoxCopies';
-    Parent := Self;
-    Left := 276;
-    Height := 103;
-    Top := 160;
-    Width := 236;
-
-{
-    Left := 236;
-    Top := 156;//120;
-    Width := 185;
-    Height := 102;
-}
-    Caption := ' ' + LS_CopiesStr + ' ';
-    TabOrder := 2;
-    LabelCopies:=TLabel.Create(Self);
-    with LabelCopies do
-    begin
-      Name := 'LabelCopies';
-      Parent := GroupBoxCopies;
-      Left := 12;
-      Height := 16;
-      Top := 24;
-      Width := 129;
-{
-      Left := 12;
-      Top := 24;
-      Width := 89;
-      Height := 13;
- }
-      Caption := LS_NumberOfCopiesStr+':';
-    end;
-    EditCopies:=TEdit.Create(Self);
-    with EditCopies do
-    begin
-      Name := 'EditCopies';
-      Parent := GroupBoxCopies;
-      Left := 158;
-      Height := 21;
-      Top := 20;
-      Width := 49;
-{
-      Left := 108;
-      Top := 20;
-      Width := 49;
-      Height := 21;
-}
-      TabOrder := 0;
-      Text := '1';
-    end;
-  end;
-  ButtonAplicar:=TButton.Create(Self);
-  with ButtonAplicar do
-  begin
-    Name := 'ButtonAplicar';
-    Parent := Self;
-    Left := 160-2;
-    Top := 280;
-    Width := 115;
-    Height := 25;
-    Caption := Ls_Aplicar;
-    ModalResult := 1;
-    TabOrder := 3;
-  end;
-  ButtonCancel:=TButton.Create(Self);
-  with ButtonCancel do
-  begin
-    Name := 'ButtonCancel';
-    Parent := Self;
-    Left := 400-2;
-    Top := 280;
-    Width := 115;
-    Height := 25;
-    Cancel := True;
-    Caption := LS_CancelStr;
-    ModalResult := 2;
-    TabOrder := 4;
-  end;
-  SpeedButtonSetup:=TButton.Create(Self);
-  with SpeedButtonSetup do
-  begin
-    Name := 'SpeedButtonSetup';
-    Parent := Self;
-    Left := 394+10;
-    Top := 20+12;
-    Width := 85;
-    Height := 29;
-    Caption := Ls_Propriedades;
-    ModalResult := 0;
-    TabOrder := 5;
-    OnClick := SpeedButtonSetupClick;
-  end;
-  ButtonImprimir:=TButton.Create(Self);
-  with ButtonImprimir do
-  begin
-    Name := 'ButtonImprimir';
-    Parent := Self;
-    Left := 280-2;
-    Top := 280;
-    Width := 115;
-    Height := 25;
-    Cancel := True;
-    Caption := LS_PrintStr;
-    ModalResult := 1;
-    TabOrder := 6;
-    OnClick := ButtonImprimirClick;
-  end;
-  //
-end;
 
 procedure TRLPrintDialog.LoadPrinterList;
 var
@@ -766,6 +378,29 @@ begin
     p.ExecuteDialog;
 end;
 
+procedure TRLPrintDialog.FormCreate(Sender: TObject);
+begin
+  Caption := LS_PrintStr;
+  GroupBoxPrinter.Caption := ' '+LS_PrinterStr+' ';
+  LabelPrinterName.Caption := '&'+LS_NameStr+':';
+  LabelFilterName.Caption := LS_UseFilterStr;
+  ButtonOptions.Caption := LS_OptionsStr;
+  CheckBoxPrintToFile.Caption := LS_PrintToFileStr;
+  CheckBoxBackgroundMode.Caption := LS_PrintInBackgroundStr;
+  GroupBoxPages.Caption := ' ' + LS_PageRangeStr + ' ';
+  LabelFromPage.Caption := LS_OfStr;
+  LabelToPage.Caption := '&'+LS_RangeToStr;
+  RadioButtonPagesAll.Caption := LS_AllStr;
+  RadioButtonPagesInterval.Caption := LS_PagesStr;
+  RadioButtonPagesSelect.Caption := LS_SelectionStr;
+  GroupBoxCopies.Caption := ' ' + LS_CopiesStr + ' ';
+  LabelCopies.Caption := LS_NumberOfCopiesStr+':';
+  ButtonAplicar.Caption := Ls_Aplicar;
+  ButtonCancel.Caption := LS_CancelStr;
+  SpeedButtonSetup.Caption := Ls_Propriedades;
+  ButtonImprimir.Caption := LS_PrintStr;
+end;
+
 { TRLPrintDialogSetup }
 
 function TRLPrintDialogSetup.GetCopies: integer;
@@ -827,11 +462,6 @@ begin
   fBackgroundMode:=False;
   fFilter        :=nil;
   //
-  inherited;
-end;
-
-destructor TRLPrintParams.Destroy;
-begin
   inherited;
 end;
 
@@ -904,6 +534,7 @@ end;
 
 
 initialization
+  {$i rlprintdialog.lrs}
   PrintParams:=TRLPrintParams.Create(nil);
 
 finalization
