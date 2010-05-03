@@ -1,34 +1,40 @@
 object RLSaveDialog: TRLSaveDialog
-  Left = 382
-  Height = 244
-  Top = 398
+  Left = 386
+  Height = 237
+  Top = 353
   Width = 391
   ActiveControl = EditFileName
   BorderStyle = bsDialog
   Caption = 'Salvar como'
-  ClientHeight = 244
+  ClientHeight = 237
   ClientWidth = 391
   OnCreate = FormCreate
   Position = poScreenCenter
   LCLVersion = '0.9.29'
   object LabelFileName: TLabel
-    Left = 15
+    AnchorSideRight.Control = EditFileName
+    Left = 20
     Height = 14
     Top = 16
     Width = 86
+    Anchors = [akTop, akRight]
+    BorderSpacing.Right = 2
     Caption = 'Nome do arquivo:'
     ParentColor = False
   end
   object LabelUseFilter: TLabel
-    Left = 12
+    AnchorSideRight.Control = ComboBoxFilters
+    Left = 15
     Height = 14
     Top = 44
     Width = 91
+    Anchors = [akTop, akRight]
+    BorderSpacing.Right = 2
     Caption = 'Salvar no formato:'
     ParentColor = False
   end
   object SpeedButtonLookup: TSpeedButton
-    Left = 356
+    Left = 358
     Height = 21
     Top = 12
     Width = 21
@@ -49,16 +55,16 @@ object RLSaveDialog: TRLSaveDialog
     object LabelFromPage: TLabel
       Left = 68
       Height = 14
-      Top = 30
+      Top = 29
       Width = 17
       Caption = '&de:'
       FocusControl = EditFromPage
       ParentColor = False
     end
     object LabelToPage: TLabel
-      Left = 136
+      Left = 137
       Height = 14
-      Top = 30
+      Top = 29
       Width = 21
       Caption = '&até:'
       FocusControl = EditToPage
@@ -93,20 +99,20 @@ object RLSaveDialog: TRLSaveDialog
       TabStop = False
     end
     object EditFromPage: TEdit
-      Left = 88
+      Left = 92
       Height = 21
       Top = 28
-      Width = 41
+      Width = 39
       OnChange = EditFromPageChange
       TabStop = False
       TabOrder = 3
       Text = '1'
     end
     object EditToPage: TEdit
-      Left = 160
+      Left = 161
       Height = 21
       Top = 28
-      Width = 41
+      Width = 39
       OnChange = EditFromPageChange
       TabStop = False
       TabOrder = 4
