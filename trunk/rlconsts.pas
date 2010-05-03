@@ -445,7 +445,8 @@ begin
   Ls_Salvar_Como          :='Save as';
   Ls_Nome_Arquivo         :='File Name:';
   LS_OptionsStr           :='Options';
-  LS_ColumnsStr           :='Coluns';
+  LS_ColumnsStr           :='Columns';
+  LS_Propriedades         :='Settings';
   Ls_Progresso            :='Progress';
   Ls_Aplicar              :='Apply';
   Ls_File_corrupted       :='File is corrupted!';
