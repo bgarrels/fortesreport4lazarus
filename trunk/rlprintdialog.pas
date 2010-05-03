@@ -10,7 +10,7 @@ interface
 
 uses
   LCLIntf, LCLType, Classes, SysUtils, LResources,
-  LMessages, Graphics, Controls, Forms, Dialogs, StdCtrls,
+  Graphics, Controls, Forms, Dialogs, StdCtrls,
   RLFilters, RLConsts, RLPrinters, RLTypes, RLSpoolFilter;
 
 type
@@ -381,19 +381,19 @@ end;
 procedure TRLPrintDialog.FormCreate(Sender: TObject);
 begin
   Caption := LS_PrintStr;
-  GroupBoxPrinter.Caption := ' '+LS_PrinterStr+' ';
+  GroupBoxPrinter.Caption := LS_PrinterStr;
   LabelPrinterName.Caption := '&'+LS_NameStr+':';
-  LabelFilterName.Caption := LS_UseFilterStr;
+  LabelFilterName.Caption := LS_UseFilterStr+':';
   ButtonOptions.Caption := LS_OptionsStr;
   CheckBoxPrintToFile.Caption := LS_PrintToFileStr;
   CheckBoxBackgroundMode.Caption := LS_PrintInBackgroundStr;
-  GroupBoxPages.Caption := ' ' + LS_PageRangeStr + ' ';
-  LabelFromPage.Caption := LS_OfStr;
+  GroupBoxPages.Caption := LS_PageRangeStr;
+  LabelFromPage.Caption := LS_RangeFromStr;
   LabelToPage.Caption := '&'+LS_RangeToStr;
   RadioButtonPagesAll.Caption := LS_AllStr;
   RadioButtonPagesInterval.Caption := LS_PagesStr;
   RadioButtonPagesSelect.Caption := LS_SelectionStr;
-  GroupBoxCopies.Caption := ' ' + LS_CopiesStr + ' ';
+  GroupBoxCopies.Caption := LS_CopiesStr;
   LabelCopies.Caption := LS_NumberOfCopiesStr+':';
   ButtonAplicar.Caption := Ls_Aplicar;
   ButtonCancel.Caption := LS_CancelStr;

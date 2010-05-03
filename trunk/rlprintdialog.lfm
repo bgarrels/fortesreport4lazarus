@@ -22,19 +22,25 @@ object RLPrintDialog: TRLPrintDialog
     ClientWidth = 500
     TabOrder = 0
     object LabelPrinterName: TLabel
-      Left = 12
+      AnchorSideRight.Control = ComboBoxPrinterNames
+      Left = 44
       Height = 14
       Top = 10
       Width = 32
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 2
       Caption = '&Nome:'
       FocusControl = ComboBoxPrinterNames
       ParentColor = False
     end
     object LabelFilterName: TLabel
-      Left = 15
+      AnchorSideRight.Control = ComboBoxFilters
+      Left = 24
       Height = 14
       Top = 50
       Width = 52
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 2
       Caption = 'Usar &filtro:'
       FocusControl = ComboBoxPrinterNames
       ParentColor = False
@@ -85,7 +91,7 @@ object RLPrintDialog: TRLPrintDialog
     end
     object SpeedButtonSetup: TButton
       Left = 390
-      Height = 25
+      Height = 27
       Top = 7
       Width = 96
       Caption = 'Setup'
