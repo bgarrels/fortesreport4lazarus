@@ -1,92 +1,96 @@
 object RLPrintDialog: TRLPrintDialog
-  Left = 287
-  Height = 313
-  Top = 127
-  Width = 524
-  HorzScrollBar.Range = 421
-  VertScrollBar.Range = 237
+  Left = 430
+  Height = 311
+  Top = 375
+  Width = 518
   ActiveControl = ButtonOptions
-  AutoScroll = False
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
   Caption = 'Imprimir:'
-  ClientHeight = 313
-  ClientWidth = 524
-  Font.Height = -12
-  Font.Name = 'helvetica [adobe]'
-  Font.Pitch = fpVariable
+  ClientHeight = 311
+  ClientWidth = 518
+  OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '0.9.27'
+  LCLVersion = '0.9.29'
   object GroupBoxPrinter: TGroupBox
     Left = 8
     Height = 150
     Top = 8
     Width = 504
     Caption = ' Impressora '
-    ClientHeight = 131
+    ClientHeight = 132
     ClientWidth = 500
     TabOrder = 0
     object LabelPrinterName: TLabel
       Left = 12
-      Height = 16
-      Top = 28
-      Width = 38
+      Height = 14
+      Top = 10
+      Width = 32
       Caption = '&Nome:'
       FocusControl = ComboBoxPrinterNames
       ParentColor = False
     end
     object LabelFilterName: TLabel
-      Left = 12
-      Height = 16
-      Top = 62
-      Width = 57
+      Left = 15
+      Height = 14
+      Top = 50
+      Width = 52
       Caption = 'Usar &filtro:'
       FocusControl = ComboBoxPrinterNames
       ParentColor = False
     end
     object ComboBoxPrinterNames: TComboBox
-      Left = 84
+      Left = 78
       Height = 21
-      Top = 20
+      Top = 8
       Width = 290
-      AutoComplete = False
-      ItemHeight = 0
-      ItemWidth = 0
+      ItemHeight = 13
       Style = csDropDownList
       TabOrder = 0
     end
     object CheckBoxPrintToFile: TCheckBox
       Left = 12
-      Height = 20
-      Top = 91
-      Width = 134
+      Height = 17
+      Top = 88
+      Width = 112
       Caption = 'Imprimir em arquivo'
       TabOrder = 2
     end
     object ComboBoxFilters: TComboBox
-      Left = 84
+      Left = 78
       Height = 21
-      Top = 52
+      Top = 48
       Width = 290
-      AutoComplete = False
-      ItemHeight = 0
-      ItemWidth = 0
+      ItemHeight = 13
+      OnChange = ComboBoxFiltersChange
       Style = csDropDownList
       TabOrder = 1
     end
     object CheckBoxBackgroundMode: TCheckBox
       Left = 12
-      Height = 20
-      Top = 111
-      Width = 177
+      Height = 17
+      Top = 109
+      Width = 146
       Caption = 'Imprimir em segundo plano'
       TabOrder = 3
     end
     object ButtonOptions: TButton
-      Left = 394
+      Left = 390
       Height = 27
-      Top = 54
+      Top = 46
       Width = 96
-      Caption = 'Opcoes'
+      Caption = 'Opções'
+      OnClick = ButtonOptionsClick
       TabOrder = 4
+    end
+    object SpeedButtonSetup: TButton
+      Left = 390
+      Height = 25
+      Top = 7
+      Width = 96
+      Caption = 'Setup'
+      OnClick = SpeedButtonSetupClick
+      TabOrder = 5
     end
   end
   object GroupBoxPages: TGroupBox
@@ -94,33 +98,34 @@ object RLPrintDialog: TRLPrintDialog
     Height = 102
     Top = 161
     Width = 259
-    Caption = ' Intervalo de impressao'
-    ClientHeight = 83
+    Caption = ' Intervalo de impressão'
+    ClientHeight = 84
     ClientWidth = 255
     TabOrder = 1
     object LabelFromPage: TLabel
       Left = 99
-      Height = 16
+      Height = 14
       Top = 32
-      Width = 18
+      Width = 17
       Caption = '&de:'
       FocusControl = EditFromPage
       ParentColor = False
     end
     object LabelToPage: TLabel
       Left = 169
-      Height = 16
+      Height = 14
       Top = 32
-      Width = 21
+      Width = 22
       Caption = 'Ate:'
+      Color = clBtnFace
       FocusControl = EditToPage
-      ParentColor = False
+      Transparent = False
     end
     object RadioButtonPagesAll: TRadioButton
       Left = 12
-      Height = 21
+      Height = 17
       Top = 7
-      Width = 52
+      Width = 42
       Caption = '&Tudo'
       Checked = True
       State = cbChecked
@@ -128,19 +133,19 @@ object RLPrintDialog: TRLPrintDialog
     end
     object RadioButtonPagesInterval: TRadioButton
       Left = 12
-      Height = 21
+      Height = 17
       Top = 31
-      Width = 70
-      Caption = 'Paginas'
+      Width = 55
+      Caption = 'Páginas'
       TabOrder = 1
       TabStop = False
     end
     object RadioButtonPagesSelect: TRadioButton
       Left = 12
-      Height = 21
+      Height = 17
       Top = 55
-      Width = 72
-      Caption = '&Selecao:'
+      Width = 59
+      Caption = '&Selecão:'
       TabOrder = 2
       TabStop = False
     end
@@ -149,6 +154,7 @@ object RLPrintDialog: TRLPrintDialog
       Height = 21
       Top = 27
       Width = 41
+      OnChange = EditFromToPageChange
       TabStop = False
       TabOrder = 3
       Text = '1'
@@ -158,6 +164,7 @@ object RLPrintDialog: TRLPrintDialog
       Height = 21
       Top = 27
       Width = 41
+      OnChange = EditFromToPageChange
       TabStop = False
       TabOrder = 4
     end
@@ -167,16 +174,16 @@ object RLPrintDialog: TRLPrintDialog
     Height = 103
     Top = 160
     Width = 236
-    Caption = ' Copias '
-    ClientHeight = 84
+    Caption = ' Cópias '
+    ClientHeight = 85
     ClientWidth = 232
     TabOrder = 2
     object LabelCopies: TLabel
       Left = 12
-      Height = 16
+      Height = 14
       Top = 24
-      Width = 129
-      Caption = 'Numero de &copias:'
+      Width = 90
+      Caption = 'Numero de &cópias:'
       ParentColor = False
     end
     object EditCopies: TEdit
@@ -189,13 +196,32 @@ object RLPrintDialog: TRLPrintDialog
     end
   end
   object ButtonCancel: TButton
-    Left = 344
+    Left = 405
     Height = 25
     Top = 277
-    Width = 163
+    Width = 107
     Cancel = True
     Caption = 'Cancelar'
     ModalResult = 2
     TabOrder = 3
+  end
+  object ButtonAplicar: TButton
+    Left = 168
+    Height = 25
+    Top = 277
+    Width = 107
+    Caption = 'Aplicar'
+    ModalResult = 1
+    TabOrder = 4
+  end
+  object ButtonImprimir: TButton
+    Left = 288
+    Height = 25
+    Top = 277
+    Width = 107
+    Caption = 'Imprimir'
+    ModalResult = 1
+    OnClick = ButtonImprimirClick
+    TabOrder = 5
   end
 end
