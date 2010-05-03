@@ -10,7 +10,7 @@ interface
 
 uses
   LCLType, Classes, SysUtils, LResources,
-  LMessages, Graphics, Controls, Forms, Dialogs, StdCtrls, Buttons,
+  Graphics, Controls, Forms, Dialogs, StdCtrls, Buttons,
   RLFilters, RLConsts, RLTypes, RLUtils;
 
 type
@@ -264,18 +264,18 @@ end;
 
 procedure TRLSaveDialog.FormCreate(Sender: TObject);
 begin
-  Caption := Ls_Salvar_Como; // 3.24b5
-  LabelFileName.Caption := Ls_Nome_Arquivo; // 3.24b5
+  Caption := Ls_Salvar_Como;
+  LabelFileName.Caption := Ls_Nome_Arquivo;
   RadioButtonPagesAll.Caption := LS_AllStr;
   RadioButtonPagesInterval.Caption := LS_PagesStr;
   RadioButtonPagesSelect.Caption := '&'+LS_SelectionStr;
   ButtonSave.Caption := LS_SaveStr;
   ButtonCancel.Caption := LS_CancelStr;
-  //LabelUseFilter.Caption := 'Salvar no formato:';
-  //GroupBoxPages.Caption := ' Páginas no intervalo';
-  //LabelFromPage.Caption := '&de:';
-  //LabelToPage.Caption := '&até:';
-  //CheckBoxBackgroundMode.Caption := 'Salvar em segundo plano';
+  LabelUseFilter.Caption := LS_UseFilterStr + ':';
+  GroupBoxPages.Caption := LS_PageRangeStr;
+  LabelFromPage.Caption := LS_RangeFromStr;
+  LabelToPage.Caption := LS_RangeToStr;
+  CheckBoxBackgroundMode.Caption := LS_SaveInBackground;
 end;
 
 function FilterStr(const aDescription,aExt:string):string;
