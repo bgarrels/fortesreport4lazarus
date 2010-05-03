@@ -8,29 +8,32 @@ LazarusResources.Add('TRLPrintDialog','FORMDATA',[
   +'mCreate'#8'Position'#7#14'poScreenCenter'#10'LCLVersion'#6#6'0.9.29'#0#9'TG'
   +'roupBox'#15'GroupBoxPrinter'#4'Left'#2#8#6'Height'#3#150#0#3'Top'#2#8#5'Wid'
   +'th'#3#248#1#7'Caption'#6#12' Impressora '#12'ClientHeight'#3#132#0#11'Clien'
-  +'tWidth'#3#244#1#8'TabOrder'#2#0#0#6'TLabel'#16'LabelPrinterName'#4'Left'#2
-  +#12#6'Height'#2#14#3'Top'#2#10#5'Width'#2' '#7'Caption'#6#6'&Nome:'#12'Focus'
-  +'Control'#7#20'ComboBoxPrinterNames'#11'ParentColor'#8#0#0#6'TLabel'#15'Labe'
-  +'lFilterName'#4'Left'#2#15#6'Height'#2#14#3'Top'#2'2'#5'Width'#2'4'#7'Captio'
-  +'n'#6#13'Usar &filtro:'#12'FocusControl'#7#20'ComboBoxPrinterNames'#11'Paren'
-  +'tColor'#8#0#0#9'TComboBox'#20'ComboBoxPrinterNames'#4'Left'#2'N'#6'Height'#2
-  +#21#3'Top'#2#8#5'Width'#3'"'#1#10'ItemHeight'#2#13#5'Style'#7#14'csDropDownL'
-  +'ist'#8'TabOrder'#2#0#0#0#9'TCheckBox'#19'CheckBoxPrintToFile'#4'Left'#2#12#6
-  +'Height'#2#17#3'Top'#2'X'#5'Width'#2'p'#7'Caption'#6#19'Imprimir em arquivo'
-  +#8'TabOrder'#2#2#0#0#9'TComboBox'#15'ComboBoxFilters'#4'Left'#2'N'#6'Height'
-  +#2#21#3'Top'#2'0'#5'Width'#3'"'#1#10'ItemHeight'#2#13#8'OnChange'#7#21'Combo'
-  +'BoxFiltersChange'#5'Style'#7#14'csDropDownList'#8'TabOrder'#2#1#0#0#9'TChec'
-  +'kBox'#22'CheckBoxBackgroundMode'#4'Left'#2#12#6'Height'#2#17#3'Top'#2'm'#5
-  +'Width'#3#146#0#7'Caption'#6#25'Imprimir em segundo plano'#8'TabOrder'#2#3#0
-  +#0#7'TButton'#13'ButtonOptions'#4'Left'#3#134#1#6'Height'#2#27#3'Top'#2'.'#5
-  +'Width'#2'`'#7'Caption'#6#8'Op'#195#167#195#181'es'#7'OnClick'#7#18'ButtonOp'
-  +'tionsClick'#8'TabOrder'#2#4#0#0#7'TButton'#16'SpeedButtonSetup'#4'Left'#3
-  +#134#1#6'Height'#2#25#3'Top'#2#7#5'Width'#2'`'#7'Caption'#6#5'Setup'#7'OnCli'
-  +'ck'#7#21'SpeedButtonSetupClick'#8'TabOrder'#2#5#0#0#0#9'TGroupBox'#13'Group'
-  +'BoxPages'#4'Left'#2#8#6'Height'#2'f'#3'Top'#3#161#0#5'Width'#3#3#1#7'Captio'
-  +'n'#6#24' Intervalo de impress'#195#163'o'#12'ClientHeight'#2'T'#11'ClientWi'
-  +'dth'#3#255#0#8'TabOrder'#2#1#0#6'TLabel'#13'LabelFromPage'#4'Left'#2'c'#6'H'
-  +'eight'#2#14#3'Top'#2' '#5'Width'#2#17#7'Caption'#6#4'&de:'#12'FocusControl'
+  +'tWidth'#3#244#1#8'TabOrder'#2#0#0#6'TLabel'#16'LabelPrinterName'#23'AnchorS'
+  +'ideRight.Control'#7#20'ComboBoxPrinterNames'#4'Left'#2','#6'Height'#2#14#3
+  +'Top'#2#10#5'Width'#2' '#7'Anchors'#11#5'akTop'#7'akRight'#0#19'BorderSpacin'
+  +'g.Right'#2#2#7'Caption'#6#6'&Nome:'#12'FocusControl'#7#20'ComboBoxPrinterNa'
+  +'mes'#11'ParentColor'#8#0#0#6'TLabel'#15'LabelFilterName'#23'AnchorSideRight'
+  +'.Control'#7#15'ComboBoxFilters'#4'Left'#2#24#6'Height'#2#14#3'Top'#2'2'#5'W'
+  +'idth'#2'4'#7'Anchors'#11#5'akTop'#7'akRight'#0#19'BorderSpacing.Right'#2#2#7
+  +'Caption'#6#13'Usar &filtro:'#12'FocusControl'#7#20'ComboBoxPrinterNames'#11
+  +'ParentColor'#8#0#0#9'TComboBox'#20'ComboBoxPrinterNames'#4'Left'#2'N'#6'Hei'
+  +'ght'#2#21#3'Top'#2#8#5'Width'#3'"'#1#10'ItemHeight'#2#13#5'Style'#7#14'csDr'
+  +'opDownList'#8'TabOrder'#2#0#0#0#9'TCheckBox'#19'CheckBoxPrintToFile'#4'Left'
+  +#2#12#6'Height'#2#17#3'Top'#2'X'#5'Width'#2'p'#7'Caption'#6#19'Imprimir em a'
+  +'rquivo'#8'TabOrder'#2#2#0#0#9'TComboBox'#15'ComboBoxFilters'#4'Left'#2'N'#6
+  +'Height'#2#21#3'Top'#2'0'#5'Width'#3'"'#1#10'ItemHeight'#2#13#8'OnChange'#7
+  +#21'ComboBoxFiltersChange'#5'Style'#7#14'csDropDownList'#8'TabOrder'#2#1#0#0
+  +#9'TCheckBox'#22'CheckBoxBackgroundMode'#4'Left'#2#12#6'Height'#2#17#3'Top'#2
+  +'m'#5'Width'#3#146#0#7'Caption'#6#25'Imprimir em segundo plano'#8'TabOrder'#2
+  +#3#0#0#7'TButton'#13'ButtonOptions'#4'Left'#3#134#1#6'Height'#2#27#3'Top'#2
+  +'.'#5'Width'#2'`'#7'Caption'#6#8'Op'#195#167#195#181'es'#7'OnClick'#7#18'But'
+  +'tonOptionsClick'#8'TabOrder'#2#4#0#0#7'TButton'#16'SpeedButtonSetup'#4'Left'
+  +#3#134#1#6'Height'#2#27#3'Top'#2#7#5'Width'#2'`'#7'Caption'#6#5'Setup'#7'OnC'
+  +'lick'#7#21'SpeedButtonSetupClick'#8'TabOrder'#2#5#0#0#0#9'TGroupBox'#13'Gro'
+  +'upBoxPages'#4'Left'#2#8#6'Height'#2'f'#3'Top'#3#161#0#5'Width'#3#3#1#7'Capt'
+  +'ion'#6#24' Intervalo de impress'#195#163'o'#12'ClientHeight'#2'T'#11'Client'
+  +'Width'#3#255#0#8'TabOrder'#2#1#0#6'TLabel'#13'LabelFromPage'#4'Left'#2'c'#6
+  +'Height'#2#14#3'Top'#2' '#5'Width'#2#17#7'Caption'#6#4'&de:'#12'FocusControl'
   +#7#12'EditFromPage'#11'ParentColor'#8#0#0#6'TLabel'#11'LabelToPage'#4'Left'#3
   +#169#0#6'Height'#2#14#3'Top'#2' '#5'Width'#2#22#7'Caption'#6#4'Ate:'#5'Color'
   +#7#9'clBtnFace'#12'FocusControl'#7#10'EditToPage'#11'Transparent'#8#0#0#12'T'
