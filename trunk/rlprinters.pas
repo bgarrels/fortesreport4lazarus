@@ -158,7 +158,8 @@ begin
   inherited PrinterIndex:=aNewPrinter;
   //
   {$IFDEF FPC}
-  Self.SetPrinter(Self.Printers[aNewPrinter]);
+  if (aNewPrinter > -1) and (aNewPrinter < Self.Printers.Count) then
+    Self.SetPrinter(Self.Printers[aNewPrinter]);
   {$ELSE}
   Self.GetPrinter(Device,Driver,Port,hDeviceMode);
   hDeviceMode:=0;
