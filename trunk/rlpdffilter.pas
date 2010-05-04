@@ -172,8 +172,6 @@ type
     //
     procedure   Write(const aStr:string='');
     procedure   WriteLn(const aStr:string='');
-    //todo: mudar de widestring para UnicodeString após 0.9.30
-    procedure   WriteUTF16(const aWideStr:widestring='');
     //
     procedure   WriteBOF;
     procedure   WriteInfo;
@@ -381,6 +379,9 @@ var
 {/@unit}
 
 implementation
+
+uses
+  LConvEncoding;
 
 const
   NullPaperSize:TRLPDFFilterPaperSize=(Width:0; Height:0);
@@ -1024,18 +1025,6 @@ begin
   Write(PDF_EOL);
 end;
 
-procedure TRLPDFFilter.WriteUTF16(const aWideStr: widestring);
-var
-  l:integer;
-begin
-  l:=Length(aWideStr)*SizeOf(WideChar);
-  if l>0 then
-  begin
-    fOutputStream.Write(aWideStr[1],l);
-    Inc(fWritePos,l);
-  end;
-end;
-
 function TRLPDFFilter.PDF_PointStr(X,Y:double):string;
 begin
   Result:=PDF_FloatToStr(PDF_PixelsToPoints(X))+' '+
@@ -1511,8 +1500,8 @@ begin
   //  +-9 Ts
   // the text
   Write('(');
-  // escape special chars and output as UTF16 (WideString)
-  WriteUTF16(UTF8Decode(PDF_EscapeText(aText)));
+  // escape special chars and output as CP1252 (WinAnsiEncoding)
+  Write(UTF8ToCP1252(PDF_EscapeText(aText)));
   WriteLn(') Tj');
   // end text
   WriteLn('ET');
@@ -1828,4 +1817,4 @@ finalization
   DefaultTextControl.free;
   DefaultDocumentInfo.free;
 
-end.
+end.
