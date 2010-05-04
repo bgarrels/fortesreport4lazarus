@@ -217,7 +217,7 @@ var
   {@var Ls_File_corrupted - Variável de internacionalização para "Versão de Arquivo inválido". :/}
   Ls_File_version         : String;  //3.24.12
   {@var Ls_Page_setings - Variável de internacionalização para "Configuração da Página". :/}
-  Ls_Page_setings         : String;  //3.24.12
+  Ls_Page_settings         : String;  //3.24.12
   {@var Ls_Page_margins - Variável de internacionalização para "Margem da Página". :/}
   Ls_Page_margins         : String;  //3.24.12
   {@var Ls_Page_margins_top - Variável de internacionalização para "Margem Superior". :/}
@@ -347,7 +347,7 @@ begin
   Ls_Aplicar              :='Aplicar';
   Ls_File_corrupted       :='Arquivo Corrompido';
   Ls_File_version         :='Versão de arquivo inválido!';
-  Ls_Page_setings         :='Configuração do Papel';
+  Ls_Page_settings         :='Configurações da página';
   Ls_Page_margins         :='Margem';
   Ls_Page_margins_top     :='Superior';
   Ls_Page_margins_bottom  :='Inferior';
@@ -451,6 +451,19 @@ begin
   Ls_Aplicar              :='Apply';
   Ls_File_corrupted       :='File is corrupted!';
   Ls_File_version         :='Invalid file version!';
+  Ls_Page_settings         :='Page Configuration';
+  Ls_Page_margins         :='Margins';
+  Ls_Page_margins_top     :='Top';
+  Ls_Page_margins_bottom  :='Bottom';
+  Ls_Page_paper           :='Paper';
+  Ls_Paper_Size           :='Paper Size';
+  Ls_Paper_Size_Width     :='Width';
+  Ls_Paper_Size_Heigth    :='Height';
+  Ls_Page_margins_rigth   :='Right';
+  Ls_Page_margins_left    :='Left';
+  Ls_Paper_Orientation    :='Orientation';
+  Ls_Paper_Orientation_Portrait:= 'Portrait';
+  Ls_Paper_Orientation_Landscape:= 'Landscape';
 end;
 
 procedure LoadFrenchStrings;
