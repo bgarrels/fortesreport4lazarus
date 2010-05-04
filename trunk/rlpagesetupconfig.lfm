@@ -1,144 +1,195 @@
-object PageSetupConfig: RLPageSetupConfig
-  Left = 211
-  Top = 407
-  ActiveControl = GroupBoxPages
+object RLPageSetupConfig: TRLPageSetupConfig
+  Left = 441
+  Height = 213
+  Top = 370
+  Width = 412
+  ActiveControl = GroupBoxPageMargins
   BorderStyle = bsDialog
-  Caption = ''
-  ClientHeight = 244
-  ClientWidth = 391
-  Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = 11
-  Font.Name = 'MS Sans Serif'
-  Font.Pitch = fpVariable
-  Font.Style = []
+  ClientHeight = 213
+  ClientWidth = 412
+  OnCreate = FormCreate
   Position = poScreenCenter
-  PixelsPerInch = 96
-  object GroupBoxPages: TGroupBox
-    Left = 12
-    Top = 68
-    Width = 365
-    Height = 101
-    Caption = ' Páginas no intervalo  '
-    TabOrder = 2
+  LCLVersion = '0.9.29'
+  object GroupBoxPageMargins: TGroupBox
+    Left = 8
+    Height = 152
+    Top = 8
+    Width = 221
+    Caption = 'Margens da página'
+    ClientHeight = 134
+    ClientWidth = 217
+    TabOrder = 0
     object LabelMarginsTop: TLabel
-      Left = 68
-      Top = 45
-      Width = 15
-      Height = 13
-      Caption = '&de:'
-      FocusControl = EditFromPage
+      Left = 12
+      Height = 14
+      Top = 44
+      Width = 41
+      Caption = 'Superior'
+      FocusControl = EditMarginsTop
+      ParentColor = False
     end
     object LabelMarginsBottom: TLabel
-      Left = 136
-      Top = 45
-      Width = 18
-      Height = 13
-      Caption = '&até:'
-      FocusControl = EditToPage
+      Left = 110
+      Height = 14
+      Top = 44
+      Width = 37
+      Caption = 'Inferior'
+      FocusControl = EditMarginsBottom
+      ParentColor = False
     end
     object LabelMarginsLeft: TLabel
-      Left = 136
-      Top = 45
-      Width = 18
-      Height = 13
-      Caption = '&até:'
-      FocusControl = EditToPage
-    end	
-    object LabelMarginsRigth: TEdit
-      Left = 88
-      Top = 44
-      Width = 41
-      Height = 21
-      TabStop = False
-      TabOrder = 3
-      Text = '1'
-      OnChange = EditMarginsBottom
+      Left = 7
+      Height = 14
+      Top = 13
+      Width = 46
+      Caption = 'Esquerda'
+      FocusControl = EditMarginsLeft
+      ParentColor = False
     end
     object EditMarginsTop: TEdit
-      Left = 160
-      Top = 44
-      Width = 41
+      Left = 58
       Height = 21
-      TabStop = False
-      TabOrder = 4
+      Top = 40
+      Width = 41
       OnChange = EditFromToPageChange
+      TabStop = False
+      TabOrder = 0
     end
     object EditMarginsBottom: TEdit
-      Left = 160
-      Top = 44
-      Width = 41
+      Left = 150
       Height = 21
-      TabStop = False
-      TabOrder = 4
-      OnChange = EditFromToPageChange
-    end	
-    object EditMarginsHeigth: TEdit
-      Left = 160
-      Top = 44
+      Top = 40
       Width = 41
-      Height = 21
-      TabStop = False
-      TabOrder = 4
       OnChange = EditFromToPageChange
-    end		
+      TabStop = False
+      TabOrder = 1
+    end
+    object EditMarginsLeft: TEdit
+      Left = 58
+      Height = 21
+      Top = 8
+      Width = 41
+      OnChange = EditFromToPageChange
+      TabStop = False
+      TabOrder = 2
+    end
     object EditMarginsRigth: TEdit
-      Left = 160
-      Top = 44
-      Width = 41
+      Left = 150
       Height = 21
-      TabStop = False
-      TabOrder = 4
+      Top = 8
+      Width = 41
       OnChange = EditFromToPageChange
-    end		
+      TabStop = False
+      TabOrder = 3
+    end
+    object LabelMarginsRigth: TLabel
+      Left = 115
+      Height = 14
+      Top = 13
+      Width = 32
+      Caption = 'Direita'
+      FocusControl = EditMarginsRigth
+      ParentColor = False
+    end
+    object LabelPaperOrientation: TLabel
+      Left = 10
+      Height = 14
+      Top = 77
+      Width = 108
+      Caption = 'LabelPaperOrientation'
+      ParentColor = False
+    end
+    object ComboBoxPaperOrientation: TComboBox
+      Left = 10
+      Height = 21
+      Top = 96
+      Width = 148
+      ItemHeight = 13
+      TabOrder = 4
+      Text = 'ComboBoxPaperOrientation'
+    end
   end
-  object ButtonSave: TButton
-    Left = 220
-    Top = 204
-    Width = 75
+  object ButtonAplicar: TButton
+    Left = 192
     Height = 25
+    Top = 176
+    Width = 99
     Caption = 'Salvar'
     Default = True
     ModalResult = 1
-    TabOrder = 4
+    TabOrder = 1
   end
   object ButtonCancel: TButton
-    Left = 304
-    Top = 204
-    Width = 75
+    Left = 306
     Height = 25
+    Top = 176
+    Width = 99
     Cancel = True
     Caption = 'Cancelar'
     ModalResult = 2
-    TabOrder = 5
+    TabOrder = 2
   end
-  object EditFileName: TEdit
-    Left = 108
-    Top = 12
-    Width = 249
-    Height = 21
-    TabOrder = 0
-  end
-  object GroupBoxCopies: TComboBox
-    Left = 108
-    Top = 40
-    Width = 177
-    Height = 21
-    Style = csDropDownList
-    ItemHeight = 13
-    TabOrder = 1
-  end
-  object CheckBoxSaveInBackground: TCheckBox
-    Left = 12
-    Top = 172
-    Width = 365
-    Height = 17
-    Caption = 'Salvar em segundo plano'
+  object GroupBoxPaper: TGroupBox
+    Left = 240
+    Height = 152
+    Top = 8
+    Width = 165
+    Caption = 'Papel'
+    ClientHeight = 134
+    ClientWidth = 161
     TabOrder = 3
-  end
-  object PageSetupConfig: TPageSetupConfig
-    Left = 340
-    Top = 80
+    object LabelSetPaper: TLabel
+      Left = 6
+      Height = 14
+      Top = 0
+      Width = 70
+      Caption = 'LabelSetPaper'
+      FocusControl = ComboBoxSetPaper
+      ParentColor = False
+    end
+    object ComboBoxSetPaper: TComboBox
+      Left = 7
+      Height = 21
+      Top = 16
+      Width = 136
+      ItemHeight = 13
+      OnChange = ComboBoxSetPaperChange
+      Style = csDropDownList
+      TabOrder = 0
+    end
+    object LabelPaperWidth: TLabel
+      Left = 6
+      Height = 14
+      Top = 56
+      Width = 38
+      Caption = 'Largura'
+      FocusControl = EditPaperWidth
+      ParentColor = False
+    end
+    object EditPaperWidth: TEdit
+      Left = 6
+      Height = 21
+      Top = 72
+      Width = 57
+      OnChange = EditFromToPageChange
+      TabOrder = 1
+    end
+    object LabelPaperHeight: TLabel
+      Left = 86
+      Height = 14
+      Top = 56
+      Width = 30
+      Caption = 'Altura'
+      FocusControl = EditPaperHeight
+      ParentColor = False
+    end
+    object EditPaperHeight: TEdit
+      Left = 86
+      Height = 21
+      Top = 72
+      Width = 57
+      OnChange = EditFromToPageChange
+      TabOrder = 2
+    end
   end
 end
