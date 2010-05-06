@@ -10,18 +10,8 @@ unit RLPDFFilter;
 interface
 
 uses
-  SysUtils, Classes, Math, Contnrs,
-{$ifdef VCL}
-  {$IFDEF MSWINDOWS}
-  Windows,
-  {$ELSE}
-  LCLIntf,
-  {$ENDIF}
-  Graphics, RLMetaVCL,
-{$else}
-  Types, QGraphics, RLMetaCLX,
-{$endif}
-  RLMetaFile, RLConsts, RLTypes, RLUtils, RLFilters;
+  SysUtils, Classes, Contnrs,
+  Graphics, RLMetaVCL, RLMetaFile, RLConsts, RLTypes, RLUtils, RLFilters;
 
 const
   PDF_FILEVERSION   ='1.2';
@@ -288,29 +278,17 @@ type
     //
     procedure   Assign(Source:TRLPDFFilterPageSetup); reintroduce;
     procedure   Clear;
-
-    {$IFDEF FPC}
-    property    WorkArea              :TRLPDFFilterMargin       read fWorkArea               write fWorkArea;
-    property    ColumnMargin          :TRLPDFFilterMargin       read fColumnMargin           write fColumnMargin;
-    property    ColumnGap             :TRLPDFFilterLocation     read fColumnGap              write fColumnGap;
-    property    Margins               :TRLPDFFilterMargin       read fMargins                write fMargins;
     property    PaperSize             :TRLPDFFilterPaperSize    read fPaperSize              write fPaperSize;
     property    MediaSize             :TRLPDFFilterPaperSize    read fMediaSize              write fMediaSize;
-    {$ENDIF}
-
-  published
-    {$IFNDEF FPC}
-    property    WorkArea              :TRLPDFFilterMargin       read fWorkArea               write fWorkArea;
-    property    ColumnMargin          :TRLPDFFilterMargin       read fColumnMargin           write fColumnMargin;
-    property    ColumnGap             :TRLPDFFilterLocation     read fColumnGap              write fColumnGap;
     property    Margins               :TRLPDFFilterMargin       read fMargins                write fMargins;
-    property    PaperSize             :TRLPDFFilterPaperSize    read fPaperSize              write fPaperSize;
-    property    MediaSize             :TRLPDFFilterPaperSize    read fMediaSize              write fMediaSize;
-    {$ENDIF}
-    property    LandScape             :boolean                  read fLandScape              write fLandScape;
-    property    PageBorder            :boolean                  read fPageBorder             write fPageBorder;
     property    ColumnBorder          :TRLPDFFilterColumnBorder read fColumnBorder           write fColumnBorder;
     property    BorderDashPattern     :TRLPDFFilterDashPattern  read fBorderDashPattern      write fBorderDashPattern;
+    property    ColumnMargin          :TRLPDFFilterMargin       read fColumnMargin           write fColumnMargin;
+    property    ColumnGap             :TRLPDFFilterLocation     read fColumnGap              write fColumnGap;
+    property    WorkArea              :TRLPDFFilterMargin       read fWorkArea               write fWorkArea;
+  published
+    property    LandScape             :boolean                  read fLandScape              write fLandScape;
+    property    PageBorder            :boolean                  read fPageBorder             write fPageBorder;
     property    ColumnCount           :word                     read fColumnCount            write fColumnCount;
     property    RowCount              :word                     read fRowCount               write fRowCount;
     property    FontPointSize         :word                     read fFontPointSize          write fFontPointSize;
@@ -1817,4 +1795,4 @@ finalization
   DefaultTextControl.free;
   DefaultDocumentInfo.free;
 
-end.
+end.
