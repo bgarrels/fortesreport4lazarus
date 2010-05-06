@@ -1477,10 +1477,8 @@ begin
   // sub/superscript
   //  +-9 Ts
   // the text
-  Write('(');
   // escape special chars and output as CP1252 (WinAnsiEncoding)
-  Write(UTF8ToCP1252(PDF_EscapeText(aText)));
-  WriteLn(') Tj');
+  WriteLn('(' + UTF8ToCP1252(PDF_EscapeText(aText)) + ') Tj');
   // end text
   WriteLn('ET');
 end;
