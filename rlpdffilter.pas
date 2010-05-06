@@ -1,6 +1,6 @@
 {$I RLReport.inc}
 
-{@unit RLPDFFilter - Implementação do filtro para criação de arquivos PDF.
+{@unit RLPDFFilter - ImplementaÃ§Ã£o do filtro para criaÃ§Ã£o de arquivos PDF.
 Portado para o Lazarus - Trabalho inicial de Isaac Trindade da Silva contato tioneobrasil@yahoo.com.br dicas4lazarus@yahoo.com.br
 Lazarus Ported - initial work by Isaac 07/2009
 }
@@ -104,10 +104,10 @@ type
 
   { TRLPDFFilter }
 
-  {@class TRLPDFFilter - Filtro para criação de documentos PDF a partir de um relatório.
+  {@class TRLPDFFilter - Filtro para criaÃ§Ã£o de documentos PDF a partir de um relatÃ³rio.
    O arquivo gerado pode ser lido pelo aplicativo Adobe AcrobatReader e pelo plugin associado
-   ao navegador de internet. Inclui imagens e fontes em um só volume e o resultado final é
-   bastante fiel ao relatório original, sendo ideal para distribuição via internet.
+   ao navegador de internet. Inclui imagens e fontes em um sÃ³ volume e o resultado final Ã©
+   bastante fiel ao relatÃ³rio original, sendo ideal para distribuiÃ§Ã£o via internet.
    @links TRLHTMLFilter, TRLRichFilter, TRLXLSFilter. 
    @ancestor TRLCustomSaveFilter.
    @pub }
@@ -175,19 +175,19 @@ type
     procedure   WriteTrailer;
     procedure   WriteEOF;
     //
-    {@method AddObj - Cria um novo objeto e retorna o seu id (índice no array de objetos).:/}
+    {@method AddObj - Cria um novo objeto e retorna o seu id (Ã­ndice no array de objetos).:/}
     function    AddObj:integer;
-    {@method BeginObj - Inicia a escrita do objeto indicado por aIndex. Se aIndex não for informado,
-    neste momento um novo objeto será criado e seu índice retornado pela função.:/}
+    {@method BeginObj - Inicia a escrita do objeto indicado por aIndex. Se aIndex nÃ£o for informado,
+    neste momento um novo objeto serÃ¡ criado e seu Ã­ndice retornado pela funÃ§Ã£o.:/}
     function    BeginObj(aIndex:integer=0):integer;
-    {@method EndObj - Finaliza a escrita de um objeto qualquer. Não é necessário indicar o índice,
-    uma vez que o marcador de fim de objeto não requer.:/}
+    {@method EndObj - Finaliza a escrita de um objeto qualquer. NÃ£o Ã© necessÃ¡rio indicar o Ã­ndice,
+    uma vez que o marcador de fim de objeto nÃ£o requer.:/}
     procedure   EndObj;
-    {@method BeginShortObj - Inicia a escrita do objeto indicado por aIndex. Se aIndex não for informado,
-    neste momento um novo objeto será criado e seu índice retornado pela função.:/}
+    {@method BeginShortObj - Inicia a escrita do objeto indicado por aIndex. Se aIndex nÃ£o for informado,
+    neste momento um novo objeto serÃ¡ criado e seu Ã­ndice retornado pela funÃ§Ã£o.:/}
     function    BeginShortObj(aIndex:integer=0):integer;
-    {@method EndShortObj - Finaliza a escrita de um objeto qualquer. Não é necessário indicar o índice,
-    uma vez que o marcador de fim de objeto não requer.:/}
+    {@method EndShortObj - Finaliza a escrita de um objeto qualquer. NÃ£o Ã© necessÃ¡rio indicar o Ã­ndice,
+    uma vez que o marcador de fim de objeto nÃ£o requer.:/}
     procedure   EndShortObj;
     procedure   BeginDoc;
     procedure   EndDoc;
@@ -230,19 +230,19 @@ type
     property PageSetup   :TRLPDFFilterPageSetup   read fPageSetup   write SetPageSetup;
     property TextControl :TRLPDFFilterTextControl read fTextControl write SetTextControl;
   published
-    {@prop DocumentInfo - Informações do documento gerado. @links TRLPDFFilterDocumentInfo. :/}
+    {@prop DocumentInfo - InformaÃ§Ãµes do documento gerado. @links TRLPDFFilterDocumentInfo. :/}
     property DocumentInfo :TRLPDFFilterDocumentInfo  read fDocumentInfo  write SetDocumentInfo;
-    {@prop ViewerOptions - Opções para o visualizador. @links TRLPDFFilterViewerOptions. :/}
+    {@prop ViewerOptions - OpÃ§Ãµes para o visualizador. @links TRLPDFFilterViewerOptions. :/}
     property ViewerOptions:TRLPDFFilterViewerOptions read fViewerOptions write fViewerOptions default DefaultViewerOptions;
-    {@prop PageMode - Opções para o visualizador em modo de página. @links TRLPDFFilterPageMode. :/}
+    {@prop PageMode - OpÃ§Ãµes para o visualizador em modo de pÃ¡gina. @links TRLPDFFilterPageMode. :/}
     property PageMode     :TRLPDFFilterPageMode      read fPageMode      write fPageMode      default pmRegular;
-    {@prop FullPageMode - Opções para o visualizador em modo de tela-cheia. @links TRLPDFFilterPageMode. :/}
+    {@prop FullPageMode - OpÃ§Ãµes para o visualizador em modo de tela-cheia. @links TRLPDFFilterPageMode. :/}
     property FullPageMode :TRLPDFFilterPageMode      read fFullPageMode  write fFullPageMode  default pmRegular;
-    {@prop PageLayout - Opções para o layout de página. @links TRLPDFFilterPageLayout. :/}
+    {@prop PageLayout - OpÃ§Ãµes para o layout de pÃ¡gina. @links TRLPDFFilterPageLayout. :/}
     property PageLayout   :TRLPDFFilterPageLayout    read fPageLayout    write fPageLayout    default plRegular;
-    {@prop FontEncoding - Opção para codificação de caracteres. @links TRLPDFFilterFontEncoding. :/}
+    {@prop FontEncoding - OpÃ§Ã£o para codificaÃ§Ã£o de caracteres. @links TRLPDFFilterFontEncoding. :/}
     property FontEncoding :TRLPDFFilterFontEncoding  read fFontEncoding  write fFontEncoding  default feWinAnsiEncoding;
-    {@prop ForceASCII - Força o modo ASCII. :/}
+    {@prop ForceASCII - ForÃ§a o modo ASCII. :/}
     property ForceASCII   :boolean                   read fForceASCII    write fForceASCII    default False;
     {@prop FileName = ancestor /}
     property FileName;
@@ -298,7 +298,7 @@ type
     property    CharCount             :word                     read fCharCount              write fCharCount;
   end;
 
-  {@class TRLPDFFilterDocumentInfo - Informações para a geração de documento PDF. }
+  {@class TRLPDFFilterDocumentInfo - InformaÃ§Ãµes para a geraÃ§Ã£o de documento PDF. }
   TRLPDFFilterDocumentInfo=class(TPersistent)
   private
     fTitle   :string;
@@ -315,7 +315,7 @@ type
     procedure Assign(Source:TRLPDFFilterDocumentInfo); reintroduce;
     procedure Clear;
   published
-    {@prop Title - Título do documento. :/}
+    {@prop Title - TÃ­tulo do documento. :/}
     property Title   :string read fTitle    write fTitle;
     {@prop Subject - Assunto do documento. :/}
     property Subject :string read fSubject  write fSubject;
@@ -323,13 +323,13 @@ type
     property Author  :string read fAuthor   write fAuthor;
     {@prop KeyWords - Palavras chaves para busca. :/}
     property KeyWords:string read fKeyWords write fKeyWords;
-    {@prop Creator - Programa utilitário gerador. :/}
+    {@prop Creator - Programa utilitÃ¡rio gerador. :/}
     property Creator :string read fCreator  write fCreator;
     {@prop Producer - Nome da produtora. :/}
     property Producer:string read fProducer write fProducer;
-    {@prop Password - Senha para o arquivo. -não implementado :/}
+    {@prop Password - Senha para o arquivo. -nÃ£o implementado :/}
 //    property Password:string read fPassword write fPassword;
-    {@prop ModDate - Data de modiicação do arquivo. :/}
+    {@prop ModDate - Data de modiicaÃ§Ã£o do arquivo. :/}
     property ModDate:TdateTime read fModDate write fModDate;
   end;
   {/@class}
@@ -602,7 +602,7 @@ var
     // font color
     with aObj.Font.Color do
       WriteLn(RGBStr(Red,Green,Blue)+' rg');
-    // define retângulo de corte
+    // define retÃ¢ngulo de corte
     if (aObj.TextFlags and MetaTextFlagAutoSize)=0 then
     begin
       with aObj.BoundsRect do
@@ -670,12 +670,12 @@ var
     WriteLn('q');
     // matriz de posicionamento (translation: 1 0 0 1 left top)
     WriteLn('1 0 0 1 '+PDF_PointStr(aObj.BoundsRect.Left,aObj.BoundsRect.Bottom)+' cm');
-    // matriz de rotação (rotation: cosT sinT -sinT cosT 0 0)
+    // matriz de rotaÃ§Ã£o (rotation: cosT sinT -sinT cosT 0 0)
     // WriteLn('1 0 0 1 0 0 cm');
     // matriz de escalonameto (scale: width 0 0 height 0 0)
     WriteLn(PDF_FloatToStr(PDF_PixelsToPoints(aObj.BoundsRect.Right-aObj.BoundsRect.Left))+' 0 0 '+
             PDF_FloatToStr(PDF_PixelsToPoints(aObj.BoundsRect.Bottom-aObj.BoundsRect.Top))+' 0 0 cm');
-    // matriz de inclinação (skew: 1 tanX tanY 1 0 0)
+    // matriz de inclinaÃ§Ã£o (skew: 1 tanX tanY 1 0 0)
     // WriteLn('1 0 0 1 0 0 cm');
     WriteLn('/Image'+IntToStr(aObj.Tag)+' Do');
     WriteLn('Q');
@@ -1454,7 +1454,7 @@ function TRLPDFFilter.BeginStream:integer;
 begin
   WriteLn('>>');
   WriteLn('stream');
-  // marca o offset de início deste stream
+  // marca o offset de inÃ­cio deste stream
   Result:=fWritePos;
 end;
 
@@ -1722,7 +1722,7 @@ begin
                PDF_Zeros(h,2)+PDF_Zeros(n,2)+PDF_Zeros(s,2);
 end;
 
-// string de referência ao objeto aIndex
+// string de referÃªncia ao objeto aIndex
 class function TRLPDFFilter.PDF_IndirectObjStr(aIndex:integer):string;
 begin
   Result:=IntToStr(aIndex)+' 0 R';
