@@ -100,9 +100,6 @@ type
 {@func ColorToHex - Devolve uma string com a cor em formato RGB-Hexadecimal. :/}
 function ColorToHex(aColor:TColor):string;
 
-{@func EncodeISO - Codifica uma string padrão ascii em formato ISO para html. :/}
-function EncodeISO(const aStr:string):string;
-
 {/@unit}
 
 implementation
@@ -126,130 +123,6 @@ var
 begin
   rgb.AsDWORD:=ColorToRGB(aColor);
   Result:=ByteToHex(rgb.AsSplit.Red)+ByteToHex(rgb.AsSplit.Green)+ByteToHex(rgb.AsSplit.Blue); 
-end;
-
-function EncodeISO(const aStr:string):string;
-type
-  TCharAndSymbol=record
-    Code  :char;
-    Symbol:string;
-  end;
-const
-  MAXENCODECHARS=99;
-  ENCODECHARS:array[1..MAXENCODECHARS] of TCharAndSymbol=(
-    (Code:#038; Symbol:'&amp;'), // ampersand
-    (Code:#062; Symbol:'&gt;'), // greater than
-    (Code:#060; Symbol:'&lt;'), // less than
-    (Code:#160; Symbol:'&nbsp;'), // no-break space
-    (Code:#161; Symbol:'&iexcl;'), // inverted exclamation mark
-    (Code:#162; Symbol:'&cent;'), // cent sign
-    (Code:#163; Symbol:'&pound;'), // pound sterling sign
-    (Code:#164; Symbol:'&curren;'), // general currency sign
-    (Code:#165; Symbol:'&yen;'), // yen sign
-    (Code:#166; Symbol:'&brvbar;'), // broken (vertical) bar
-    (Code:#167; Symbol:'&sect;'), // section sign
-    (Code:#168; Symbol:'&uml;'), // umlaut (dieresis)
-    (Code:#169; Symbol:'&copy;'), // copyright sign
-    (Code:#170; Symbol:'&ordf;'), // ordinal indicator, feminine
-    (Code:#171; Symbol:'&laquo;'), // angle quotation mark, left
-    (Code:#172; Symbol:'&not;'), // not sign
-    (Code:#173; Symbol:'&shy;'), // soft hyphen
-    (Code:#174; Symbol:'&reg;'), // registered sign
-    (Code:#175; Symbol:'&macr;'), // macron
-    (Code:#176; Symbol:'&deg;'), // degree sign
-    (Code:#177; Symbol:'&plusmn;'), // plus-or-minus sign
-    (Code:#178; Symbol:'&sup2;'), // superscript two
-    (Code:#179; Symbol:'&sup3;'), // superscript three
-    (Code:#180; Symbol:'&acute;'), // acute accent
-    (Code:#181; Symbol:'&micro;'), // micro sign
-    (Code:#182; Symbol:'&para;'), // pilcrow (paragraph sign)
-    (Code:#183; Symbol:'&middot;'), // middle dot
-    (Code:#184; Symbol:'&cedil;'), // cedilla
-    (Code:#185; Symbol:'&sup1;'), // superscript one
-    (Code:#186; Symbol:'&ordm;'), // ordinal indicator, masculine
-    (Code:#187; Symbol:'&raquo;'), // angle quotation mark, right
-    (Code:#188; Symbol:'&frac14;'), // fraction one-quarter
-    (Code:#189; Symbol:'&frac12;'), // fraction one-half
-    (Code:#190; Symbol:'&frac34;'), // fraction three-quarters
-    (Code:#191; Symbol:'&iquest;'), // inverted question mark
-    (Code:#192; Symbol:'&Agrave;'), // capital A, grave accent
-    (Code:#193; Symbol:'&Aacute;'), // capital A, acute accent
-    (Code:#194; Symbol:'&Acirc;'), // capital A, circumflex accent
-    (Code:#195; Symbol:'&Atilde;'), // capital A, tilde
-    (Code:#196; Symbol:'&Auml;'), // capital A, dieresis or umlaut mark
-    (Code:#197; Symbol:'&Aring;'), // capital A, ring
-    (Code:#198; Symbol:'&AElig;'), // capital AE diphthong (ligature)
-    (Code:#199; Symbol:'&Ccedil;'), // capital C, cedilla
-    (Code:#200; Symbol:'&Egrave;'), // capital E, grave accent
-    (Code:#201; Symbol:'&Eacute;'), // capital E, acute accent
-    (Code:#202; Symbol:'&Ecirc;'), // capital E, circumflex accent
-    (Code:#203; Symbol:'&Euml;'), // capital E, dieresis or umlaut mark
-    (Code:#204; Symbol:'&Igrave;'), // capital I, grave accent
-    (Code:#205; Symbol:'&Iacute;'), // capital I, acute accent
-    (Code:#206; Symbol:'&Icirc;'), // capital I, circumflex accent
-    (Code:#207; Symbol:'&Iuml;'), // capital I, dieresis or umlaut mark
-    (Code:#208; Symbol:'&ETH;'), // capital Eth, Icelandic
-    (Code:#209; Symbol:'&Ntilde;'), // capital N, tilde
-    (Code:#210; Symbol:'&Ograve;'), // capital O, grave accent
-    (Code:#211; Symbol:'&Oacute;'), // capital O, acute accent
-    (Code:#212; Symbol:'&Ocirc;'), // capital O, circumflex accent
-    (Code:#213; Symbol:'&Otilde;'), // capital O, tilde
-    (Code:#214; Symbol:'&Ouml;'), // capital O, dieresis or umlaut mark
-    (Code:#215; Symbol:'&times;'), // multiply sign
-    (Code:#216; Symbol:'&Oslash;'), // capital O, slash
-    (Code:#217; Symbol:'&Ugrave;'), // capital U, grave accent
-    (Code:#218; Symbol:'&Uacute;'), // capital U, acute accent
-    (Code:#219; Symbol:'&Ucirc;'), // capital U, circumflex accent
-    (Code:#220; Symbol:'&Uuml;'), // capital U, dieresis or umlaut mark
-    (Code:#221; Symbol:'&Yacute;'), // capital Y, acute accent
-    (Code:#222; Symbol:'&THORN;'), // capital THORN, Icelandic
-    (Code:#223; Symbol:'&szlig;'), // small sharp s, German (sz ligature)
-    (Code:#224; Symbol:'&agrave;'), // small a, grave accent
-    (Code:#225; Symbol:'&aacute;'), // small a, acute accent
-    (Code:#226; Symbol:'&acirc;'), // small a, circumflex accent
-    (Code:#227; Symbol:'&atilde;'), // small a, tilde
-    (Code:#228; Symbol:'&auml;'), // small a, dieresis or umlaut mark
-    (Code:#229; Symbol:'&aring;'), // small a, ring
-    (Code:#230; Symbol:'&aelig;'), // small ae diphthong (ligature)
-    (Code:#231; Symbol:'&ccedil;'), // small c, cedilla
-    (Code:#232; Symbol:'&egrave;'), // small e, grave accent
-    (Code:#233; Symbol:'&eacute;'), // small e, acute accent
-    (Code:#234; Symbol:'&ecirc;'), // small e, circumflex accent
-    (Code:#235; Symbol:'&euml;'), // small e, dieresis or umlaut mark
-    (Code:#236; Symbol:'&igrave;'), // small i, grave accent
-    (Code:#237; Symbol:'&iacute;'), // small i, acute accent
-    (Code:#238; Symbol:'&icirc;'), // small i, circumflex accent
-    (Code:#239; Symbol:'&iuml;'), // small i, dieresis or umlaut mark
-    (Code:#240; Symbol:'&eth;'), // small eth, Icelandic
-    (Code:#241; Symbol:'&ntilde;'), // small n, tilde
-    (Code:#242; Symbol:'&ograve;'), // small o, grave accent
-    (Code:#243; Symbol:'&oacute;'), // small o, acute accent
-    (Code:#244; Symbol:'&ocirc;'), // small o, circumflex accent
-    (Code:#245; Symbol:'&otilde;'), // small o, tilde
-    (Code:#246; Symbol:'&ouml;'), // small o, dieresis or umlaut mark
-    (Code:#247; Symbol:'&divide;'), // divide sign
-    (Code:#248; Symbol:'&oslash;'), // small o, slash
-    (Code:#249; Symbol:'&ugrave;'), // small u, grave accent
-    (Code:#250; Symbol:'&uacute;'), // small u, acute accent
-    (Code:#251; Symbol:'&ucirc;'), // small u, circumflex accent
-    (Code:#252; Symbol:'&uuml;'), // small u, dieresis or umlaut mark
-    (Code:#253; Symbol:'&yacute;'), // small y, acute accent
-    (Code:#254; Symbol:'&thorn;'), // small thorn, Icelandic
-    (Code:#255; Symbol:'&yuml;')); // small y, dieresis or umlaut mark
-var
-  i,j:integer;
-begin
-  Result:=aStr;
-  for i:=Length(Result) downto 1 do
-  begin
-    for j:=1 to MAXENCODECHARS do
-      if Result[i]=ENCODECHARS[j].Code then
-      begin
-        Delete(Result,i,1);
-        Insert(ENCODECHARS[j].Symbol,Result,i);
-        Break;
-      end;
-  end;
 end;
 
 function EqualRect(const aRect1,aRect2:TRect):boolean;
@@ -780,8 +653,8 @@ begin
                   WriteLn(aFile,'<td align="center">');
                   if fFileIndex>0 then
                   begin
-                    WriteLn(aFile,'<a href="'+FileNameByIndex(0)+'">'+EncodeISO('|<')+'</a>');
-                    WriteLn(aFile,'<a href="'+FileNameByIndex(fFileIndex-1)+'">'+EncodeISO('<')+'</a>');
+                    WriteLn(aFile,'<a href="'+FileNameByIndex(0)+'">|&lt;</a>');
+                    WriteLn(aFile,'<a href="'+FileNameByIndex(fFileIndex-1)+'">&lt;</a>');
                   end;
                   //
                   q:=20;
@@ -802,8 +675,8 @@ begin
                   //
                   if fFileIndex<fFileCount-1 then
                   begin
-                    WriteLn(aFile,'<a href="'+FileNameByIndex(fFileIndex+1)+'">'+EncodeISO('>')+'</a>');
-                    WriteLn(aFile,'<a href="'+FileNameByIndex(fFileCount-1)+'">'+EncodeISO('>|')+'</a>');
+                    WriteLn(aFile,'<a href="'+FileNameByIndex(fFileIndex+1)+'">&gt;</a>');
+                    WriteLn(aFile,'<a href="'+FileNameByIndex(fFileCount-1)+'">&gt;|</a>');
                   end;
                   WriteLn(aFile,'</td>');
                   WriteLn(aFile,'</tr>');
