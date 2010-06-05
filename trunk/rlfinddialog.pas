@@ -4,22 +4,12 @@ Portado para o Lazarus - Trabalho inicial de Isaac Trindade da Silva contato tio
 Lazarus Ported - initial work by Isaac 07/2009
 }
 unit RLFindDialog;
-{$MODE DELPHI}{$H+}
+{$MODE DELPHI}
 interface
 
 uses
-  SysUtils, Contnrs, Classes,
-{$ifdef VCL}
- {$IFDEF MSWINDOWS}
-  Windows,
-  {$ELSE}
-  LCLIntf,
-  {$ENDIF}
-  Messages, Graphics, Controls, Forms, Dialogs, StdCtrls, Buttons, ExtCtrls,
-{$else}
-  Types, QControls, Qt, QButtons, QExtCtrls, QForms, QDialogs, QStdCtrls, QTypes, QGraphics,
-{$endif}
-  RLConsts;
+  SysUtils, Classes, LCLIntf, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, Buttons, ExtCtrls, RLConsts;
 
 type
   TRLFindOption =(foWholeWords,foMatchCase,foFindBackward);
@@ -50,7 +40,7 @@ type
     procedure   Init;
   public
     { Public declarations }
-    constructor CreateNew(aOwner:TComponent; Dummy:integer=0); override;
+    constructor Create(aOwner:TComponent); override;
     //
     property    Text   :string         read GetTextValue write SetTextValue;
     property    Options:TRLFindOptions read GetOptions   write SetOptions;
@@ -65,128 +55,110 @@ implementation
 
 { TfrmRLFindDialog }
 
-constructor TfrmRLFindDialog.CreateNew(aOwner: TComponent; Dummy: integer);
+constructor TfrmRLFindDialog.Create(aOwner: TComponent);
 begin
-  fOnFind:=nil;
-  //
-  inherited;
-  //
+  inherited Create(aOwner);
   Init;
 end;
 
 procedure TfrmRLFindDialog.Init;
 begin
-  BorderIcons := [biSystemMenu];
-{$ifdef VCL}
   BorderStyle := bsDialog;
-{$else}
-  BorderStyle := fbsDialog;
-{$endif}
-  Caption := 'Procurar';
+  Caption := LS_FindCaptionStr;
   ClientHeight := 94;
   ClientWidth := 367;
-  Color := clBtnFace;
-  Position := poScreenCenter;
   OnDeactivate := FormDeactivate;
-  LabelTextToFind:=TLabel.Create(Self);
+  LabelTextToFind := TLabel.Create(Self);
   with LabelTextToFind do
   begin
     Name := 'LabelTextToFind';
     Parent := Self;
-    Left := 8;
-    Top := 16;
-    Width := 30;
-    Height := 13;
-    Caption := 'Te&xto:';
+    Left := 4;
+    Top := 8;
+    BorderSpacing.Left := 4;
+    BorderSpacing.Top := 8;
+    FocusControl := EditTextToFind;
+    Caption := LS_TextToFindStr+':';
   end;
   EditTextToFind:=TEdit.Create(Self);
   with EditTextToFind do
   begin
     Name := 'EditTextToFind';
     Parent := Self;
-    Left := 48;
-    Top := 12;
-    Width := 229;
-    Height := 21;
+    Width := 230;
+    Text := '';
     TabOrder := 0;
+    AnchorVerticalCenterTo(LabelTextToFind);
+    AnchorToNeighbour(akLeft, 4, LabelTextToFind);
   end;
   BitBtnFindNext:=TBitBtn.Create(Self);
   with BitBtnFindNext do
   begin
     Name := 'BitBtnFindNext';
     Parent := Self;
-    Left := 284;
-    Top := 12;
     Width := 75;
-    Height := 21;
-    Caption := '&Próxima';
+    Height := EditTextToFind.Height + 2;
+    BorderSpacing.Right := 4;
+    Caption := LS_FindNextStr;
     Default := True;
     TabOrder := 1;
     OnClick := BitBtnFindNextClick;
+    AnchorVerticalCenterTo(EditTextToFind);
+    AnchorToNeighbour(akLeft, 4, EditTextToFind);
   end;
   BitBtnCancel:=TBitBtn.Create(Self);
   with BitBtnCancel do
   begin
     Name := 'BitBtnCancel';
     Parent := Self;
-    Left := 284;
-    Top := 36;
     Width := 75;
-    Height := 21;
+    Height := BitBtnFindNext.Height;
     Cancel := True;
-    Caption := '&Cancelar';
+    Caption := LS_CancelStr;
     TabOrder := 2;
     OnClick := BitBtnCancelClick;
+    AnchorHorizontalCenterTo(BitBtnFindNext);
+    AnchorToNeighbour(akTop, 4, BitBtnFindNext);
   end;
   CheckBoxWholeWords:=TCheckBox.Create(Self);
   with CheckBoxWholeWords do
   begin
     Name := 'CheckBoxWholeWords';
     Parent := Self;
-    Left := 8;
-    Top := 44;
-    Width := 133;
-    Height := 17;
-    Caption := 'Palavras &inteiras';
+    Caption := LS_WholeWordsStr;
     TabOrder := 3;
+    AnchorToNeighbour(akTop, 6, EditTextToFind);
+    AnchorParallel(akLeft, 0, LabelTextToFind);
   end;
   CheckBoxMatchCase:=TCheckBox.Create(Self);
   with CheckBoxMatchCase do
   begin
     Name := 'CheckBoxMatchCase';
     Parent := Self;
-    Left := 8;
-    Top := 64;
-    Width := 193;
-    Height := 17;
-    Caption := 'Diferenciar &maiúsculas e minúsculas';
+    Caption := LS_MatchCaseStr;
     TabOrder := 4;
+    AnchorToNeighbour(akTop, 2, CheckBoxWholeWords);
+    AnchorParallel(akLeft, 0, CheckBoxWholeWords);
   end;
   RadioGroupDirection:=TRadioGroup.Create(Self);
   with RadioGroupDirection do
   begin
     Name := 'RadioGroupDirection';
     Parent := Self;
-    Left := 204;
-    Top := 36;
-    Width := 73;
-    Height := 49;
-    Caption := ' Direção ';
-    Items.Text := 'A&cima'#13'A&baixo';
+    Constraints.MinWidth := 80;
+    Caption := ' '+LS_DirectionCaptionStr+' ';
+    Items.Add(LS_DirectionUpStr);
+    Items.Add(LS_DirectionDownStr);
+    BorderSpacing.Bottom := 4;
     ItemIndex := 1;
+    AutoSize := True;
     TabOrder := 5;
+    Anchors := [akTop, akRight];
+    AnchorParallel(akRight, 0, EditTextToFind);
+    AnchorToNeighbour(akTop, 4, EditTextToFind);
   end;
-  //
-  Caption                     :=LS_FindCaptionStr;
-  LabelTextToFind.Caption     :=LS_TextToFindStr+':';
-  EditTextToFind.Text         :='';
-  BitBtnFindNext.Caption      :=LS_FindNextStr;
-  BitBtnCancel.Caption        :=LS_CancelStr;
-  CheckBoxWholeWords.Caption  :=LS_WholeWordsStr;
-  CheckBoxMatchCase.Caption   :=LS_MatchCaseStr;
-  RadioGroupDirection.Caption :=' '+LS_DirectionCaptionStr+' ';
-  RadioGroupDirection.Items[0]:=LS_DirectionUpStr;
-  RadioGroupDirection.Items[1]:=LS_DirectionDownStr;
+  AutoSize := True;
+  Position := poScreenCenter;
 end;
 
 function TfrmRLFindDialog.GetTextValue:string;
