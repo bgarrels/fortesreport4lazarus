@@ -10,11 +10,7 @@ interface
 
 uses
   SysUtils, Classes,
-{$ifdef VCL}
   Graphics, Forms, Dialogs, StdCtrls, ExtCtrls, Buttons, Controls, ComCtrls;
-{$else}
-  QTypes, QGraphics, QForms, QDialogs, QStdCtrls, QExtCtrls, QButtons, QControls, QComCtrls;
-{$endif}
 
 type
   TfrmRLFeedBack = class(TForm)
@@ -28,7 +24,7 @@ type
   private
     { Private declarations }
     BarIndex:integer;
-    Bars    :TList;
+    Bars    :TFpList;
     //
     procedure   Init;
   public
@@ -55,105 +51,46 @@ uses
 
 procedure TfrmRLFeedBack.Init;
 begin
-  Left := 289;
-  Top := 252;
-  Width := 393;
-  Height := 129;
+  Width := 380;
+  Height := 100;
   HorzScrollBar.Range := 61;
   VertScrollBar.Range := 45;
   ActiveControl := BitBtnCancel;
   AutoScroll := False;
   Caption := Ls_Progresso;
-  Color := clBtnFace;
-  Font.Color := clWindowText;
-  {$IFDEF LINUX}
-    {$IFDEF LCLQt}
-    Font.Height := 12;
-    {$ELSE}
-    Font.Height := 10;
-    {$ENDIF}
-  Font.Name := 'helvetica';
-  {$ELSE}
-  Font.Height := 11;
-  Font.Name := 'MS Sans Serif';
-  {$ENDIF}
-  Font.Pitch := fpVariable;
-  Font.Style := [];
-  FormStyle := fsStayOnTop;
+  BorderStyle := bsDialog;
   Position := poScreenCenter;
-{$ifdef VCL}
-  BorderStyle := bsDialog
-{$else}
-  BorderStyle := fbsDialog;
-{$endif};
   OnDestroy := FormDestroy;
-  PixelsPerInch := 96;
-  LabelPhase:=TLabel.Create(Self);
-  with LabelPhase do
-  begin
-    Name := 'LabelPhase';
-    Parent := Self;
-    Left := 14;
-    Top := 12;
-    Width := 39;
-    Height := 13;
-    Caption := 'LabelPhase';
-    Font.Color := clWindowText;
-    {$IFDEF LINUX}
-    {$IFDEF LCLQt}
-    Font.Height := 12;
-    {$ELSE}
-    Font.Height := 10;
-    {$ENDIF}
-    Font.Name := 'helvetica';
-    {$ELSE}
-    Font.Height := 11;
-    Font.Name := 'MS Sans Serif';
-    {$ENDIF}
-    Font.Pitch := fpVariable;
-    Font.Style := [];
-    ParentFont := False;
-  end;
-  ProgressBar:=TProgressBar.Create(Self);
+  ProgressBar := TProgressBar.Create(Self);
   with ProgressBar do
   begin
     Name := 'ProgressBar';
     Parent := Self;
-    Left := 14;
     Top := 28;
-    Width := 355;
-    Height := 17;
+    Width := 350;
+    Left := (Self.ClientWidth - Width) div 2;
     Min := 0;
     Max := 100;
     Step := 1;
-    {$IFDEF FPC}
-    Smooth:=True;
-    {$ENDIF}
+    Smooth := True;
   end;
-  BitBtnCancel:=TBitBtn.Create(Self);
+  LabelPhase := TLabel.Create(Self);
+  with LabelPhase do
+  begin
+    Name := 'LabelPhase';
+    Parent := Self;
+    Left := ProgressBar.Left;
+    Top := 12;
+    Caption := 'LabelPhase';
+  end;
+  BitBtnCancel := TBitBtn.Create(Self);
   with BitBtnCancel do
   begin
     Name := 'BitBtnCancel';
     Parent := Self;
-    Left := 151;
-    Top := 65;
-    {$IFDEF LINUX}
-    Height := 30;
-    Width := 95;
-   {$IFDEF LCLQt}
-   Font.Height := 12;
-   {$ELSE}
-   Font.Height := 10;
-   {$ENDIF}
-    Font.Name := 'helvetica';
-    {$ELSE}
-    Height := 25;
-    Width := 85;
-    Font.Height := 11;
-    Font.Name := 'MS Sans Serif';
-    {$ENDIF}
+    Left := (Self.ClientWidth - Width) div 2;
+    Top := 60;
     Caption := LS_CancelStr;
-    TabOrder := 0;
     OnClick := BitBtnCancelClick;
     Kind := bkCancel;
   end;
@@ -177,16 +114,12 @@ var
   i,h,d:integer;
   b,n:TProgressBar;
 begin
-  {$IFDEF FPC}
-  inherited CreateNew(Owner,0);
-  {$ELSE}
-  inherited CreateNew(Owner);
-  {$ENDIF}
+  inherited Create(nil);
   Init;
   //
   d:=Height-BitBtnCancel.Top;
   Caption:=aTitle;
-  Bars:=TList.create;
+  Bars:=TFpList.create;
   h:=0;
   b:=ProgressBar;
   Bars.Add(b);
@@ -198,18 +131,16 @@ begin
     n.Boundsrect:=b.BoundsRect;
     n.Step      :=b.Step;
     n.Top       :=b.Top+b.Height+2;
-    {$IFDEF FPC}
     n.Smooth:=True;
-    {$ENDIF}
     inc(h,b.Height+2);
     b:=n;
     Bars.Add(b);
   end;
   Height  :=Height+h;
   BitBtnCancel.Top:=Height-d;
-  BarIndex:=0;
-  Canceled:=False;
-  Finished:=False;
+  //BarIndex:=0;
+  //Canceled:=False;
+  //Finished:=False;
 end;
 
 procedure TfrmRLFeedBack.BitBtnCancelClick(Sender: TObject);
@@ -256,7 +187,7 @@ end;
 
 procedure TfrmRLFeedBack.FormDestroy(Sender: TObject);
 begin
-  Bars.free;
+  Bars.Destroy;
 end;
 
 procedure TfrmRLFeedBack.TimerBlinkTimer(Sender: TObject);
