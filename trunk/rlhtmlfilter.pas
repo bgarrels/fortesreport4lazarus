@@ -9,29 +9,7 @@ unit RLHTMLFilter;
 interface
 
 uses
-  SysUtils, Classes, Contnrs,
-  {$IFDEF FPC}
-    {$ifdef MSWINDOWS}
-      Windows,
-    {$else}
-      LCLIntf,
-    {$endif}
-      Types,
-  {$ELSE}
-    {$ifdef MSWINDOWS}
-      Windows,
-    {$else}
-      Types,
-    {$endif}
-  {$ENDIF}
-{$ifdef VCL}
-  Graphics, RLMetaVCL,
-{$else}
-  QGraphics, RLMetaCLX,
-{$endif}
-{$IFDEF FPC}
-  rlshared,
-{$ENDIF}
+  SysUtils, Classes, Contnrs, LCLIntf,  Graphics, RLMetaVCL,
   RLMetaFile, RLConsts, RLFilters, RLUtils, RLTypes;
 
 type
@@ -677,7 +655,7 @@ var
     if (aObj.Font.Style and MetaFontStyleStrikeOut)=MetaFontStyleStrikeOut then
       Write(fWorkingFileHandle,'<strike>');
     // o texto
-    Write(fWorkingFileHandle,EncodeISO(aObj.DisplayText));
+    Write(fWorkingFileHandle, aObj.DisplayText);
     // retorna fonte
     if (aObj.Font.Style and MetaFontStyleStrikeOut)=MetaFontStyleStrikeOut then
       Write(fWorkingFileHandle,'</strike>');
@@ -750,7 +728,7 @@ begin
   WriteLn(aFile,'<html>');
   WriteLn(aFile);
   WriteLn(aFile,'<head>');
-  WriteLn(aFile,'<meta http-equiv="Content-Type" content="text/html" charset="iso-8859-1">');
+  WriteLn(aFile,'<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">');
   WriteLn(aFile,'<meta name="GENERATOR" content="'+CS_ProductTitleStr+' '+IntToStr(CommercialVersion)+'.'+IntToStr(ReleaseVersion)+CommentVersion+'">');
   if Pages.Title<>'' then
     WriteLn(aFile,'<title>'+Pages.Title+'</title>');
