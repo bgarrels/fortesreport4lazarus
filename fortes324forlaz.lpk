@@ -17,7 +17,7 @@
     <Description Value="Versão para lazarus do excelente gerador de relatorios FortesReport. 
 Lazarus version of powerfull report generator FortesReport
 "/>
-    <Version Minor="3" Release="5" Build="7"/>
+    <Version Minor="3" Release="5" Build="10"/>
     <Files Count="44">
       <Item1>
         <Filename Value="rlabout.lfm"/>
