@@ -8291,7 +8291,7 @@ procedure TRLCustomDBResult.Initialize;
     i:integer;
   begin
     for i:=0 to fBuiltInRegs.Count-1 do
-      with TRLDBResultBuiltIn(fBuiltInRegs) do
+      with TRLDBResultBuiltIn(fBuiltInRegs[i]) do
       begin
         Count:=0;
         Sum  :=0;
