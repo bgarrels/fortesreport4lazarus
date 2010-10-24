@@ -3268,24 +3268,22 @@ begin
 end;
 
 function TRLGraphicSurface.TextWidth(const aText:string):integer;
-Var
-B: Tbitmap;
+var
+  B: Tbitmap;
 begin
   B:= AuxBitmapNeeded;
   B.Canvas.Font.Assign(fFont);
   Result:=B.Canvas.TextWidth(aText);
-  FreeAndNil(B);
 end;
 
 
 function TRLGraphicSurface.TextHeight(const aText:string):integer;
-Var
-B: Tbitmap;
+var
+  B: Tbitmap;
 begin
   B:= AuxBitmapNeeded;
   B.Canvas.Font.Assign(fFont);
   Result:=B.Canvas.TextHeight(aText);
-  FreeAndNil(B);
 end;
 
 
