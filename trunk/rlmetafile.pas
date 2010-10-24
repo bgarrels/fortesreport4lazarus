@@ -8,52 +8,11 @@ Lazarus Ported - initial work by Isaac 07/2009
 }
 unit RLMetaFile;
 {$MODE DELPHI}{$H+}
-//{$mode objfpc}{$H+}
 interface
 
 uses
-
- {$IFDEF FPC}
-// Types,
- Graphics,
- Classes, SyncObjs, Contnrs, Math, SysUtils,
-//  Contnrs, Classes, TypInfo, SyncObjs,
- {$IFDEF MSWINDOWS}
-   LCLIntf,
-  // Windows,
- {$ENDIF}
- {$IFDEF FPC}
-   {$IFDEF LINUX}
-   LCLIntf,
-   {$ENDIF}
-  LCLType,LMessages, LCLProc, Dialogs, GraphMath, Controls,
-  //ExtCtrls, DBCtrls, Controls, Forms, Dialogs, StdCtrls, Messages, Buttons, Graphics,
- {$ENDIF}
-  RLUtils, RLConsts, RLTypes
-  ;
- {$ELSE} //NAO FPC
- {$IFDEF MSWINDOWS}
- Graphics,
- {$ENDIF}
- Classes,
- SyncObjs,
- Contnrs,
-// SysUtils, Contnrs, Classes, Math, Types, TypInfo, SyncObjs,
-{$ifdef VCL}
- {$IFDEF MSWINDOWS}
-  Windows,
- {$ENDIF}
-  Dialogs, Controls,
-  //ExtCtrls, DBCtrls, Controls, Forms, Dialogs, StdCtrls, Messages, Buttons, Graphics,
-{$endif}
-{$ifdef CLX}
-  Types, QGraphics, QDialogs,
-{$endif}
-  RLUtils, RLConsts, RLTypes
-  ;
-
- {$ENDIF} //NAO FPC
-
+  Classes, SysUtils, Contnrs, SyncObjs, Graphics, Dialogs,
+  RLUtils, RLConsts, RLTypes,  Types;
 
 const
   MetaOrientationPortrait =1;
@@ -302,9 +261,7 @@ type
   TRLGraphicStorage=class(TComponent)
   private
     // cache para páginas em memória
-    {$IFNDEF FPC}
     fPageCache     :TObjectList;
-    {$ENDIF}
     // endereço das páginas em disco (stream)
     fPageAllocation:TInt64List;
     // arquivo temporário para armazenamento das páginas
@@ -322,9 +279,6 @@ type
     fAboutToUpdate  :boolean;
     fLockIndent     :integer;
     fCanceled       :boolean;
-
-//    parentHwnd      :HWND;
-
     // guarda referência à página no cache em memória
     procedure   AddToCache(aSurface:TRLGraphicSurface);
     // retorna referência à página se ela estiver no cache em memória
@@ -367,9 +321,6 @@ type
   protected
     procedure   Notification(aComponent: TComponent; Operation: TOperation); override;
   public
-    {$IFDEF FPC}
-    fPageCache     :Contnrs.TObjectList;
-    {$ENDIF}
     constructor Create(aOwner:TComponent); override;
     destructor  Destroy; override;
     {@method Link - Cria uma referência para o componente.
@@ -1041,16 +992,8 @@ function NewGroupId:integer;
 {/@unit}
 
 implementation
-uses
-{$IFDEF FPC}
-Types,
-{$ENDIF}
-{$ifdef VCL}
-RLMetaVCL;
-{$endif}
-{$ifdef CLX}
-RLMetaCLX;
-{$endif}
+
+uses RLMetaVCL, Math, LCLProc, LCLIntf;
 
 { UTILS }
 
@@ -1115,21 +1058,7 @@ var
   graphicrect:TRect;
 begin
   // cria um retângulo com o tamanho natural do gráfico na posição de corte
-  graphicrect:=Types.Rect(aRect.Left,aRect.Top,aRect.Left+aGraphic.Width,aRect.Top+aGraphic.Height);
-  {$IFDEF CANCELADO}
-  {$IFDEF MSWINDOWS}
-  {$IFDEF FPC}
-  graphicrect.Left:=aRect.Left;
-  graphicrect.Top:=aRect.Top;
-  graphicrect.Right:=aRect.Left+aGraphic.Width;
-  graphicrect.Bottom:=aRect.Top+aGraphic.Height;
-  {$ELSE}
   graphicrect:=Rect(aRect.Left,aRect.Top,aRect.Left+aGraphic.Width,aRect.Top+aGraphic.Height);
-  {$ENDIF}
-  {$ELSE}
-  graphicrect:=Rect(aRect.Left,aRect.Top,aRect.Left+aGraphic.Width,aRect.Top+aGraphic.Height);
-  {$ENDIF}
-  {$ENDIF}
   // centraliza os dois retângulos
   if aCenter then
     OffsetRect(graphicrect,((aRect.Right-aRect.Left)-(graphicrect.Right-graphicrect.Left)) div 2,
@@ -1687,26 +1616,18 @@ begin
   fMacros         :=nil;
   fReferenceList  :=nil;
   fUpdateCalls    :=0;
-  {$IFDEF FPC}
   fLock           :=nil;
-  {$ELSE}
-  fLock           :=nil;
-  {$ENDIF}
   fAboutToUpdate  :=False;
   fLockIndent     :=0;
   fCanceled       :=False;
-  {$IFDEF FPC}
-//  fPageCache     :=TFPObjectList.Create;
-  fPageCache     :=Contnrs.TObjectList.create(True);
-  {$ELSE}
+  //
   fPageCache     :=TObjectList.Create;
-  {$ENDIF}
   fPageAllocation:=TInt64List.Create;
   fMacros        :=TStringList.Create;
   fReferenceList :=TList.Create;
-  fLock          :=SyncObjs.TCriticalSection.Create;
+  fLock           :=TCriticalSection.Create;
+  //
   inherited;
-//  parentHwnd := (AOwner as TWinControl).Handle;
 end;
 
 destructor TRLGraphicStorage.Destroy;
@@ -1760,13 +1681,13 @@ end;
 
 procedure TRLGraphicStorage.Lock;
 begin
-// fLock.Enter;
+  fLock.Enter;
   Inc(fLockIndent);
 end;
 
 procedure TRLGraphicStorage.Unlock;
 begin
-//  Dec(fLockIndent);
+  Dec(fLockIndent);
   fLock.Leave;
 end;
 
@@ -1774,12 +1695,8 @@ procedure TRLGraphicStorage.StorePage(aSurface:TRLGraphicSurface);
 var
   size:integer;
   datapos,beginpos,endpos:int64;
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  sleep(10);
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     TempStreamNeeded;
     fTempStream.Position:=fTempStream.Size;
@@ -1803,93 +1720,60 @@ begin
     fTempStream.Position:=endpos;
     aSurface.Modified:=False;
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 procedure TRLGraphicStorage.PrepareUpdate;
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     fAboutToUpdate:=True;
     fCanceled     :=False; 
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 procedure TRLGraphicStorage.BeginUpdate;
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     Inc(fUpdateCalls);
     fAboutToUpdate:=False;
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 procedure TRLGraphicStorage.EndUpdate;
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     Dec(fUpdateCalls);
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 function TRLGraphicStorage.Busy: boolean;
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-  //Lock;
+  Lock;
   try
     Result:=(fUpdateCalls>0) or fAboutToUpdate;
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
-
+    Unlock;
   end;
 end;
 
 procedure TRLGraphicStorage.Cancel;
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     if Busy then
       fCanceled:=True; 
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
@@ -1898,20 +1782,15 @@ label
   TryAgain;
 var
   MustWait:boolean;
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
   TryAgain:
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-  //Lock;
+  Lock;
   try
     Result:=GetPages(aPageIndex);
     // espera se ainda estiver em processamento e se a preparação não tiver sido cancelada
     MustWait:=(Result=nil) and Busy and not Canceled;
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
   if MustWait then
   begin
@@ -1944,66 +1823,46 @@ end;
 procedure TRLGraphicStorage.RetrievePage(aSurface:TRLGraphicSurface);
 var
   size:integer;
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-  //Lock;
+  Lock;
   try
     fTempStream.Position:=fPageAllocation[aSurface.fPageIndex];
     fTempStream.Read(size,SizeOf(size));
     aSurface.LoadFromStream(fTempStream);
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 procedure TRLGraphicStorage.Add(aSurface:TRLGraphicSurface);
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     aSurface.SetStorage(Self);
     StorePage(aSurface);
     AddToCache(aSurface);
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 function TRLGraphicStorage.New(PaperSize:TRLPaperSize):TRLGraphicSurface;
 var
   Info:TRLPaperInfo;
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     Info  :=PaperInfo[PaperSize];
     Result:=New(Info.Width,Info.Height);
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 function TRLGraphicStorage.New(PaperWidth,PaperHeight:double):TRLGraphicSurface;
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
   // notifica antes, para a página anterior
-//Lock;
+  Lock;
   try
     Result:=TRLGraphicSurface.Create;
     Result.Width      :=Round(ScreenPPI*PaperWidth/InchAsMM);
@@ -2016,19 +1875,13 @@ begin
     StorePage(Result);
     AddToCache(Result);
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 procedure TRLGraphicStorage.Clear;
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     if Assigned(fTempStream) then
       fTempStream.Size:=0;
@@ -2036,20 +1889,15 @@ begin
     fPageCache.Clear;
     fMacros.Clear;
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 procedure TRLGraphicStorage.AddToCache(aSurface:TRLGraphicSurface);
 var
   s:TRLGraphicSurface;
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     // limite de dez páginas em cachê
     if fPageCache.Count>=MAXPAGECACHE then
@@ -2061,23 +1909,18 @@ begin
     end;
     fPageCache.Add(aSurface);
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 function TRLGraphicStorage.GetFromCache(aPageIndex:integer):TRLGraphicSurface;
 var
   i:integer;
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     Result:=nil;
-    if (aPageIndex>=0) and Assigned(TObjectList(fPageCache)) then
+    if (aPageIndex>=0) and Assigned(fPageCache) then
     begin
       i:=0;
       while (i<fPageCache.Count) and (TRLGraphicSurface(fPageCache[i]).PageIndex<>aPageIndex) do
@@ -2086,9 +1929,7 @@ begin
         Result:=TRLGraphicSurface(fPageCache[i]);
     end;
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
@@ -2096,11 +1937,8 @@ procedure TRLGraphicStorage.FlushCache;
 var
   s:TRLGraphicSurface;
   i:integer;
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     for i:=0 to fPageCache.Count-1 do
     begin
@@ -2109,19 +1947,13 @@ begin
         StorePage(s);
     end;
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 function TRLGraphicStorage.LoadPageFromDisk(aPageIndex:integer):TRLGraphicSurface;
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     if (aPageIndex>=0) and (aPageIndex<fPageAllocation.Count) then
     begin
@@ -2138,19 +1970,13 @@ begin
     else
       Result:=nil;
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 function TRLGraphicStorage.GetPages(aPageIndex:integer):TRLGraphicSurface;
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     Result:=GetFromCache(aPageIndex);
     if Result=nil then
@@ -2160,35 +1986,23 @@ begin
         AddToCache(Result);
     end;
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 function TRLGraphicStorage.GetPageCount: integer;
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     Result:=fPageAllocation.Count;
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
 procedure TRLGraphicStorage.TempStreamNeeded;
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     if not Assigned(fTempStream) then
     begin
@@ -2197,9 +2011,7 @@ begin
       fTempStream  :=TFileStream.Create(fTempFileName,fmCreate);
     end;
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
@@ -2235,8 +2047,6 @@ const
   FileHeaderVersion4='RPF4'#26;
 
 procedure TRLGraphicStorage.SaveToStream(aStream: TStream);
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
   procedure SaveHeaderToStream(aStream: TStream);
   var
     data:string;
@@ -2340,9 +2150,7 @@ var
     aStream.Position:=savedpos;
   end;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     FlushCache;
     SaveHeaderToStream(aStream);
@@ -2350,16 +2158,11 @@ begin
       SaveMacrosToStream(aStream);
     SavePagesToStream(aStream);
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
-
+    Unlock;
   end;
 end;
 
 procedure TRLGraphicStorage.LoadFromStream(aStream:TStream);
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
   procedure LoadHeaderFromStream(aStream:TStream);
   var
     data:string;
@@ -2478,9 +2281,7 @@ var
       LoadPageFromStream(aStream,i);
   end;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     Clear;
     LoadHeaderFromStream(aStream);
@@ -2490,10 +2291,7 @@ begin
     TempStreamNeeded;
     LoadPagesFromStream(aStream);
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
-
+    Unlock;
   end;
 end;
 
@@ -2505,35 +2303,22 @@ begin
 end;
 
 function TRLGraphicStorage.GetMacro(const Name:string):string;
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     Result:=fMacros.Values[Name];
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
-
+    Unlock;
   end;
 end;
 
 procedure TRLGraphicStorage.SetMacro(const Name,Value:string);
-var
-  MyCriticalSection:SyncObjs.TCriticalSection;
 begin
-  MyCriticalSection:=SyncObjs.TCriticalSection.Create;
-  MyCriticalSection.Enter;
-//Lock;
+  Lock;
   try
     fMacros.Values[Name]:=Value;
   finally
-    MyCriticalSection.Leave;
-    MyCriticalSection.Release;
-//  Unlock;
+    Unlock;
   end;
 end;
 
