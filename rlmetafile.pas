@@ -2458,7 +2458,6 @@ end;
 
 destructor TRLGraphicSurface.Destroy;
 begin
-  inherited;
   //
   SetStorage(nil);
   FreeObj(fObjects);
@@ -2468,6 +2467,7 @@ begin
   FreeObj(fFonts);
   FreeObj(fClipStack);
   FreeObj(fMacros);
+  inherited;
 end;
 
 procedure TRLGraphicSurface.SaveToFile(const aFileName:string);
