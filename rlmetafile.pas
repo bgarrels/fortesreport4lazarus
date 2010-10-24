@@ -1608,36 +1608,31 @@ end;
 
 constructor TRLGraphicStorage.Create(aOwner:TComponent); 
 begin
-  fPageCache      :=nil;
-  fPageAllocation :=nil;
-  fTempStream     :=nil;
-  fTempFileName   :=emptystr;
+  inherited Create(aOwner);
+  //fTempStream     :=nil;
+  //fTempFileName   :=emptystr;
   fFileVersion    :=4;
-  fMacros         :=nil;
-  fReferenceList  :=nil;
-  fUpdateCalls    :=0;
-  fLock           :=nil;
-  fAboutToUpdate  :=False;
-  fLockIndent     :=0;
-  fCanceled       :=False;
+  //fUpdateCalls    :=0;
+  //fAboutToUpdate  :=False;
+  //fLockIndent     :=0;
+  //fCanceled       :=False;
   //
   fPageCache     :=TObjectList.Create;
   fPageAllocation:=TInt64List.Create;
   fMacros        :=TStringList.Create;
   fReferenceList :=TList.Create;
-  fLock           :=TCriticalSection.Create;
+  fLock          :=TCriticalSection.Create;
   //
-  inherited;
 end;
 
 destructor TRLGraphicStorage.Destroy;
 begin
   //
-  FreeObj(fLock);
-  FreeObj(fReferenceList);
-  FreeObj(fPageCache);
-  FreeObj(fPageAllocation);
-  FreeObj(fMacros);
+  fPageCache.Destroy;
+  fPageAllocation.Destroy;
+  fMacros.Destroy;
+  fReferenceList.Destroy;
+  fLock.Destroy;
   if Assigned(fTempStream) then
   begin
     fTempStream.Destroy;
@@ -1920,7 +1915,7 @@ begin
   Lock;
   try
     Result:=nil;
-    if (aPageIndex>=0) and Assigned(fPageCache) then
+    if aPageIndex>=0 then
     begin
       i:=0;
       while (i<fPageCache.Count) and (TRLGraphicSurface(fPageCache[i]).PageIndex<>aPageIndex) do
