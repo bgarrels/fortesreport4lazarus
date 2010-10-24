@@ -66,7 +66,7 @@ begin
         1: Filter.FormSelection:=fs132Cols;
       end;
   finally
-    Destroy;
+    Form.Destroy;
   end;
 end;
 
