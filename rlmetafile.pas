@@ -2417,24 +2417,17 @@ end;
 
 constructor TRLGraphicSurface.Create;
 begin
-  fStorage    :=nil;
+  //fStorage    :=nil;
   fPageIndex  :=-1;
-  fObjects    :=nil;
   fPenPos     :=Point(0,0);
   fWritePos   :=Point(0,0);
   fWordWrap   :=True;
-  fWidth      :=0;
-  fHeight     :=0;
-  fBrush      :=nil;
-  fFont       :=nil;
-  fPen        :=nil;
+  //fWidth      :=0;
+  //fHeight     :=0;
   fMargins    :=Rect(0,0,0,0);
-  fOpened     :=false;
-  fModified   :=false;
-  fFonts      :=nil;
-  fClipStack  :=nil;
-  fGeneratorId:=0;
-  fMacros     :=nil;
+  //fOpened     :=false;
+  //fModified   :=false;
+  //fGeneratorId:=0;
   //
   fBrush:=TBrush.Create;
   fBrush.Color:=clWhite;
@@ -2447,21 +2440,19 @@ begin
   fFonts    :=TStringList.Create;
   fClipStack:=TList.Create;
   fMacros   :=TStringList.Create;
-  //
-  inherited Create;
 end;
 
 destructor TRLGraphicSurface.Destroy;
 begin
   //
   SetStorage(nil);
-  FreeObj(fObjects);
-  FreeObj(fBrush);
-  FreeObj(fPen);
-  FreeObj(fFont);
-  FreeObj(fFonts);
-  FreeObj(fClipStack);
-  FreeObj(fMacros);
+  fObjects.Destroy;
+  fBrush.Destroy;
+  fPen.Destroy;
+  fFont.Destroy;
+  fFonts.Destroy;
+  fClipStack.Destroy;
+  fMacros.Destroy;
   inherited;
 end;
 
