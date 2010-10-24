@@ -1632,7 +1632,6 @@ end;
 
 destructor TRLGraphicStorage.Destroy;
 begin
-  inherited;
   //
   FreeObj(fLock);
   FreeObj(fReferenceList);
@@ -1641,10 +1640,11 @@ begin
   FreeObj(fMacros);
   if Assigned(fTempStream) then
   begin
-    fTempStream.free;
+    fTempStream.Destroy;
     SysUtils.DeleteFile(fTempFileName);
     UnregisterTempFile(fTempFileName);
   end;
+  inherited;
 end;
 
 procedure TRLGraphicStorage.Notification(aComponent:TComponent; Operation:TOperation);
