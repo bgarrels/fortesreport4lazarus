@@ -8734,7 +8734,6 @@ begin
   b:=AuxBitmapNeeded;
   b.Canvas.Font.Assign(Font);
   RunMemo(Buffer,b.Canvas,taLeftJustify,Rect(0,0,MaxWidth,MaxInt),MaxWidth,MaxInt,Result);
-  FreeAndNil(b);
 end;
 
 procedure MemoDraw(const Buffer:string; Canvas:TObject; Alignment:TRLTextAlignment; const ARect:TRect; WordWrap:boolean);

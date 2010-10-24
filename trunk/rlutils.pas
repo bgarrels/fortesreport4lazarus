@@ -299,7 +299,7 @@ begin
   if __AuxBitmap<>nil then
     Result:=__AuxBitmap
   else
-    Result:= NewBitmap(1,1);
+    Result:= AuxBitmapNeeded(1,1);
 end;
 
 function AuxBitmapNeeded(Width,Height:integer):TBitmap;
@@ -429,8 +429,8 @@ begin
       inc(i,2);
     end;
     // procura referência para a classe
-    Result:=AuxBitmapNeeded;
-    stream.Seek(0,0);
+    Result:=TBitmap.Create;
+    stream.Position:=0;
     TPublicGraphic(Result).ReadData(stream);
   finally
     FreeObj(stream);
@@ -1168,6 +1168,7 @@ initialization
 
 finalization
   ClearTempFiles;
+  __AuxBitmap.Free;
 
 end.
 

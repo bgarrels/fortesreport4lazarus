@@ -577,16 +577,15 @@ end;
 
 function TRLPDFFilter.GetTextWidth(const aText:string; aFont:TRLMetaFont):integer;
 var
-B: Tbitmap;
+  B: Tbitmap;
 begin
-B:= AuxBitmapNeeded;
+  B:= AuxBitmapNeeded;
   with B.Canvas do
   begin
     Font.Name:=aFont.Name;
     Font.Size:=aFont.Size;
     Result:=TextWidth(aText);
   end;
-  FreeAndNil(B);
 end;
 
 procedure TRLPDFFilter.InternalDrawPage(aPage:TRLGraphicSurface);

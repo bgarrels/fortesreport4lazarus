@@ -1779,7 +1779,6 @@ begin
   Result.Size.X  :=bmp.Canvas.TextWidth(Result.Text);
   Result.Size.Y  :=bmp.Canvas.TextHeight(Result.Text);
   Result.BaseLine:=CanvasGetDescent(bmp.Canvas);
-  Bmp.free;
 end;
 
 { TRLRichWordPart }

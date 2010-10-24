@@ -1025,8 +1025,6 @@ begin
   else
     Result:=20;
   end;
-
-  FreeObj(B);
 end;
 
 function TRLDraftFilter.CPPSelectionToCPP(aCPP:TRLCPPSelection):integer;
@@ -1973,4 +1971,4 @@ begin
 end;
 
 end.
-
+
