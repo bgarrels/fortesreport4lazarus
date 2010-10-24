@@ -12,15 +12,11 @@ Lazarus Ported - initial work by Isaac 07/2009
   * Corrige RLAngleLabel
 }
 unit RLReport;
-//{$MODE DELPHI}{$H+}
-{$mode objfpc}{$H+}
-{$DEFINE MODOLAZARUS}
-
+{$MODE DELPHI}{$H+}
 interface
 
 uses
-  LCLIntf, LCLType,
-  Types, LCLProc, DB, Classes, SysUtils, Math, Contnrs, TypInfo, SyncObjs,
+  Types, LCLType, LCLProc, DB, Classes, SysUtils, Math, Contnrs, TypInfo, SyncObjs,
 {$ifdef USEVARIANTS}
   Variants,
 {$endif}
@@ -1148,6 +1144,7 @@ type
    @ancestor TCustomControl. }
   TRLCustomControl=class(TCustomControl)
   private
+
     // variables
 
     fPreparingCaption  :TCaption;
@@ -1174,7 +1171,7 @@ type
     fRealBounds        :TRLRealBounds;
     fCaption           :TCaption;
     fLayout            :TRLTextLayout;
-    fRLControlState      :TRLControlState;
+    fControlState      :TRLControlState;
     fBehavior          :TRLControlBehavior;
     fTransparent       :boolean;
     fOldBoundsRect     :TRect;
@@ -1570,11 +1567,7 @@ type
     
     {@prop ControlState - Estado do controle dentre as diversas atividades.
      @links TRLControlState. :/}
-    {$IFDEF MODOLAZARUS}
-    property    ControlState     :TRLControlState   read fRLControlState       write fRLControlState;
-    {$ELSE}
-    property    ControlState      :TRLControlState    read fRLControlState       write fRLControlState;
-    {$ENDIF}
+    property    ControlState      :TRLControlState    read fControlState       write fControlState;
 
     {@prop OldBoundsRect - Contém as últimas dimensões do controle antes da última alteração. :/}
     property    OldBoundsRect     :TRect              read fOldBoundsRect      write fOldBoundsRect;
@@ -4850,8 +4843,8 @@ procedure LoadReportFromFile(const aFileName:string);
 
 implementation
 
-//uses
-//  LCLIntf;
+uses
+  LCLIntf;
 
 const
   faSlaveLeftSet  =[faLeft,faTop,faBottom,faLeftMost,faClient,faLeftTop,faLeftBottom,faCenterLeft,faClientLeft,faClientTop,faClientBottom,faWidth,faLeftOnly];
@@ -5379,19 +5372,10 @@ end;
 
 procedure TRLMargins.DefineProperties(Filer:TFiler);
 begin
-  {$IFDEF MODOLAZARUS}
-  inherited DefineProperties(Filer);
-  Filer.DefineProperty('LeftMargin'  ,@ReadLeftMargin  ,@WriteLeftMargin  ,fLeftMargin<>fDefaultLeftMargin);
-  Filer.DefineProperty('TopMargin'   ,@ReadTopMargin   ,@WriteTopMargin   ,fTopMargin<>fDefaultTopMargin);
-  Filer.DefineProperty('RightMargin' ,@ReadRightMargin ,@WriteRightMargin ,fRightMargin<>fDefaultRightMargin);
-  Filer.DefineProperty('BottomMargin',@ReadBottomMargin,@WriteBottomMargin,fBottomMargin<>fDefaultBottomMargin);
-
-  {$ELSE}
   Filer.DefineProperty('LeftMargin'  ,ReadLeftMargin  ,WriteLeftMargin  ,fLeftMargin<>fDefaultLeftMargin);
   Filer.DefineProperty('TopMargin'   ,ReadTopMargin   ,WriteTopMargin   ,fTopMargin<>fDefaultTopMargin);
   Filer.DefineProperty('RightMargin' ,ReadRightMargin ,WriteRightMargin ,fRightMargin<>fDefaultRightMargin);
   Filer.DefineProperty('BottomMargin',ReadBottomMargin,WriteBottomMargin,fBottomMargin<>fDefaultBottomMargin);
-  {$ENDIF}
 end;
 
 procedure TRLMargins.SetDefaults(aLeft,aTop,aRight,aBottom:double);
@@ -6237,7 +6221,7 @@ begin
   //fAutoExpand     :=False;
   //fAutoTrunc      :=False;
   fLayout         :=tlTop;
-  //fRLControlState   :=[];
+  //fControlState   :=[];
   //fBehavior       :=[];
   fDefaultBehavior:=fBehavior;
   fTransparent    :=True;
@@ -6412,11 +6396,11 @@ end;
 
 procedure TRLCustomControl.Print;
 begin
-  Include(fRLControlState,stPrinting);
+  Include(fControlState,stPrinting);
   try
     InternalPrint;
   finally
-    Exclude(fRLControlState,stPrinting);
+    Exclude(fControlState,stPrinting);
   end;
 end;
 
@@ -6479,11 +6463,7 @@ begin
     SafeSetBoundsParams.ATop   :=ATop;
     SafeSetBoundsParams.AWidth :=AWidth;
     SafeSetBoundsParams.AHeight:=AHeight;
-    {$IFDEF MODOLAZARUS}
-    ThreadSafeCall(@SafeSetBoundsMethod);
-    {$ELSE}
     ThreadSafeCall(SafeSetBoundsMethod);
-    {$ENDIF}
   finally
     fLocker.Leave;
   end;
@@ -6494,9 +6474,9 @@ var
   p:TPoint;
   r:TRect;
 begin
-  if stAdjustingBounds in fRLControlState then
+  if stAdjustingBounds in fControlState then
     Exit;
-  Include(fRLControlState,stAdjustingBounds);
+  Include(fControlState,stAdjustingBounds);
   try
     CalcSize(p);
     if csDesigning in ComponentState then
@@ -6513,7 +6493,7 @@ begin
     AdjustAlignment(r);
     BoundsRect:=r;
   finally
-    Exclude(fRLControlState,stAdjustingBounds);
+    Exclude(fControlState,stAdjustingBounds);
   end;
 end;
 
@@ -7142,11 +7122,11 @@ var
 begin
   if csLoading in ComponentState then
     Exit;
-  if stRestoringBounds in fRLControlState then
+  if stRestoringBounds in fControlState then
     Exit;
-  if stExpandingParent in fRLControlState then
+  if stExpandingParent in fControlState then
     Exit;
-  Include(fRLControlState,stExpandingParent);
+  Include(fControlState,stExpandingParent);
   try
     w:=(BoundsRect.Right -BoundsRect.Left)-(OldBoundsRect.Right -OldBoundsRect.Left);
     h:=(BoundsRect.Bottom-BoundsRect.Top )-(OldBoundsRect.Bottom-OldBoundsRect.Top);
@@ -7177,7 +7157,7 @@ begin
           s.Height:=s.Height+h;
     end;
   finally
-    Exclude(fRLControlState,stExpandingParent);
+    Exclude(fControlState,stExpandingParent);
   end;
 end;
 
@@ -7210,14 +7190,14 @@ procedure TRLCustomControl.RealignHoldeds;
 var
   i:integer;
 begin
-  if stAdjustingHoldeds in fRLControlState then
+  if stAdjustingHoldeds in fControlState then
     Exit;
-  Include(fRLControlState, stAdjustingHoldeds);
+  Include(fControlState, stAdjustingHoldeds);
   try
     for i:=0 to fHoldeds.Count-1 do
       TRLCustomControl(fHoldeds[i]).AdjustBounds;
   finally
-    Exclude(fRLControlState, stAdjustingHoldeds);
+    Exclude(fControlState, stAdjustingHoldeds);
   end;
 end;
 
@@ -7474,11 +7454,11 @@ end;
 
 procedure TRLCustomControl.PopBoundsRect;
 begin
-  Include(fRLControlState,stRestoringBounds);
+  Include(fControlState,stRestoringBounds);
   try
     BoundsRect:=fPeekBoundsRect;
   finally
-    Exclude(fRLControlState,stRestoringBounds);
+    Exclude(fControlState,stRestoringBounds);
   end;
 end;
 
@@ -7562,14 +7542,14 @@ begin
     Exit;
   if csLoading in ComponentState then
     Exit;
-  if stMeasuringHeights in fRLControlState then
+  if stMeasuringHeights in fControlState then
     Exit;
-  Include(fRLControlState,stMeasuringHeights);
+  Include(fControlState,stMeasuringHeights);
   try
     InternalMeasureHeight;
     DoOnMeasureHeight;
   finally
-    Exclude(fRLControlState,stMeasuringHeights);
+    Exclude(fControlState,stMeasuringHeights);
   end;
   AdjustBounds;
 end;
@@ -8858,11 +8838,7 @@ end;
 constructor TRLCustomMemo.Create(aOwner:TComponent);
 begin
   fLines:=TStringList.Create;
-  {$IFDEF MODOLAZARUS}
-  TStringList(fLines).OnChange:=@TreatOnChange;
-  {$ELSE}
   TStringList(fLines).OnChange:=TreatOnChange;
-  {$ENDIF}
   //
   inherited Create(aOwner);
 end;
@@ -9021,11 +8997,7 @@ begin
   //fScaled :=False;
   // objects
   fPicture         :=TPicture.Create;
-  {$IFDEF MODOLAZARUS}
-  fPicture.OnChange:=@PictureChanged;
-  {$ELSE}
   fPicture.OnChange:=PictureChanged;
-  {$ENDIF}
   //
   inherited Create(aOwner);
   // customization
@@ -9480,18 +9452,9 @@ begin
   //fOptions   :=[];
   // objects
   fBrush         :=TBrush.Create;
-  {$IFDEF MODOLAZARUS}
-  fBrush.OnChange:=@ChangeResponse;
-  {$ELSE}
   fBrush.OnChange:=ChangeResponse;
-  {$ENDIF}
   fPen           :=TPen.Create;
-  {$IFDEF MODOLAZARUS}
-  fPen.OnChange  :=@ChangeResponse;
-  {$ELSE}
   fPen.OnChange  :=ChangeResponse;
-  {$ENDIF}
-
   fDrawData      :=TStringList.Create;
   //
   inherited Create(aOwner);
@@ -9858,12 +9821,7 @@ end;
 
 procedure TRLCustomDraw.DefineProperties(Filer: TFiler);
 begin
-  {$IFDEF MODOLAZARUS}
-  Filer.DefineProperty('Kind',@ReadKind,nil,False);
-  {$ELSE}
   Filer.DefineProperty('Kind',ReadKind,nil,False);
-  {$ENDIF}
-
 end;
 
 procedure TRLCustomDraw.SetDrawHeight(const Value: integer);
@@ -9949,9 +9907,9 @@ type
   TAlignControlArray=array[TRLControlAlign] of TList;
 var
   alignarray:TAlignControlArray;
-  RLalign   :TRLControlAlign;
+  align     :TRLControlAlign;
   control   :TControl;
-  RLanchors   :TRLControlAnchors;
+  anchors   :TRLControlAnchors;
   alignrect :TRect;
   auxrect   :TRect;
   leftrect  :TRect;
@@ -10098,12 +10056,12 @@ begin
   {$ENDIF}
 
   // limpa vetor de listas
-  for RLalign:=Low(TRLControlAlign) to High(TRLControlAlign) do
-    alignarray[RLalign]:=nil;
+  for align:=Low(TRLControlAlign) to High(TRLControlAlign) do
+    alignarray[align]:=nil;
   try
     // criar listas de alinhamento
-    for RLalign:=Low(TRLControlAlign) to High(TRLControlAlign) do
-      alignarray[RLalign]:=TList.Create;
+    for align:=Low(TRLControlAlign) to High(TRLControlAlign) do
+      alignarray[align]:=TList.Create;
     // adiciona controles às listas de alinhamento
     for i:=0 to ControlCount-1 do
     begin
@@ -10462,8 +10420,8 @@ begin
     end;
 
   finally
-    for RLalign:=Low(TRLControlAlign) to High(TRLControlAlign) do
-      FreeObj(alignarray[RLalign]);
+    for align:=Low(TRLControlAlign) to High(TRLControlAlign) do
+      FreeObj(alignarray[align]);
   end;
 end;
 
@@ -10478,9 +10436,9 @@ begin
   {$ENDIF}
   if csLoading in ComponentState then
     Exit;
-  if stAligningControls in fRLControlState then
+  if stAligningControls in fControlState then
     Exit;
-  Include(fRLControlState,stAligningControls);
+  Include(fControlState,stAligningControls);
   try
     AlignControls(ClientRect);
     //
@@ -10491,7 +10449,7 @@ begin
         TRLCustomSite(c).RealignControls;
     end;
   finally
-    Exclude(fRLControlState,stAligningControls);
+    Exclude(fControlState,stAligningControls);
   end;
 end;
 
@@ -11191,7 +11149,7 @@ begin
   debugln('TRLCustomSite.CanPrint');
   {$ENDIF}
 
-  fCouldPrint:=Visible and not (stPrinting in fRLControlState);
+  fCouldPrint:=Visible and not (stPrinting in fControlState);
   if fCouldPrint then
     DoBeforePrint;
   Result:=fCouldPrint;
@@ -11456,16 +11414,9 @@ var
   i:integer;
 begin
   Result:=0;
-  {$IFDEF MODOLAZARUS}
-  for i:=0 to fBandSets.Count-1 do
-    if fBandSets[i]=@aBandSet then
-      Inc(Result);
-  {$ELSE}
   for i:=0 to fBandSets.Count-1 do
     if fBandSets[i]=aBandSet then
       Inc(Result);
-  {$ENDIF}
-
 end;
 
 procedure TRLCustomBandSet.AddBandSet(aBandSet: TRLCustomBandSet);
@@ -12212,20 +12163,11 @@ begin
     i:=0;
     while i<l.Count do
     begin
-      {$IFDEF MODOLAZARUS}
-      if l.Items[i]=@fNewPageCaller then
-      begin
-        Result:=brStackExit;
-        Exit;
-      end;
-
-      {$ELSE}
       if l.Items[i]=fNewPageCaller then
       begin
         Result:=brStackExit;
         Exit;
       end;
-      {$ENDIF}
       e:=TRLCustomSite(l.Items[i]);
 
       if e is TRLCustomBand then
@@ -13688,7 +13630,7 @@ begin
   end;
 end;
 
-function TRLCustomReport.GetPageNumber{$IFDEF MODOLAZARUS}:Integer{$ENDIF} ;
+function TRLCustomReport.GetPageNumber;
 begin
   Result:=fFirstPageNumber+fPageIndex;
 end;
@@ -13921,21 +13863,12 @@ begin
   fExpressionParser:=aValue;
   if aValue<>nil then
   begin
-    {$IFDEF MODOLAZARUS}
-    aValue.ResourceProc    :=@Self.ParserResource;
-    aValue.TokenProc       :=@Self.ParserTokener;
-    aValue.FindAgregateProc:=@Self.ParserFindAgregate;
-    aValue.SetAttributeProc:=@Self.ParserSetAttribute;
-    aValue.GetAttributeProc:=@Self.ParserGetAttribute;
-    aValue.FreeNotification(Self);
-    {$ELSE}
     aValue.ResourceProc    :=Self.ParserResource;
     aValue.TokenProc       :=Self.ParserTokener;
     aValue.FindAgregateProc:=Self.ParserFindAgregate;
     aValue.SetAttributeProc:=Self.ParserSetAttribute;
     aValue.GetAttributeProc:=Self.ParserGetAttribute;
     aValue.FreeNotification(Self);
-    {$ENDIF}
   end;
 end;
 
@@ -13998,21 +13931,12 @@ begin
     if not Assigned(fInternalParser) then
     begin
       fInternalParser:=TRLExpressionParser.Create(nil);
-      {$IFDEF MODOLAZARUS}
-      fInternalParser.ResourceProc    :=@Self.ParserResource;
-      fInternalParser.TokenProc       :=@Self.ParserTokener;
-      fInternalParser.FindAgregateProc:=@Self.ParserFindAgregate;
-      fInternalParser.SetAttributeProc:=@Self.ParserSetAttribute;
-      fInternalParser.GetAttributeProc:=@Self.ParserGetAttribute;
-      fInternalParser.NameSpace       :=Self.Owner;
-      {$ELSE}
       fInternalParser.ResourceProc    :=Self.ParserResource;
       fInternalParser.TokenProc       :=Self.ParserTokener;
       fInternalParser.FindAgregateProc:=Self.ParserFindAgregate;
       fInternalParser.SetAttributeProc:=Self.ParserSetAttribute;
       fInternalParser.GetAttributeProc:=Self.ParserGetAttribute;
       fInternalParser.NameSpace       :=Self.Owner;
-      {$ENDIF}
     end;
     Result:=fInternalParser;
   end;
@@ -14026,11 +13950,7 @@ begin
     fReportState:=rsInitiating;
     Pages.PrepareUpdate;
     if BackgroundMode then
-    {$IFDEF MODOLAZARUS}
-      ThreadIt(@InternalPrepare).Resume
-    {$ELSE}
       ThreadIt(InternalPrepare).Resume
-    {$ENDIF}
     else
       InternalPrepare;
   end;
