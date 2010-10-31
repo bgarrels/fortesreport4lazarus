@@ -9,21 +9,8 @@ unit RLPreview;
 interface
 
 uses
-  Classes, SysUtils, Math, Contnrs,
-{$ifdef MSWINDOWS}
-{$IFDEF FPC}
-  LCLIntf,
-{$ELSE}
-  Windows,
-{$ENDIF}
-{$else}
-  Types,
-{$endif}
-{$ifdef VCL}
+  LCLIntf, Classes, SysUtils, Math, Contnrs, Types,
   Graphics, Controls, ExtCtrls, Forms, Menus, Clipbrd, Dialogs,
-{$else}
-  QGraphics, QControls, QExtCtrls, QForms, QMenus, QClipbrd, QDialogs,
-{$endif}
   RLMetaFile, RLConsts, RLUtils, RLFilters;
 
 type
@@ -360,10 +347,8 @@ begin
     fBoxes.Add(b);
   end;
   //
-  {$IFNDEF FPC}
   HorzScrollBar.Tracking:=True;
   VertScrollBar.Tracking:=True;
-  {$ENDIF}
 end;
 
 destructor TRLPreview.Destroy;
