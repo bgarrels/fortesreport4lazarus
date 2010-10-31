@@ -5,21 +5,16 @@ Lazarus Ported - initial work by Isaac 07/2009
 
 }
 unit RLMetaVCL;
-{$IFDEF FPC}
+
 {$MODE DELPHI}{$H+}
-{$ENDIF}
+
 interface
 
 uses
-  {$IFDEF MSWINDOWS}
+  {$ifdef LCLWin32}
   Windows,
-  {$ELSE}
-  LCLIntf, LCLType, LCLProc, xLib,
-  {$ENDIF}
-  {$IFDEF FPC}
-  rlshared,
-  {$ENDIF}
-  SysUtils, Graphics, Classes, Math, StdCtrls,
+  {$endif}
+  LCLIntf, LCLType, LCLProc, SysUtils, Graphics, Classes, Math, StdCtrls,
   RLMetaFile, RLUtils, RLConsts;
 
 type
@@ -77,6 +72,9 @@ function  CanvasGetDescent(aCanvas:TCanvas):integer;
 
 
 implementation
+
+uses
+  IntfGraphics, FPimage;
 
 { CONVERSION }
 
@@ -493,25 +491,16 @@ end;
 
 procedure CanvasStart(aCanvas:TCanvas);
 begin
-{$IFDEF LINUX}
-//aCanvas.Start; //metodo nao existe no lazarus
-{$ENDIF}
 end;
 
 procedure CanvasStop(aCanvas:TCanvas);
 begin
 end;
-{$IFDEF FPC}
+
 function CanvasGetClipRect(aCanvas:TCanvas):TRect;
 begin
-  result:=aCanvas.ClipRect;
+  GetClipBox(aCanvas.Handle,@result);
 end;
-{$ELSE}
-function CanvasGetClipRect(aCanvas:TCanvas):TRect;
-begin
-  GetClipBox(aCanvas.Handle,result);
-end;
-{$ENDIF}
 
 procedure CanvasSetClipRect(aCanvas:TCanvas; const aRect:TRect);
 var
@@ -716,7 +705,7 @@ begin
     aCanvas.Pen.Width:=width0;
   end;
 end;
-{$IFDEF MSWINDOWS}
+{$IFDEF LCLWin32}
 procedure FontGetMetrics(const aFontName:string; aFontStyles:TFontStyles; var aFontRec:TRLMetaFontMetrics);
 var
   size:integer;
@@ -735,7 +724,7 @@ begin
   try
     outl^.otmSize:=size;
     if GetOutlineTextMetrics(aux.Canvas.Handle,size,outl)=0 then
-      raise Exception.Create(Ls_GetOutlineTextMetrics); //3.24b5
+      raise Exception.Create(Ls_GetOutlineTextMetrics);
     //
     aFontRec.TrueType :=(outl^.otmTextMetrics.tmPitchAndFamily=TMPF_TRUETYPE);
     aFontRec.BaseFont :=aFontName;
@@ -823,6 +812,7 @@ function CanvasGetDescent(aCanvas:TCanvas):integer;
 var
   stl:TFontStyles;
   aux:TBitmap;
+  img: TLazIntfImage;
   x,y:integer;
 begin
   stl:=aCanvas.Font.Style-[fsUnderline];
@@ -838,23 +828,28 @@ begin
     aux.Width :=aux.Canvas.TextWidth('L');
     aux.Height:=aux.Canvas.TextHeight('L');
     aux.Canvas.TextOut(0,0,'L');
+    img:=aux.CreateIntfImage;
     y:=aux.Height-1;
-    {$IFNDEF FPC}
     while y>=0 do
     begin
       x:=0;
       while x<aux.Width do
       begin
-        with TRGBArray(aux.ScanLine[y]^)[x] do
+        //original: seems flawed. Should not check RGB = 0 (black)?
+        {
+          with TRGBArray(aux.ScanLine[y]^)[x] do
           if RGB(rgbRed,rgbGreen,rgbBlue)<>0 then
             Break;
+        }
+        if img.Colors[x,y]<>colWhite then
+          break;
         Inc(x);
       end;
       if x<aux.Width then
         Break;
       Dec(y);
     end;
-    {$ENDIF}
+    img.Destroy;
     LastFontName   :=aCanvas.Font.Name;
     LastFontSize   :=aCanvas.Font.Size;
     LastFontStyle  :=stl;
