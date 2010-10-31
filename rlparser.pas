@@ -9,17 +9,7 @@ unit RLParser;
 interface
 
 uses
-  {$IFDEF FPC}
-  LCLIntf, LCLType, Types,
-  {$ENDIF}
-  Contnrs, Math,  TypInfo,
-  SysUtils,
-  RLUtils
-{$ifdef USEVARIANTS}
-  ,Variants
-{$endif}
-  ,Classes
-  ;
+  Classes, Contnrs, Math, TypInfo, Variants, SysUtils, RLUtils;
 
 type
   {@type TRLParserTokenKind - Tipo de token. :}
@@ -1063,20 +1053,12 @@ begin
     begin
       info:=GetPropInfo(aPersistent,aPropName);
       if info<>nil then
-        {$IFDEF FPC}
         case info^.PropType^.Kind of
-        {$ELSE}
-        case info^.PropType^^.Kind of
-        {$ENDIF}
           tkInteger,
           tkChar,
           tkWChar      : Result:=GetOrdProp(aPersistent,info);
           tkEnumeration: Result:=GetEnumProp(aPersistent,info);
-          {$IFDEF FPC}
-          tkSet        : Result:='';
-          {$ELSE}
-          tkSet        : Result:=GetSetProp(aPersistent,info);
-          {$ENDIF}
+          tkSet        : Result:=GetSetProp(aPersistent,info,false);
           tkFloat      : Result:=GetFloatProp(aPersistent,info);
           tkMethod     : Result:=info^.PropType^.Name;
           tkString,
@@ -1097,11 +1079,7 @@ begin
   begin
     info:=GetPropInfo(aPersistent,aPropName);
     if info<>nil then
-      {$IFDEF FPC}
       case info^.PropType^.Kind of
-      {$ELSE}
-      case info^.PropType^^.Kind of
-      {$ENDIF}
         tkInteger,
         tkChar,
         tkWChar      : begin
@@ -1165,11 +1143,7 @@ var
 begin
   Result:=nil;
   info:=GetPropInfo(NameSpace,Name);
-  {$IFDEF FPC}
   if Assigned(info) and (info^.PropType^.Kind=tkClass) then
-  {$ELSE}
-  if Assigned(info) and (info^.PropType^^.Kind=tkClass) then
-  {$ENDIF}
   begin
     obj:=TObject(GetOrdProp(NameSpace,info));
     if Assigned(obj) and (obj is TPersistent) then
