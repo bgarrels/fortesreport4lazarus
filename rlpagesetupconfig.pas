@@ -10,7 +10,7 @@ interface
 
 uses
   Classes, SysUtils, LCLType, Graphics, Controls, Forms, Dialogs, StdCtrls, LResources,
-  RLFilters, RLConsts, RLPrinters, RLTypes, RLSpoolFilter;
+  RLFilters, RLConsts, RLTypes, RLSpoolFilter;
 
 type
 
