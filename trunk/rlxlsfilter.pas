@@ -9,20 +9,8 @@ unit RLXLSFilter;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, Math,
-{$ifdef VCL}
-  {$IFDEF MSWINDOWS}
-  Windows,
-  {$ELSE}
-  LCLIntf,
-  LCLType,
-  {$ENDIF}
-  Types,
-  Graphics, RLMetaVCL,
-{$else}
-  Types, QGraphics, RLMetaCLX,
-{$endif}
-  RLMetaFile, RLConsts, RLTypes, RLUtils, RLFilters;
+  LCLIntf, LCLType, Types, SysUtils, Classes, Contnrs, Math,
+  Graphics, RLMetaVCL, RLMetaFile, RLConsts, RLTypes, RLUtils, RLFilters;
 
 const
   XLSMaxDefaultColors  =16;
