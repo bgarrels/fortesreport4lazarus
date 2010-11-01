@@ -355,35 +355,36 @@ var
   end;
   procedure DrawPixel(aObj:TRLPixelObject);
   begin
-    Write(fWorkingFileHandle,'<hr style="position:absolute;'+
+    //todo: find a way to remove the dummy comments inside empty div
+    Write(fWorkingFileHandle,'<div style="position:absolute;'+
                              'left:'+IntToStr(aObj.BoundsRect.Left-fPrintCut.X)+'px;'+
                              'top:'+IntToStr(aObj.BoundsRect.Top-fPrintCut.Y)+'px;'+
                              'width:1px;'+
                              'height:1px;'+
                              ClipStr(FromMetaRect(aObj.BoundsRect),cliprct)+';'+
-                             'color:#'+ColorToHex(FromMetaColor(aObj.Color))+';">');
+                             'background-color:#'+ColorToHex(FromMetaColor(aObj.Color))+';"><!-- --></div>');//empty div fails in explorer.
     WriteLn(fWorkingFileHandle);
   end;
   procedure DrawLine(aObj:TRLLineObject);
   begin
-    Write(fWorkingFileHandle,'<hr style="position:absolute;'+
+    Write(fWorkingFileHandle,'<div style="position:absolute;'+
                              'left:'+IntToStr(aObj.BoundsRect.Left-fPrintCut.X)+'px;'+
                              'top:'+IntToStr(aObj.BoundsRect.Top-fPrintCut.Y)+'px;'+
                              'width:'+IntToStr(aObj.BoundsRect.Right-aObj.BoundsRect.Left)+'px;'+
                              'height:'+IntToStr(aObj.BoundsRect.Bottom-aObj.BoundsRect.Top)+'px;'+
                              ClipStr(FromMetaRect(aObj.BoundsRect),cliprct)+';'+
-                             'color:#'+ColorToHex(FromMetaColor(aObj.Pen.Color))+';">');
+                             'background-color:#'+ColorToHex(FromMetaColor(aObj.Pen.Color))+';"><!-- --></div>');
     WriteLn(fWorkingFileHandle);
   end;
   procedure DrawRectangle(aObj:TRLRectangleObject);
   begin
-    Write(fWorkingFileHandle,'<hr style="position:absolute;'+
+    Write(fWorkingFileHandle,'<div style="position:absolute;'+
                              'left:'+IntToStr(aObj.BoundsRect.Left-fPrintCut.X)+'px;'+
                              'top:'+IntToStr(aObj.BoundsRect.Top-fPrintCut.Y)+'px;'+
                              'width:'+IntToStr(aObj.BoundsRect.Right-aObj.BoundsRect.Left)+'px;'+
                              'height:'+IntToStr(aObj.BoundsRect.Bottom-aObj.BoundsRect.Top)+'px;'+
                              ClipStr(FromMetaRect(aObj.BoundsRect),cliprct)+';'+
-                             'color:#'+ColorToHex(FromMetaColor(aObj.Brush.Color))+';">');
+                             'background-color:#'+ColorToHex(FromMetaColor(aObj.Brush.Color))+';"><!-- --></div>');
     WriteLn(fWorkingFileHandle);
   end;
   procedure DrawFillRect(aObj:TRLFillRectObject);
@@ -476,7 +477,7 @@ var
           Write(fWorkingFileHandle,'<img src="'+ExtractFileName(graphfn)+'" '+
                                    'width='+IntToStr(aObj.BoundsRect.Right-aObj.BoundsRect.Left)+' '+
                                    'height='+IntToStr(aObj.BoundsRect.Bottom-aObj.BoundsRect.Top)+'>');
-          Write(fWorkingFileHandle,'</div>');
+          Write(fWorkingFileHandle,'<!-- --></div>');
           WriteLn(fWorkingFileHandle);
         end;  
       finally
