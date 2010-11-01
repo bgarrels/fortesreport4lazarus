@@ -5,26 +5,14 @@ unit RLReg;
 interface
 
 uses
-  Classes,
-  {$IFDEF FPC}
-  PropEdits, ComponentEditors, LCLType, LResources,
-  {$ELSE}
-    {$ifdef DELPHI5}
-      DsgnIntF,
-    {$else}
-      DesignIntF,
-    {$endif}
- {$ENDIF}
-  RLDesign,
-  RLReport, RLDraftFilter, RLRichFilter, RLHTMLFilter, RLPDFFilter, RLParser,
+  Classes, PropEdits, ComponentEditors, LCLType, LResources,
+  RLDesign, RLReport, RLDraftFilter, RLRichFilter, RLHTMLFilter, RLPDFFilter, RLParser,
   RLPreview, RLMetaFile, RLBarcode, RLRichText, RLPreviewForm, RLXLSFilter,
   RLPrintDialog, RLSaveDialog;
 
 procedure Register;
 
 implementation
-
-//{$R 'RLReport.dcr'}
 
 procedure Register;
 begin
@@ -67,10 +55,8 @@ begin
   RegisterPropertyEditor(TypeInfo(TRLDataFieldsProperty),TRLCustomGroup,'DataFields',TRLDataFieldsEditor);
 end;
 
-{$IFDEF FPC}
 initialization
   {$I fortes324forlaz.lrs}
-{$ENDIF}
 
 end.
 
