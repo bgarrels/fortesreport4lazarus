@@ -6,29 +6,7 @@ unit RLRichFilter;
 interface
 
 uses
-  SysUtils, Classes,
-  {$IFDEF FPC}
-    {$ifdef MSWINDOWS}
-      Windows,
-    {$else}
-      LCLIntf,
-    {$endif}
-      Types,
-  {$ELSE}
-    {$ifdef MSWINDOWS}
-      Windows,
-    {$else}
-      Types,
-    {$endif}
-  {$ENDIF}
-{$ifdef VCL}
-  Graphics, RLMetaVCL,
-{$else}
-  QGraphics, RLMetaCLX,
-{$endif}
-{$IFDEF FPC}
-  rlshared,
-{$ENDIF}
+  LCLIntf, SysUtils, Classes, Types, Graphics, RLMetaVCL,
   RLMetaFile, RLFilters, RLTypes, RLConsts, RLUtils;
 
 type
@@ -176,12 +154,46 @@ end;
 
 function RTF_FormatText(const aText:string):string;
 var
-  i:integer;
+  i,k:integer;
+  HasUnicode: Boolean;
+  W: WideString;
+  TmpStr: string;
+  TmpChar: Char;
+  TmpWideChar: WideChar;
 begin
-  result:=aText;
-  for i:=Length(result) downto 1 do
-    if result[i] in ['{','}','\'] then
-      Insert('\',result,i);
+  Result:=aText;
+  HasUnicode:=false;
+  for i:=Length(Result) downto 1 do
+  begin
+    TmpChar:=Result[i];
+    if TmpChar>#127 then
+      HasUnicode:=true;
+    if TmpChar in ['{','}','\'] then
+      Insert('\',Result,i);
+  end;
+  if HasUnicode then
+  begin
+    W:=UTF8Decode(Result);
+    //Reserve enough space, longest unicode char: "\u-32767? "
+    SetLength(Result,Length(W)*10);
+    k:=1;
+    for i := 1 to Length(W) do
+    begin
+      TmpWideChar:=W[i];
+      if TmpWideChar>#127 then
+      begin
+        TmpStr:='\u'+IntToStr(SmallInt(TmpWideChar))+'?';
+        move(TmpStr[1],Result[k],Length(TmpStr));
+        inc(k,Length(TmpStr));
+      end
+      else
+      begin
+        Result[k]:=char(ord(TmpWideChar));
+        inc(k);
+      end;
+    end;
+    SetLength(Result,k-1);
+  end;
 end;
 
 // hexadecimal invertido
@@ -294,7 +306,7 @@ begin
         StreamWriteLn(endstream,'\landscape');
       //
       StreamWriteLn(endstream,'\viewkind1');
-      StreamWriteLn(endstream,'\margl0\margt0\margr0\margb0');
+      StreamWriteLn(endstream,'\margl0\margt0\margr0\margb0\uc1');
       // transfere dados do temp
       fTempStream.Seek(0,soFromBeginning);
       endstream.CopyFrom(fTempStream,fTempStream.Size);
