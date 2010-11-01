@@ -9,24 +9,8 @@ unit RLRichText;
 interface
 
 uses
-  Classes, SysUtils, Contnrs, Math,
-{$ifdef MSWINDOWS}
-{$IFDEF FPC}
-  LCLIntf,
-  LCLType,
-  Types,
-{$ELSE}
-  Windows,
-{$ENDIF}
-{$else}
-  Types,
-{$endif}
-{$ifdef CLX}
-  QGraphics, RLMetaCLX,
-{$else}
-  Graphics, RLMetaVCL,
-{$endif}
-  RLReport, RLUtils, RLMetaFile, RLRichParsers;
+  LCLIntf, LCLType, Classes, SysUtils, Graphics, RLMetaVCL,
+  RLReport, RLUtils, RLRichParsers;
 
 type
 

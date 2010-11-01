@@ -9,36 +9,11 @@ unit RLRichParsers;
 interface
 
 uses
-  Classes, SysUtils, Contnrs, Math,
-
-{$ifdef MSWINDOWS}
-{$IFDEF FPC}
-  LCLIntf,
-  LCLType,
-  Types,
-{$ELSE}
+  {$ifdef LCLWin32}
   Windows,
-{$ENDIF}
-{$else}
-{$IFDEF FPC}
-  LCLIntf,
-  LCLType,
-  Types,
-{$ELSE}
-  Types,
-{$ENDIF}
-{$endif}
-
-{$ifdef CLX}
-  QGraphics, RLMetaCLX,
-{$else}
-  Graphics, RLMetaVCL,
-{$endif}
-{$IFDEF FPC}
-  dynlibs,
-  rlshared,
-{$ENDIF}
-  RLUtils, RLMetaFile;
+  {$endif}
+  LCLIntf, LCLType,  Types, Classes, SysUtils, Contnrs, Math, dynlibs,
+  Graphics, RLMetaVCL, RLUtils, RLMetaFile;
 
 type
   TRichEditVersion = 1..3; //Verifica a versão do rich para possiveis correções no formato
@@ -1890,18 +1865,17 @@ end;
 
 { Initialization part }
 
+{$ifdef LCLWin32}
 var
   OldError: Longint;
   FLibHandle: THandle;
   Ver: TOsVersionInfo;
+{$endif}
 
 initialization
   RichEditVersion := 1;
-  {$IFDEF FPC}
-  OldError := 0;
-  {$ELSE}
+  {$ifdef LCLWin32}
   OldError := SetErrorMode(SEM_NOOPENFILEERRORBOX);
-  {$ENDIF}
   try
     FLibHandle := LoadLibrary(RichEdit20ModuleName);
     if (FLibHandle > 0) and (FLibHandle < HINSTANCE_ERROR) then FLibHandle := 0;
@@ -1911,7 +1885,6 @@ initialization
     end
     else begin
       RichEditVersion := 2;
-      {$IFNDEF FPC}
       Ver.dwOSVersionInfoSize := SizeOf(Ver);
       GetVersionEx(Ver);
       with Ver do begin
@@ -1919,15 +1892,15 @@ initialization
           (dwMajorVersion >= 5) then
           RichEditVersion := 3;
       end;
-      {$ENDIF}
     end;
   finally
-  {$IFNDEF FPC}
     SetErrorMode(OldError);
-  {$ENDIF}
   end;
+  {$endif}
 finalization
+  {$ifdef LCLWin32}
   if FLibHandle <> 0 then FreeLibrary(FLibHandle);
+  {$endif}
 
 end.
 
