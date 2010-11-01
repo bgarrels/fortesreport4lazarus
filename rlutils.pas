@@ -415,25 +415,21 @@ type
 
 function HexToBitmap(const aHex:string):TBitmap;
 var
-  stream:TStringStream;
-  i,l   :integer;
+  Stream: TMemoryStream;
+  i     :integer;
 begin
-  stream:=TStringStream.Create(emptystr);
+  Stream:=TMemoryStream.Create;
   try
     // traduz string hex em binária
-    l:=Length(aHex);
-    i:=1;
-    while i<l do
-    begin
-      stream.WriteString(char(HexToByte(aHex[i]+aHex[i+1])));
-      inc(i,2);
-    end;
+    i:=Length(aHex) div 2;
+    Stream.Size:=i;
+    HexToBin(@aHex[1],Stream.Memory,i);
     // procura referência para a classe
     Result:=TBitmap.Create;
-    stream.Position:=0;
-    TPublicGraphic(Result).ReadData(stream);
+    Stream.Position:=0;
+    TPublicGraphic(Result).ReadData(Stream);
   finally
-    FreeObj(stream);
+    Stream.Free;
   end;
 end;
 
