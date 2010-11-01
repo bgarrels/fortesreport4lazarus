@@ -9,21 +9,7 @@ unit RLSpoolFilter;
 interface
 
 uses
-  Classes, SysUtils, Contnrs,
-{$IFDEF FPC}
-    {$IFDEF MSWINDOWS}
-    Windows,
-    {$ELSE}
-    LCLIntf, LCLType,
-    {$ENDIF}
-    Graphics, RLMetaVCL, Types,
-{$ELSE}
-   {$ifdef MSWINDOWS}
-    Windows, Graphics, RLMetaVCL,
-   {$else}
-    Types, QGraphics, RLMetaCLX,
-   {$endif}
- {$ENDIF}
+  LCLIntf, LCLType, Classes, SysUtils, Contnrs, Graphics, RLMetaVCL, Types,
   RLMetaFile, RLFilters, RLTypes, RLPrinters, RLConsts;
 
 type
