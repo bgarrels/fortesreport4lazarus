@@ -357,8 +357,7 @@ end;
 initialization
 
 finalization
-  if Assigned(SpoolFilterInstance) then
-    SpoolFilterInstance.free;
+  SpoolFilterInstance.free;
 
 end.
-
+
