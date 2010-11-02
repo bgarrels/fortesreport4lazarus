@@ -11,7 +11,7 @@ interface
 uses
   LCLIntf, LCLType, Classes, SysUtils, LResources,
   Graphics, Controls, Forms, Dialogs, StdCtrls,
-  RLFilters, RLConsts, RLPrinters, RLTypes, RLSpoolFilter;
+  RLFilters, RLConsts, RLPrinters, RLTypes;
 
 type
   {@type TRLPrintDialogOptions - Opções de configuração do diálogo de impressão.

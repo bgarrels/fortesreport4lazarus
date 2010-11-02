@@ -167,8 +167,6 @@ function SaveFilterByFileName(const aFileName:string):TRLCustomSaveFilter;
 
 implementation
 
-uses
-  RLSpoolFilter;
 
 function SaveFilterByFileName(const aFileName:string):TRLCustomSaveFilter;
 var
@@ -220,7 +218,12 @@ end;
 
 destructor TRLCustomFilter.Destroy;
 begin
-  ActiveFilters.Extract(Self);
+  //SpoolFilter is destroyed after ActiveFilters is destroyed due to the unit
+  //initialization/finalization order
+  //Nil ActiveFilters at finalization and check for nil here
+  //todo: implement proper/sane filter store
+  if Assigned(ActiveFilters) then
+    ActiveFilters.Extract(Self);
   if Assigned(fPages) then
     fPages.Unlink(Self);
   FreeObj(fProgress);
@@ -436,7 +439,8 @@ initialization
   ActiveFilters:=TList.Create;
 
 finalization
-  ActiveFilters.free;
+  // make sure the ActiveFilters is nil at finalization. See TRLCustomFilter.Destroy
+  FreeAndNil(ActiveFilters);
 
 end.
-
+
