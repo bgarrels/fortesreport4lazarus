@@ -5,11 +5,16 @@
     <Name Value="fortes324forlaz"/>
     <Author Value="Isaac Trindade Silva"/>
     <CompilerOptions>
-      <Version Value="8"/>
+      <Version Value="10"/>
       <PathDelim Value="\"/>
       <SearchPaths>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
       <Other>
         <CompilerPath Value="$(CompPath)"/>
       </Other>
@@ -18,7 +23,7 @@
 Lazarus version of powerfull report generator FortesReport
 "/>
     <Version Minor="3" Release="5" Build="10"/>
-    <Files Count="44">
+    <Files Count="43">
       <Item1>
         <Filename Value="rlabout.lfm"/>
         <Type Value="LFM"/>
@@ -192,29 +197,22 @@ Lazarus version of powerfull report generator FortesReport
         <Filename Value="rlsavedialog.lfm"/>
         <Type Value="LFM"/>
       </Item43>
-      <Item44>
-        <Filename Value="rlshared.pas"/>
-        <UnitName Value="rlshared"/>
-      </Item44>
     </Files>
     <Type Value="RunAndDesignTime"/>
-    <RequiredPkgs Count="5">
+    <RequiredPkgs Count="4">
       <Item1>
-        <PackageName Value="imagesforlazarus"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item1>
       <Item2>
-        <PackageName Value="Printer4Lazarus"/>
+        <PackageName Value="LCL"/>
       </Item2>
       <Item3>
-        <PackageName Value="LCL"/>
+        <PackageName Value="IDEIntf"/>
       </Item3>
       <Item4>
-        <PackageName Value="IDEIntf"/>
-      </Item4>
-      <Item5>
         <PackageName Value="FCL"/>
         <MinVersion Major="1" Valid="True"/>
-      </Item5>
+      </Item4>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)\"/>
