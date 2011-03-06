@@ -10,7 +10,7 @@ interface
 
 uses
   Classes, SysUtils, LCLType, Graphics, Controls, Forms, Dialogs, StdCtrls, LResources,
-  RLFilters, RLConsts, RLTypes;
+  RLFilters, RLConsts, RLTypes, Printers;
 
 type
 
@@ -261,4 +261,4 @@ finalization
   PageParams.Free;
 
 end.
-
+
