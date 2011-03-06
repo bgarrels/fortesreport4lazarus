@@ -9,22 +9,7 @@ unit RLTypes;
 interface
 
 uses
-{$IFDEF FPC}
- {$ifdef MSWINDOWS}
-  Windows,
- {$else}
-  LCLIntf,
- {$endif}
-  Types, LCLType, Printers, OSPrinters, rlshared,
-  SysUtils,LCLProc,
-{$ELSE}
-  {$ifdef MSWINDOWS}
-    Windows, Printers,
-  {$else}
-    Types, QPrinters,
-  {$endif}
-{$ENDIF}
-  Classes;
+  Printers, Classes;
 
 type
   TRLPrinterMetrics=record
@@ -39,18 +24,13 @@ type
     ClientWidth   :integer;
     ClientHeight  :integer;
   end;
-{$IFDEF FPC}
-TRLSystemPaperType  =TPageSize;
-TRLSystemOrientation=TPrinterOrientation;
-{$ELSE}
-{$ifdef MSWINDOWS}
-  TRLSystemPaperType  =integer;
-  TRLSystemOrientation=integer;
-{$else}
-  TRLSystemPaperType  =TPageSize;
-  TRLSystemOrientation=TPrinterOrientation;
-{$endif}
-{$ENDIF}
+
+  TPageSize = (psA4, psB5, psLetter, psLegal, psExecutive, psA0, psA1, psA2,
+    psA3, psA5, psA6, psA7, psA8, psA9, psB0, psB1, psB10, psB2, psB3, psB4, psB6,
+    psB7, psB8, psB9, psC5E, psComm10E, psDLE, psFolio, psLedger, psTabloid, psNPageSize);
+
+  TRLSystemPaperType = TPageSize;
+  TRLSystemOrientation = TPrinterOrientation;
 
 {@type TRLPaperInfo - Informações sobre tamanhos de papel. :}
 type
@@ -69,7 +49,7 @@ type
 {/@type}               
 
 {@type TRLPageOrientation - Orientação do papel. :/}
-type TRLPageOrientation=(poPortrait,poLandscape);
+type TRLPageOrientation=TPrinterOrientation;
 
 type
   TRLPaperSize=(fpA0,fpA1,fpA2,fpA3,fpA4,fpA5,fpA6,fpA7,fpA8,fpA9,fpA10,
@@ -96,15 +76,9 @@ type
                 fpEng_Elephant,fpEng_Imperial,
                 fpCustom);
 
-{$IFDEF FPC}
+//const UserPaperCode=DMPAPER_USER;
 const UserPaperCode=psNPageSize;
-{$ELSE}
-{$IFDEF MSWINDOWS}
-const UserPaperCode=DMPAPER_USER;
-{$ELSE}
-const UserPaperCode=psNPageSize;
-{$ENDIF}
-{$ENDIF}
+
 {@var PaperInfo - Vetor com informações sobre tamanhos de papel. @links TRLPaperInfo. :/}
 var PaperInfo:array[TRLPaperSize] of TRLPaperInfo;
 
@@ -178,32 +152,11 @@ begin
     aResultPaperWidth :=PaperInfo[PaperSize].Width;
     aResultPaperHeight:=PaperInfo[PaperSize].Height;
   end;
-  {$ifdef MSWINDOWS}
-  {$IFDEF FPC}
-  if aOrientationLandscape then
-    aResultOrientation:=Printers.poLandscape
-  else
-    aResultOrientation:=Printers.poPortrait;
-  {$ELSE}
-  if aOrientationLandscape then
-    aResultOrientation:=DMORIENT_LANDSCAPE
-  else
-    aResultOrientation:=DMORIENT_PORTRAIT;
-  {$ENDIF}
-  {$else}
-  {$IFDEF FPC}
-  if aOrientationLandscape then
-    aResultOrientation:=Printers.poLandscape
-  else
-    aResultOrientation:=Printers.poPortrait;
-  {$ELSE}
-  if aOrientationLandscape then
-    aResultOrientation:=QPrinters.poLandscape
-  else
-    aResultOrientation:=QPrinters.poPortrait;
-  {$ENDIF}
-  {$endif}
 
+  if aOrientationLandscape then
+    aResultOrientation:=poLandscape
+  else
+    aResultOrientation:=poPortrait;
 end;
 
 procedure SetPaperInfo(aPaperSize:TRLPaperSize; const aWidth,aHeight:double; const aDescription:string);
@@ -384,8 +337,9 @@ initialization
   SetPaperInfo(fpCustom,                      0,     0,'User Defined');
 
   // Equivalências para Windows
-{$ifdef MSWINDOWS}
-{$IFNDEF FPC}
+  //todo
+  {
+  $ifdef MSWINDOWS
   SetPaperEqv(fpA2,DMPAPER_A2);
   SetPaperEqv(fpA3,DMPAPER_A3);
   SetPaperEqv(fpA4,DMPAPER_A4);
@@ -467,11 +421,10 @@ initialization
   SetPaperEqv(fpJap_DblPostcard,DMPAPER_DBL_JAPANESE_POSTCARD);
   SetPaperEqv(fpJap_Postcard,DMPAPER_JAPANESE_POSTCARD);
   SetPaperEqv(fpCustom,DMPAPER_USER);
-{$ENDIF}
-{$endif}
+endif
 
   // Equivalências para Linux/CLX
-{$ifdef LINUX OR FPC}
+ifdef LINUX
   SetPaperEqv(fpA0,psA0);
   SetPaperEqv(fpA1,psA1);
   SetPaperEqv(fpA2,psA2);
@@ -503,6 +456,7 @@ initialization
   SetPaperEqv(fpLedger,psLedger);
   SetPaperEqv(fpTabloid,psTabloid);
   SetPaperEqv(fpCustom,psNPageSize);
-{$endif}
+endif
+}
 
 end.
