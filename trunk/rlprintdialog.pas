@@ -10,7 +10,7 @@ interface
 
 uses
   LCLIntf, LCLType, Classes, SysUtils, LResources,
-  Graphics, Controls, Forms, Dialogs, StdCtrls,
+  Graphics, Controls, Forms, Dialogs, StdCtrls, PrintersDlgs,
   RLFilters, RLConsts, RLPrinters, RLTypes;
 
 type
@@ -47,6 +47,7 @@ type
   { TRLPrintDialog }
 
   TRLPrintDialog = class(TForm)
+    PrinterSetupDialog1: TPrinterSetupDialog;
     SpeedButtonSetup: TButton;
     ButtonImprimir: TButton;
     ButtonAplicar: TButton;
@@ -332,12 +333,7 @@ begin
   PrintParams.BackgroundMode:=CheckBoxBackgroundMode.Checked;
   //
   if (ComboBoxPrinterNames.ItemIndex<>-1) and (RLPrinter.PrinterIndex<>ComboBoxPrinterNames.ItemIndex) then begin
-      RLPrinter.PrinterIndex:=ComboBoxPrinterNames.ItemIndex;
-      {$IFDEF MSWINDOWS}
-      {$IFNDEF FPC}
-      RLPrinter.CreateDevM;
-      {$ENDIF}
-      {$ENDIF}
+        RLPrinter.PrinterIndex:=ComboBoxPrinterNames.ItemIndex;
       end;
   if ComboBoxFilters.ItemIndex<>0 then
     PrintParams.Filter:=TRLCustomPrintFilter(ComboBoxFilters.Items.Objects[ComboBoxFilters.ItemIndex])
@@ -516,13 +512,8 @@ end;
 
 procedure TRLPrintDialog.SpeedButtonSetupClick(Sender: TObject);
 begin
-SaveEditors;
-{$IFDEF FPC}
-Showmessage('Item não implementado');
-{$ENDIF}
-{$IFNDEF FPC}
-RLPrinter.ExecuteSetup;
-{$ENDIF}
+  SaveEditors;
+  PrinterSetupDialog1.Execute;
 end;
 
 procedure TRLPrintDialog.ButtonImprimirClick(Sender: TObject);

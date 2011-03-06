@@ -211,7 +211,7 @@ begin
   fFilteringPageNo :=0;
   fFilteringCopyNo :=0;
   //
-  inherited;
+  inherited Create(aOwner);
   //
   ActiveFilters.Add(Self);
 end;
@@ -431,7 +431,7 @@ begin
   fFileName  :=emptystr;
   fDefaultExt:=emptystr;
   //
-  inherited;
+  inherited Create(aOwner);
 end;
 
 initialization
@@ -443,4 +443,4 @@ finalization
   FreeAndNil(ActiveFilters);
 
 end.
-
+

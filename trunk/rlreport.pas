@@ -25,7 +25,7 @@ uses
 {$endif}
   ExtCtrls, DBCtrls, Controls, Forms, Dialogs, StdCtrls, LMessages, Buttons, Graphics,
   RLMetaVCL, RLMetaFile, RLFeedBack, RLParser, RLFilters, RLConsts, RLUtils, RLPrintDialog, RLSaveDialog, RLPreviewForm,
-  RLPreview, RLTypes, RLPrinters, RLSpoolFilter, RLPageSetupConfig;
+  RLPreview, RLTypes, RLPrinters, RLSpoolFilter, RLPageSetupConfig, Printers;
 
 const
   CommercialVersion=RLConsts.CommercialVersion;

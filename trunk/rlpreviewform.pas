@@ -12,7 +12,7 @@ uses
   LCLType, SysUtils, Contnrs, Classes,  Math,
   Controls, Buttons, ExtCtrls, Forms, Dialogs, StdCtrls, Graphics,
   RLConsts, RLMetaFile, RLPreview, RLFilters, RLUtils, RLPrintDialog, RLSaveDialog, RLPrinters, RLTypes, RLFindDialog,
-  RLSpoolFilter, RLPageSetupConfig;
+  RLSpoolFilter, RLPageSetupConfig, Printers;
 
 type
 
@@ -1253,7 +1253,6 @@ begin
   SpeedButtonPrint.Caption :=LS_PrintStr;
   SpeedButtonSetup.Hint    :=LS_ConfigPrinterStr;
   SpeedButtonSetup.ShowHint:=True;
-  SpeedButtonSetup.Enabled :=RLPrinter.SetupEnabled;
   SpeedButtonSave.Hint     :=LS_SaveToFileStr;
   SpeedButtonSave.ShowHint :=True;
   SpeedButtonSeArch.Hint   := LS_FindCaptionStr;
