@@ -3,7 +3,7 @@
   <Package Version="3">
     <PathDelim Value="\"/>
     <Name Value="fortes324forlaz"/>
-    <Author Value="Isaac Trindade Silva"/>
+    <Author Value="Fortes Informática. Versão para o Lazarus por Isaac Trindade Silva e Luiz Américo Pereira Câmara"/>
     <CompilerOptions>
       <Version Value="10"/>
       <PathDelim Value="\"/>
@@ -16,13 +16,15 @@
         </SyntaxOptions>
       </Parsing>
       <Other>
+        <CompilerMessages>
+          <UseMsgFile Value="True"/>
+        </CompilerMessages>
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Description Value="Versão para lazarus do excelente gerador de relatorios FortesReport. 
-Lazarus version of powerfull report generator FortesReport
-"/>
-    <Version Minor="3" Release="5" Build="10"/>
+    <Description Value="Versão para lazarus do excelente gerador de relatorios FortesReport.
+Lazarus version of powerfull report generator FortesReport"/>
+    <Version Major="3" Minor="24" Release="1"/>
     <Files Count="43">
       <Item1>
         <Filename Value="rlabout.lfm"/>
@@ -215,7 +217,7 @@ Lazarus version of powerfull report generator FortesReport
       </Item4>
     </RequiredPkgs>
     <UsageOptions>
-      <UnitPath Value="$(PkgOutDir)\"/>
+      <UnitPath Value="$(PkgOutDir)"/>
     </UsageOptions>
     <PublishOptions>
       <Version Value="2"/>
