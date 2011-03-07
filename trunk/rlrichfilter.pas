@@ -413,7 +413,8 @@ var
       IntersectRect(cut,Rect,cliprct);
       OffsetRect(cut,-Rect.Left,-Rect.Top);
       bmp:=ClipGraphic(bmx,cut,False);
-      bmp.PixelFormat:=pf8bit;
+      //todo: crash em gtk e imagm preta no windows
+      //bmp.PixelFormat:=pf8bit;
       //
       with Rect do
         WriteLn('\pard\plain'+
