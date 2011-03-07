@@ -24,7 +24,7 @@
     </CompilerOptions>
     <Description Value="Versão para lazarus do excelente gerador de relatorios FortesReport.
 Lazarus version of powerfull report generator FortesReport"/>
-    <Version Major="3" Minor="24" Release="1"/>
+    <Version Major="3" Minor="24" Release="2"/>
     <Files Count="43">
       <Item1>
         <Filename Value="rlabout.lfm"/>
