@@ -9,7 +9,7 @@ object ITDesignForm: TITDesignForm
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
-  LCLVersion = '0.9.29'
+  LCLVersion = '0.9.31'
   object RLReport1: TRLReport
     Left = 8
     Height = 1123
@@ -106,9 +106,8 @@ object ITDesignForm: TITDesignForm
           Left = 38
           Height = 21
           Top = 0
-          Width = 46
+          Width = 81
           Align = faLeft
-          AutoSize = False
           Caption = 'Código Item'
           Color = clWhite
           Font.Color = clBlack
@@ -124,10 +123,10 @@ object ITDesignForm: TITDesignForm
           Transparent = False
         end
         object RLLabel2: TRLLabel
-          Left = 84
+          Left = 119
           Height = 21
           Top = 0
-          Width = 634
+          Width = 599
           Align = faClient
           AutoSize = False
           Caption = 'Descrição'
@@ -161,7 +160,7 @@ object ITDesignForm: TITDesignForm
           Left = 38
           Height = 22
           Top = 0
-          Width = 46
+          Width = 81
           Align = faHeight
           AutoSize = False
           Color = clWhite
@@ -176,10 +175,10 @@ object ITDesignForm: TITDesignForm
           Transparent = False
         end
         object RLDBText4: TRLDBText
-          Left = 84
+          Left = 119
           Height = 22
           Top = 0
-          Width = 634
+          Width = 599
           Align = faHeight
           AutoSize = False
           Color = clWhite
@@ -239,7 +238,6 @@ object ITDesignForm: TITDesignForm
   end
   object DatasetITE: TSqlite3Dataset
     FileName = 'ite.db'
-    FieldDefs = <>
     left = 104
     top = 8
   end
