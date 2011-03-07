@@ -47,7 +47,6 @@ type
   { TRLPrintDialog }
 
   TRLPrintDialog = class(TForm)
-    PrinterSetupDialog1: TPrinterSetupDialog;
     SpeedButtonSetup: TButton;
     ButtonImprimir: TButton;
     ButtonAplicar: TButton;
@@ -189,6 +188,9 @@ var PrintParams:TRLPrintParams=nil;
 {/@unit}
 
 implementation
+
+uses
+  OSPrinters, Printers;
 
 // UTILS
 
@@ -513,7 +515,11 @@ end;
 procedure TRLPrintDialog.SpeedButtonSetupClick(Sender: TObject);
 begin
   SaveEditors;
-  PrinterSetupDialog1.Execute;
+  {$IFDEF MSWindows}
+  TWinPrinter(Printer).AdvancedProperties;
+  {$ELSE}
+  ShowMessage('Printer.AdvancedProperties is not yet implemented for this platform');
+  {$ENDIF}
 end;
 
 procedure TRLPrintDialog.ButtonImprimirClick(Sender: TObject);
