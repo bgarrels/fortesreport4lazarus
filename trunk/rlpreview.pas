@@ -840,9 +840,14 @@ function TRLPreviewBox.GetPage:TRLGraphicSurface;
 var
   i,j:integer;
 begin
-  i:=fPreview.fPageIndex;
-  j:=fPreview.fBoxes.IndexOf(Self);
-  Result:=fPreview.Pages.WaitPage(i+j);
+  if Assigned(fPreview.Pages) then
+  begin
+    i:=fPreview.fPageIndex;
+    j:=fPreview.fBoxes.IndexOf(Self);
+    Result:=fPreview.Pages.WaitPage(i+j);
+  end
+  else
+    Result := nil;
 end;
 
 function TRLPreviewBox.DoZoom(X:integer):integer;
