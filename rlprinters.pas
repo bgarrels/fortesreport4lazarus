@@ -10,7 +10,8 @@ interface
 
 uses
   {$ifdef Windows}Windows, WinUtilPrn,{$endif}
-  Classes, SysUtils, Math, forms,
+  {$ifdef unix}process,{$endif}
+  Classes, SysUtils, Math, Forms, Dialogs,
   Graphics, Printers, RLConsts, RLTypes, RLUtils;
 
 type
@@ -154,18 +155,18 @@ begin
   l:=TStringList.Create;
   printername:=Printer.Printers[Index];
   try
-  try
-  AProcess := TProcess.Create(nil);
-  AProcess.CommandLine := 'lpstat -v';
-  //AProcess.Options := AProcess.Options + [poWaitOnExit, poUsePipes];
-  AProcess.Options := [poWaitOnExit, poUsePipes];
-  AProcess.Execute;
-  l.LoadFromStream(AProcess.Output);
-  except
-  showmessage('lpstat error');
-  end;
+    try
+      AProcess := TProcess.Create(nil);
+      AProcess.CommandLine := 'lpstat -v';
+      //AProcess.Options := AProcess.Options + [poWaitOnExit, poUsePipes];
+      AProcess.Options := [poWaitOnExit, poUsePipes];
+      AProcess.Execute;
+      l.LoadFromStream(AProcess.Output);
+    except
+       showmessage('lpstat error');
+    end;
   finally
-  AProcess.Free;
+    AProcess.Free;
   end;
   devicename:='';
   for i:=0 to l.Count-1 do
