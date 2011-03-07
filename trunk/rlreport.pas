@@ -9368,7 +9368,7 @@ begin
       itCarbonCopy      : s:=IntToStr(FindParentBand.CarbonIndex+1);
       itDate            : s:=DateToStr(MasterReport.ReportDateTime);
       itDetailCount     : s:=IntToStr(FindParentPager.DetailCount);
-      itFullDate        : s:=FormatDateTime(LongDateFormat,MasterReport.ReportDateTime);
+      itFullDate        : s:=AnsiToUtf8(FormatDateTime(LongDateFormat,MasterReport.ReportDateTime));
       itHour            : s:=TimeToStr(MasterReport.ReportDateTime);
       itJunction        : s:=JunctionStr;
       itLastPageNumber  : s:='{LastPageNumber}';
