@@ -114,7 +114,7 @@ var
   i,h,d:integer;
   b,n:TProgressBar;
 begin
-  inherited Create(nil);
+  inherited CreateNew(nil, 0);
   Init;
   //
   d:=Height-BitBtnCancel.Top;
