@@ -1654,7 +1654,7 @@ begin
   titleno:=fSheets.Count;
   repeat
     Inc(titleno);
-    Result:=LS_PageStr+IntToStr(titleno);
+    Result:=Utf8ToAnsi(LS_PageStr)+IntToStr(titleno);
     i:=0;
     while (i<SheetCount) and not AnsiSameText(Sheets[i].Title,Result) do
       Inc(i);
@@ -3304,7 +3304,7 @@ begin
       y1:=y0;
       while (y1<fVertTabs.Count) and (fVertTabs.Sizes[y1].Position<bounds.Bottom-deltay) do
         Inc(y1);
-      aux:=obj.DisplayText;
+      aux:=Utf8ToAnsi(obj.DisplayText);
       range:=sheet.FindRange(x0,y0,x1-1,y1-1,True);
       if aux=emptystr then
         range.Value:=' '
