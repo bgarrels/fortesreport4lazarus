@@ -15,7 +15,6 @@ uses
   RLSpoolFilter, RLPageSetupConfig, Printers;
 
 type
-
   { TRLPreviewForm }
 
   TRLPreviewForm = class(TForm)
@@ -272,6 +271,17 @@ implementation
 uses
   LCLIntf;
 
+type
+
+  { TRLPreviewWithSplitter }
+
+  TRLPreviewWithSplitter = class(TRLPreview)
+  private
+    FSplitter: TSplitter;
+  public
+    property Splitter: TSplitter read FSplitter write FSplitter;
+  end;
+
 var
   SetupInstance:TRLPreviewSetup=nil;
 
@@ -480,15 +490,15 @@ end;
 procedure TRLPreviewForm.OrganizePreviews;
 var
   i,t,w:integer;
-  n:TControl;
+  n:TRLPreviewWithSplitter;
   s:TSplitter;
 begin
   if fPreviewList.Count>0 then
   begin
     for i:=fPreviewList.Count-1 downto 0 do
     begin
-      n:=TControl(TRLPreview(fPreviewList[i]));
-      s:=TSplitter(n.Tag);
+      n:=TRLPreviewWithSplitter(fPreviewList[i]);
+      s:=n.Splitter;
       s.Align:=alNone;
       n.Align:=alNone;
     end;
@@ -496,8 +506,8 @@ begin
     t:=0;
     for i:=0 to fPreviewList.Count-1 do
     begin
-      n:=TControl(TRLPreview(fPreviewList[i]));
-      s:=TSplitter(n.Tag);
+      n:=TRLPreviewWithSplitter(fPreviewList[i]);
+      s:=n.Splitter;
       n.Height:=w;
       if i=fPreviewList.Count-1 then
       begin
@@ -522,30 +532,29 @@ end;
 
 procedure TRLPreviewForm.NewPreview;
 var
-  n:TRLPreview;
+  n:TRLPreviewWithSplitter;
   s:TSplitter;
 begin
 
-  n:=TRLPreview.Create(nil);
+  n:=TRLPreviewWithSplitter.Create(nil);
   with n do
   begin
     Width       :=0;
     OnChangeView:=rpvDefaultChangeView;
     OnEnter     :=PreviewEnter;
   end;
-  TControl(n).Parent:=PanelContainer;
+  n.Parent:=PanelContainer;
   s:=TSplitter.Create(n);
+  n.Splitter:=s;
   with s do
   begin
     AutoSnap:=False;
     Width   :=0;
     Parent  :=PanelContainer;
   end;
-  n.Tag:=integer(s);
   fPreviewList.Add(n);
   if fPreviewList.Count>1 then
     n.Pages:=TRLPreview(fPreviewList[0]).Pages;
-
 end;
 
 procedure TRLPreviewForm.ReleasePreview;
