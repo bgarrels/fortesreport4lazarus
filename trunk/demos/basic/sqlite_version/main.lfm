@@ -7,7 +7,7 @@ object MainForm: TMainForm
   ClientHeight = 165
   ClientWidth = 307
   Position = poScreenCenter
-  LCLVersion = '0.9.29'
+  LCLVersion = '0.9.31'
   object PreviewNFButton: TButton
     Left = 15
     Height = 25
@@ -54,12 +54,12 @@ object MainForm: TMainForm
   object RLHTMLFilter1: TRLHTMLFilter
     DocumentStyle = dsCSS2
     DisplayName = 'Web page'
-    left = 200
+    left = 224
     top = 88
   end
   object RLRichFilter1: TRLRichFilter
     DisplayName = 'RichText Format'
-    left = 128
+    left = 184
     top = 88
   end
   object RLPDFFilter1: TRLPDFFilter
@@ -69,6 +69,18 @@ object MainForm: TMainForm
     FontEncoding = feNoEncoding
     DisplayName = 'PDF Document'
     left = 258
+    top = 88
+  end
+  object RLXLSFilter1: TRLXLSFilter
+    PageSetup.HeaderMargin = 0
+    PageSetup.FooterMargin = 0
+    DisplayName = 'Planilha Excel'
+    left = 144
+    top = 88
+  end
+  object RLDraftFilter1: TRLDraftFilter
+    FontSizeReal = False
+    left = 88
     top = 88
   end
 end
