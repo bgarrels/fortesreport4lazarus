@@ -9,8 +9,7 @@ unit RLPrinters;
 interface
 
 uses
-  {$ifdef Windows}Windows, WinUtilPrn,{$endif}
-  {$ifdef unix}process,{$endif}
+  {$ifdef LCLWin32}Windows, WinUtilPrn,{$else}process,{$endif}
   Classes, SysUtils, Math, Forms, Dialogs,
   Graphics, Printers, RLConsts, RLTypes, RLUtils;
 
@@ -104,7 +103,7 @@ begin
     Result:=aPrinterName;
 end;
 
-{$ifdef Windows}
+{$ifdef LCLWin32}
 function GetPrinterDevice(Index:integer):string;
 const
   PRINTER_ACCESS_USE=$00000008;

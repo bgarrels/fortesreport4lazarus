@@ -515,7 +515,7 @@ end;
 procedure TRLPrintDialog.SpeedButtonSetupClick(Sender: TObject);
 begin
   SaveEditors;
-  {$IFDEF MSWindows}
+  {$IFDEF LCLWin32}
   TWinPrinter(Printer).AdvancedProperties;
   {$ELSE}
   ShowMessage('Printer.AdvancedProperties is not yet implemented for this platform');
