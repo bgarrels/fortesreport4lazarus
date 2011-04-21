@@ -122,15 +122,15 @@ begin
   else
     Exit;
 
-  if not OpenPrinter(PChar(PrinterDevice.Name),hPrinter,@foodefs) then
+  if not OpenPrinter(PChar(PrinterDevice.Name),@hPrinter,@foodefs) then
     RaiseLastOSError;
   try
-    GetPrinter(hPrinter,2,nil,0,bytesNeeded);
+    GetPrinter(hPrinter,2,nil,0,@bytesNeeded);
     if bytesNeeded=0 then
       bytesNeeded:=32768;
     pInfo:=AllocMem(bytesNeeded);
     try
-      GetPrinter(hPrinter,2,pInfo,bytesNeeded,bytesNeeded);
+      GetPrinter(hPrinter,2,PByte(pInfo),bytesNeeded,@bytesNeeded);
       if pInfo^.pServerName<>emptystr then
         Result:=pInfo^.pServerName+'\'+pInfo^.pShareName
       else
