@@ -12907,7 +12907,7 @@ begin
     if fRecordAction in [raUseIt,raIgnoreIt] then
     begin
       if Assigned(DataSource) then
-        if Assigned(DataSource.DataSet) and DataSource.DataSet.Active then
+        if Assigned(DataSource.DataSet) and DataSource.DataSet.Active and (fRecordRange<>rrCurrentOnly) then
         begin
           DataSource.DataSet.Next;
           keepon:=not DataSource.DataSet.Eof;
