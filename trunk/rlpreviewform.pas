@@ -1436,13 +1436,15 @@ begin
     else
       PrintParams.Orientation:=poPortrait;
 
-    with TRLPrintDialog.Create(nil) do
+    with TRLPrintDialog.Create(nil) do begin
+      FormStyle:=Self.FormStyle;
       try
         if not Execute then
           Exit;
       finally
         Free;
       end;
+    end;
     //
     filter:=PrintParams.Filter;
 
@@ -1499,6 +1501,7 @@ begin
         SaveParams.FileName:=SaveParams.Filter.FileName;
     //
     savedlg:=TRLSaveDialog.Create(nil);
+    savedlg.FormStyle:=Self.FormStyle;
     try
       if not savedlg.Execute then
         Exit;
@@ -1605,6 +1608,7 @@ begin
   if not Assigned(fFindDialog) then
   begin
     fFindDialog:=TfrmRLFindDialog.CreateNew(nil);
+    fFindDialog.FormStyle:=Self.FormStyle;
     fFindDialog.OnFind:=OnFindHandler;
   end;
   fFindDialog.ActiveControl:=fFindDialog.EditTextToFind;
@@ -1926,6 +1930,7 @@ pagesetupdlg   :TRLPageSetupConfig;
 //aPages:TRLGraphicStorage;
 begin
     pagesetupdlg:=TRLPageSetupConfig.Create(nil);
+    pagesetupdlg.FormStyle:=Self.FormStyle;
     try
       if not pagesetupdlg.Execute then
         Exit;
