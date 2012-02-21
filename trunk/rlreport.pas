@@ -8619,7 +8619,7 @@ begin
           Inc(LineWidth,SpaceWidth);
         Inc(Pos);
       end
-      else if Buffer[Pos] in [#13] then
+      else if Buffer[Pos] in [#13,#10] then
       begin
         Result:=Copy(Buffer,Pos0,Pos-Pos0);
         Inc(Pos);
@@ -8630,7 +8630,7 @@ begin
       else
       begin
         PosAux:=Pos;
-        while (Pos<=Length(Buffer)) and not (Buffer[Pos] in [#9,#32,#13]) do
+        while (Pos<=Length(Buffer)) and not (Buffer[Pos] in [#9,#32,#13,#10]) do
         begin
           Inc(LineWidth,CanvasTextWidth(Canvas,Buffer[Pos]));
           Inc(Pos);
