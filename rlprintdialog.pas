@@ -123,6 +123,9 @@ type
   {/@class}
 
   {@class TRLPrintParams - Parâmetros de impressão.}
+
+  { TRLPrintParams }
+
   TRLPrintParams=class(TComponent)
   private
     fMaxPage       :integer;
@@ -476,7 +479,7 @@ end;
 procedure TRLPrintParams.Clear;
 begin
   fMinPage    :=1;
-  fMaxPage    :=fToPage;
+  fMaxPage    :=9999;
   fFromPage   :=fMinPage;
   fToPage     :=fMaxPage;
   fPrintRange :=rprAllPages;
