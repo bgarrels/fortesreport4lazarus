@@ -201,7 +201,7 @@ begin
   fCanceled        :=False;
   fFilterStyle     :=[];
   fFirstPage       :=1;
-  fLastPage        :=LastPage;
+  fLastPage        :=1;
   fCopies          :=1;
   fBackgroundMode  :=False;
   //
