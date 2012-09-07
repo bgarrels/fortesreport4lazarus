@@ -26,29 +26,17 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="6">
+    <RequiredPackages Count="3">
       <Item1>
-        <PackageName Value="LCLBase"/>
-        <MinVersion Major="1" Release="1" Valid="True"/>
-      </Item1>
-      <Item2>
         <PackageName Value="sqlite3laz"/>
         <MinVersion Minor="4" Valid="True"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="fortes324forlaz"/>
       </Item2>
       <Item3>
-        <PackageName Value="DBFLaz"/>
-        <MinVersion Minor="1" Release="1" Valid="True"/>
-      </Item3>
-      <Item4>
-        <PackageName Value="FCL"/>
-        <MinVersion Major="1" Valid="True"/>
-      </Item4>
-      <Item5>
-        <PackageName Value="fortes324forlaz"/>
-      </Item5>
-      <Item6>
         <PackageName Value="LCL"/>
-      </Item6>
+      </Item3>
     </RequiredPackages>
     <Units Count="4">
       <Unit0>
@@ -60,6 +48,7 @@
         <Filename Value="main.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
       </Unit1>
@@ -82,7 +71,7 @@
     </Units>
   </ProjectOptions>
   <CompilerOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

@@ -6,7 +6,7 @@ interface
 
 uses
   LCLIntf, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ExtCtrls, LResources, Db, dbf, Sqlite3DS, RLReport;
+  ExtCtrls, LResources, Db, Sqlite3DS, RLReport;
 
 type
 
@@ -14,6 +14,7 @@ type
 
   TITDesignForm = class(TForm)
     DataSourceITE: TDataSource;
+    RLBand5: TRLBand;
     RLReport1: TRLReport;
     RLGroup1: TRLGroup;
     RLBand2: TRLBand;
