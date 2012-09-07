@@ -9,7 +9,7 @@ unit RLPreview;
 interface
 
 uses
-  LCLIntf, Classes, SysUtils, Math, Contnrs, Types,
+  LCLIntf, Classes, SysUtils, Math, Contnrs, Types, LMessages,
   Graphics, Controls, ExtCtrls, Forms, Menus, Clipbrd, Dialogs,
   RLMetaFile, RLConsts, RLUtils, RLFilters;
 
@@ -70,7 +70,7 @@ type
     procedure   DoChangeView;
     procedure   CancelEdit;
     procedure   InvalidateBoxes;
-
+    procedure   WMMouseWheel(var Message: TLMMouseEvent); message LM_MOUSEWHEEL;
   protected
 
     // override
@@ -221,6 +221,7 @@ type
 
     function    DoZoom(X:integer):integer;
     function    UndoZoom(X:integer):integer;
+    procedure WMMouseWheel(var Message: TLMMouseEvent); message LM_MOUSEWHEEL;
 
   protected
 
@@ -253,6 +254,9 @@ type
 {/@unit}
 
 implementation
+
+const
+  PREVIEW_LINE_HEIGHT = 20;
 
 // UTILS
 
@@ -724,6 +728,12 @@ begin
     TRLPreviewBox(fBoxes.Items[i]).Invalidate;
 end;
 
+procedure TRLPreview.WMMouseWheel(var Message: TLMMouseEvent);
+begin
+  Message.WheelDelta := Message.WheelDelta * PREVIEW_LINE_HEIGHT;
+  inherited WMMouseWheel(Message);
+end;
+
 procedure TRLPreview.RealignBoxes;
 var
   i,offsetleft,offsettop,docwidth,docheight,pagewidth,pageheight,totalwidth,totalheight:integer;
@@ -858,6 +868,11 @@ end;
 function TRLPreviewBox.UndoZoom(X:integer):integer;
 begin
   Result:=Round(X/(fPreview.ZoomFactor/100));
+end;
+
+procedure TRLPreviewBox.WMMouseWheel(var Message: TLMMouseEvent);
+begin
+  fPreview.WMMouseWheel(Message);
 end;
 
 procedure TRLPreviewBox.Paint;
