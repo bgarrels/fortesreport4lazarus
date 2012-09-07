@@ -6,7 +6,7 @@ interface
 
 uses
   LCLIntf, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Db, dbf, Sqlite3DS, ExtCtrls, LResources, RLReport, RLParser;
+  Db, Sqlite3DS, ExtCtrls, LResources, RLReport, RLParser;
 
 type
 
@@ -15,36 +15,20 @@ type
   TNFDesignForm = class(TForm)
     DatasetCLICLI_CODIGO: TLongintField;
     DatasetCLICLI_NOME: TStringField;
-    DatasetCLIOldCLI_CODIGO: TLongintField;
-    DatasetCLIOldCLI_NOME: TStringField;
     DatasetINFINF_ITE_CODIGO: TLongintField;
     DatasetINFINF_NF_NUMERO: TStringField;
     DatasetINFINF_QUANT: TFloatField;
     DatasetINFINF_SUBTOTAL: TFloatField;
     DatasetINFINF_VALOR: TFloatField;
     DatasetINFITE_NOME1: TStringField;
-    DatasetINFOldINF_ITE_CODIGO: TLongintField;
-    DatasetINFOldINF_NF_NUMERO: TStringField;
-    DatasetINFOldINF_QUANT: TFloatField;
-    DatasetINFOldINF_SUBTOTAL: TFloatField;
-    DatasetINFOldINF_VALOR: TFloatField;
-    DatasetINFOldINF_ITE_NOME: TStringField;
     DatasetITEITE_CODIGO: TLongintField;
     DatasetITEITE_GRUPO: TStringField;
     DatasetITEITE_NOME: TStringField;
-    DatasetITEOldITE_CODIGO: TLongintField;
-    DatasetITEOldITE_GRUPO: TStringField;
-    DatasetITEOldITE_NOME: TStringField;
     DatasetNF: TSqlite3Dataset;
     DatasetNFCLI_NOME1: TStringField;
     DatasetNFNF_CLI_CODIGO: TLongintField;
     DatasetNFNF_DATA: TDateField;
     DatasetNFNF_NUMERO: TStringField;
-    DatasetINFOld: TDbf;
-    DatasetCLIOld: TDbf;
-    DatasetITEOld: TDbf;
-    DatasetNFOldNF_DATA: TDateField;
-    DatasetNFOldNF_NUMERO: TStringField;
     RLReport1: TRLReport;
     DataSourceNF: TDataSource;
     DataSourceINF: TDataSource;

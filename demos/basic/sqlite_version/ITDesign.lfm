@@ -9,7 +9,7 @@ object ITDesignForm: TITDesignForm
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
-  LCLVersion = '0.9.31'
+  LCLVersion = '1.1'
   object RLReport1: TRLReport
     Left = 8
     Height = 1123
@@ -39,7 +39,7 @@ object ITDesignForm: TITDesignForm
       Transparent = False
       object RLBand2: TRLBand
         Left = 0
-        Height = 21
+        Height = 30
         Top = 0
         Width = 718
         BandType = btHeader
@@ -52,7 +52,7 @@ object ITDesignForm: TITDesignForm
         Transparent = False
         object RLLabel3: TRLLabel
           Left = 0
-          Height = 21
+          Height = 30
           Top = 0
           Width = 46
           Align = faLeft
@@ -73,7 +73,7 @@ object ITDesignForm: TITDesignForm
         end
         object RLDBText2: TRLDBText
           Left = 46
-          Height = 21
+          Height = 30
           Top = 0
           Width = 77
           Align = faLeft
@@ -91,7 +91,7 @@ object ITDesignForm: TITDesignForm
       object RLBand3: TRLBand
         Left = 0
         Height = 21
-        Top = 21
+        Top = 30
         Width = 718
         BandType = btColumnHeader
         Color = clWhite
@@ -147,7 +147,7 @@ object ITDesignForm: TITDesignForm
       object RLBand4: TRLBand
         Left = 0
         Height = 22
-        Top = 42
+        Top = 51
         Width = 718
         Color = clWhite
         ParentColor = False
@@ -196,7 +196,7 @@ object ITDesignForm: TITDesignForm
       object RLBand1: TRLBand
         Left = 0
         Height = 21
-        Top = 64
+        Top = 73
         Width = 718
         BandType = btSummary
         Color = clWhite
@@ -229,6 +229,16 @@ object ITDesignForm: TITDesignForm
           Transparent = False
         end
       end
+    end
+    object RLBand5: TRLBand
+      Left = 38
+      Height = 39
+      Top = 213
+      Width = 718
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
     end
   end
   object DataSourceITE: TDatasource
