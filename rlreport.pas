@@ -1181,7 +1181,6 @@ type
     fCouldPrint        :boolean;
     fDefaultBehavior   :TRLControlBehavior;
     fOnMeasureHeight   :TNotifyEvent;
-    parentHwnd         :HWND;
 
     // internal state variables
     fLocker:TCriticalSection;
@@ -6240,7 +6239,6 @@ begin
   ControlStyle    :=ControlStyle+[csOpaque,csReplicatable];
   //
   MakeCaption;
-  parentHwnd := (AOwner as TWinControl).Handle;
 end;
 
 destructor TRLCustomControl.Destroy;
