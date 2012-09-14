@@ -23,7 +23,7 @@ uses
 {$ifdef USEMASKUTILS}
   MaskUtils,
 {$endif}
-  ExtCtrls, DBCtrls, Controls, Forms, Dialogs, StdCtrls, LMessages, Buttons, Graphics,
+  ExtCtrls, DBCtrls, Controls, Forms, Dialogs, LMessages, Buttons, Graphics,
   RLMetaVCL, RLMetaFile, RLFeedBack, RLParser, RLFilters, RLConsts, RLUtils, RLPrintDialog, RLSaveDialog, RLPreviewForm,
   RLPreview, RLTypes, RLPrinters, RLSpoolFilter, RLPageSetupConfig, Printers;
 
