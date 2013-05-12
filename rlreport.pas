@@ -2927,7 +2927,7 @@ type
 
     // internal custom properties
 
-    {@prop ColIndex - Índice da coluna imprimindo. :/}
+    {@prop ColIndex - �?ndice da coluna imprimindo. :/}
     property    ColIndex  :integer read fColIndex;
 
     {@prop ColCount - Total de colunas da grid. :/}
@@ -2939,7 +2939,7 @@ type
     {@prop ColWidth - Largura das colunas em milímetros. :/}
     property    ColWidth  :double  read fColWidth   write SetColWidth stored IsManyCols;
 
-    {@prop RowIndex - Índice da linha imprimindo. :/}
+    {@prop RowIndex - �?ndice da linha imprimindo. :/}
     property    RowIndex  :integer read fRowIndex;
 
     {@prop Organization - Determina a direção para a impressão das bandas.
@@ -3554,7 +3554,7 @@ type
 
     // internal custom properties
 
-    {@prop PageIndex - Índice da página atual. :/}
+    {@prop PageIndex - �?ndice da página atual. :/}
     property    PageIndex         :integer              read fPageIndex           write SetPageIndex;
 
     {@prop PageNumber - Número da página atual (FirstPageNumber+PageIndex). :/}
@@ -8629,10 +8629,10 @@ begin
       begin
         PosAux:=Pos;
         while (Pos<=Length(Buffer)) and not (Buffer[Pos] in [#9,#32,#13,#10]) do
-        begin
-          Inc(LineWidth,CanvasTextWidth(Canvas,Buffer[Pos]));
           Inc(Pos);
-        end;
+
+        Inc(LineWidth, CanvasTextWidth(Canvas, Copy(Buffer, PosAux, Pos - PosAux)));
+
         if (LineWidth>MaxWidth) and HasText then
         begin
           Pos    :=PosAux;
