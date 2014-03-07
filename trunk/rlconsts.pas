@@ -814,6 +814,108 @@ begin
   Ls_Aplicar              :='Bewerben Sie sich';
 end;
 
+procedure LoadRussianStrings;
+begin
+  LS_PrintingInProgressStr:='Печать...';
+  LS_FilterInProgressStr  :='Сохранение отчета...';
+  LS_PreparingReportStr   :='Подготовка отчета...';
+  LS_PrinterNotFoundStr   :='Принтер не найден';
+  LS_NoPathToPrinterStr   :='�?еправильный путь принтера';
+  LS_LoadDefaultConfigStr :='Загрузить конфигураци�? по умолчанию';
+  LS_PrinterDriverErrorStr:='Ошибка драйвера принтера';
+  LS_PageStr              :='Страница';
+  LS_PrepareErrorStr      :='Ошибка при подготовке отчета';
+  LS_PageBreakStr         :='Продолжает�?�?...';
+  LS_PageMendStr          :='Продолжение';
+  LS_ReportEndStr         :='Конец';
+  LS_FileNotFoundStr      :='Файл не найден';
+  LS_FileNameStr          :='Им�? файла';
+  LS_AllFileTypesStr      :='В�?е файлы';
+  LS_LoadReportStr        :='Загрузить отчет';
+  LS_NotFoundStr          :='�?е найден';
+  LS_WaitStr              :='Подождите...';
+  LS_FinishedStr          :='Завершено';
+  LS_CancelStr            :='Отмена';
+  LS_CloseStr             :='Закрыть';
+  LS_SaveStr              :='Сохранить';
+  LS_SendStr              :='Отправить';
+  LS_PrintStr             :='Печать';
+  LS_AboutTheStr          :='О Программе';
+  LS_PreviewStr           :='Предварительный про�?мотр';
+  LS_OfStr                :='из';
+  LS_ZoomStr              :='Маштаб';
+  LS_FirstPageStr         :='Перва�? �?траница';
+  LS_PriorPageStr         :='Предыдуща�? �?траница';
+  LS_NextPageStr          :='Следующа�? �?траница';
+  LS_LastPageStr          :='По�?ледн�?�? �?траница';
+  LS_EntirePageStr        :='В�?�? �?траница';
+  LS_EntireWidthStr       :='В�?�? ширина';
+  LS_MultiplePagesStr     :='�?е�?колько �?траниц';
+  LS_ConfigPrinterStr     :='�?а�?тройка принтера';
+  LS_SaveToFileStr        :='Сохранить в файл';
+  LS_SendToStr            :='Отправить в';
+  LS_PrinterStr           :='Принтер';
+  LS_NameStr              :='Им�?';
+  LS_PrintToFileStr       :='Печать в файл';
+  LS_PrintInBackgroundStr :='Печать в фоне';
+  LS_SaveInBackground     :='Сохранение в фоне';
+  LS_PageRangeStr         :='Диапазон печати';
+  LS_RangeFromStr         :='�?';
+  LS_RangeToStr           :='по';
+  LS_AllStr               :='В�?е';
+  LS_PagesStr             :='Страницы';
+  LS_SelectionStr         :='Выделение';
+  LS_CopiesStr            :='Копии';
+  LS_NumberOfCopiesStr    :='Кол-во копий';
+  LS_OkStr                :='Хорошо';
+  LS_DivideScreenStr      :='Разделить �?кран';
+  LS_InvalidNameStr       :='�?еправильное им�?';
+  LS_DuplicateNameStr     :='Им�? уже и�?пользует�?�?';
+  LS_UseFilterStr         :='Фильтр';
+  LS_WebPageStr           :='Веб �?траница';
+  LS_RichFormatStr        :='RichText Format';
+  LS_PDFFormatStr         :='PDF Документ';
+  LS_XLSFormatStr         :='Таблица Excel';
+  LS_AtStr                :='в';
+  LS_FormStr              :='Форма';
+  LS_DefaultStr           :='По умолчанию';
+  LS_ColsStr              :='Столб.';
+  LS_ZoomInStr            :='Увеличить';
+  LS_ZoomOutStr           :='Уменьшить';
+  LS_CopyStr              :='Копировать';
+  LS_EditStr              :='Редактировать';
+  LS_FindCaptionStr       :='�?айти';
+  LS_TextToFindStr        :='Те&к�?т';
+  LS_FindNextStr          :='�?айти &дальше';
+  LS_WholeWordsStr        :='&Только �?лово целиком';
+  LS_MatchCaseStr         :='&Учитывать реги�?тр';
+  LS_DirectionUpStr       :='&Вверх';
+  LS_DirectionDownStr     :='В&низ';
+  LS_DirectionCaptionStr  :='�?аправление';
+  Ls_GetOutlineTextMetrics:='GetOutlineTextMetrics �?ломало�?ь';
+  Ls_Salvar_Como          :='Сохранить как';
+  Ls_Nome_Arquivo         :='Им�? файла:';
+  LS_OptionsStr           :='�?а�?тройки';
+  LS_ColumnsStr           :='Столбцы';
+  LS_Propriedades         :='�?а�?тройки';
+  Ls_Progresso            :='Прогре�?�?';
+  Ls_Aplicar              :='Применить';
+  Ls_File_corrupted       :='Файл поврежден!';
+  Ls_File_version         :='�?еправильна�? вер�?и�? файла!';
+  Ls_Page_settings        :='�?а�?тройка �?траницы';
+  Ls_Page_margins         :='Пол�?';
+  Ls_Page_margins_top     :='Верх';
+  Ls_Page_margins_bottom  :='�?их';
+  Ls_Page_paper           :='Бумага';
+  Ls_Paper_Size           :='Размер бумаги';
+  Ls_Paper_Size_Width     :='Ширина';
+  Ls_Paper_Size_Heigth    :='Вы�?ота';
+  Ls_Page_margins_rigth   :='Право';
+  Ls_Page_margins_left    :='Лево';
+  Ls_Paper_Orientation    :='Ориентаци�?';
+  Ls_Paper_Orientation_Portrait:= 'Портретна�?';
+  Ls_Paper_Orientation_Landscape:= 'Ландшафтна�?';
+end;
 
 procedure DetectLocale;
 {$ifdef LINUX}
@@ -835,6 +937,8 @@ begin
     LoadItalianStrings
   else if dlct='SW' then
     LoadSwedishStrings
+  else if dlct='RU' then
+    LoadRussianStrings
   else
     LoadEnglishStrings;
 {$else}
@@ -845,6 +949,7 @@ begin
     $0c {LANG_FRENCH}    : LoadFrenchStrings;
     $10 {LANG_ITALIAN}   : LoadItalianStrings;
     $1d {LANG_SWEDISH}   : LoadSwedishStrings;
+    $19 {LANG_RUSSIAN}   : LoadRussianStrings;
   else
     LoadEnglishStrings;
   end;
